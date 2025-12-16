@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  basePath: "/praktikoffice",
+  assetPrefix: "/praktikoffice",
 };
 
 export default nextConfig;
