@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useColorContext } from "@/contexts/ColorContext";
+import { getAssetPath } from "@/lib/assets";
 
 const categories = [
   { id: "offices", name: "офисы", font: "font-melodrama italic" },
@@ -155,7 +156,8 @@ export const Gallery = () => {
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   onError={(e) => {
                     // Fallback to hero image if gallery image doesn't exist
-                    (e.target as HTMLImageElement).src = "/hero.jpg";
+                    (e.target as HTMLImageElement).src =
+                      getAssetPath("/hero.jpg");
                   }}
                 />
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300" />

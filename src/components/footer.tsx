@@ -10,7 +10,9 @@ export const Footer = () => {
           <div className="space-y-6">
             <div>
               <p className="text-xs opacity-60 mb-2">address</p>
-              <p className="text-sm">Abu Dhabi Plaza | 26 floor | 360°</p>
+              <p className="text-sm">
+                Abu Dhabi Plaza | 26th floor | 360° view
+              </p>
             </div>
             <div>
               <p className="text-xs opacity-60 mb-2">mail</p>

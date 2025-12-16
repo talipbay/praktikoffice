@@ -2,6 +2,7 @@
 
 import { useLenis } from "lenis/react";
 import { useRef, useState } from "react";
+import { getAssetPath } from "@/lib/assets";
 
 export const Hero = () => {
   const imageRef = useRef<HTMLDivElement>(null);
@@ -60,7 +61,7 @@ export const Hero = () => {
           borderTopLeftRadius: `${topBorderRadius}px`,
           borderTopRightRadius: `${topBorderRadius}px`,
           width: `${widthPercentage}%`,
-          backgroundImage: 'url("/hero.jpg")',
+          backgroundImage: `url("${getAssetPath("/hero.jpg")}")`,
           backgroundPosition: "center center",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",

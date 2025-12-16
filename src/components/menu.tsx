@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { getAssetPath } from "@/lib/assets";
 
 interface MenuProps {
   isOpen: boolean;
@@ -15,12 +16,12 @@ const menuItems = [
 ];
 
 const carouselImages = [
-  "/hero.jpg",
-  "/hero.jpg",
-  "/hero.jpg",
-  "/hero.jpg",
-  "/hero.jpg",
-  "/hero.jpg",
+  getAssetPath("/hero.jpg"),
+  getAssetPath("/hero.jpg"),
+  getAssetPath("/hero.jpg"),
+  getAssetPath("/hero.jpg"),
+  getAssetPath("/hero.jpg"),
+  getAssetPath("/hero.jpg"),
 ];
 
 export const Menu = ({ isOpen, onClose }: MenuProps) => {
@@ -127,7 +128,8 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                                 : ""
                             }`}
                           onError={(e) => {
-                            (e.target as HTMLImageElement).src = "/hero.jpg";
+                            (e.target as HTMLImageElement).src =
+                              getAssetPath("/hero.jpg");
                           }}
                         />
                       </div>
