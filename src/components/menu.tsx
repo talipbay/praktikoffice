@@ -58,7 +58,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
             initial={{ y: "-100%" }}
             animate={{ y: 0 }}
             exit={{ y: "-100%" }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 2, delay: 0, ease: [0.22, 1, 0.36, 1] }}
             className="h-full w-full"
             onClick={(e) => e.stopPropagation()}
           >
@@ -212,7 +212,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
             {/* Mobile Layout */}
             <div className="lg:hidden flex flex-col h-full p-8">
               {/* Navigation */}
-              <div className="flex-1 flex flex-col justify-center space-y-8">
+              <div className="flex-1 flex flex-col justify-center space-y-2">
                 {menuItems.map((item) => (
                   <div key={item.id} className="relative overflow-hidden">
                     <motion.h2
