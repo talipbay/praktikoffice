@@ -83,8 +83,15 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    cursor: none !important;
   }
+
+  /* Only hide cursor on desktop devices */
+  @media (min-width: 769px) and (hover: hover) and (pointer: fine) {
+    * {
+      cursor: none !important;
+    }
+  }
+
   body {
     @apply bg-background text-foreground font-sans;
   }

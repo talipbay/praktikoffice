@@ -18,6 +18,7 @@ const Cursor = () => {
   const outerBgControls = useAnimationControls();
 
   const [type, setType] = useState<CursorLookType>("default");
+  const [isMobile, setIsMobile] = useState(false);
   const secondaryCursor = useRef<HTMLDivElement>(null);
   const mainCursor = useRef<HTMLDivElement>(null);
   const positionRef = useRef({
@@ -124,53 +125,86 @@ const Cursor = () => {
   };
 
   useEffect(() => {
-    // Show cursor immediately if mouse is already in the window
-    show();
+    // Check if device is mobile
+    const checkMobile = () => {
+      const isMobileDevice =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        ) ||
+        window.innerWidth <= 768 ||
+        "ontouchstart" in window;
+      setIsMobile(isMobileDevice);
 
-    let hideLinks = document.querySelectorAll("[data-cursor-hide]");
-    hideLinks.forEach((item) => {
-      item.addEventListener("mouseenter", hide);
-      item.addEventListener("mouseleave", show);
-    });
+      if (isMobileDevice) {
+        setType("hidden");
+        return;
+      }
+    };
 
-    let smallLinks = document.querySelectorAll('[data-cursor="small"]');
-    smallLinks.forEach((item) => {
-      item.addEventListener("mouseenter", () => onMouseEnterLink(3));
-      item.addEventListener("mouseleave", onMouseLeaveLink);
-    });
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
 
-    let medLinks = document.querySelectorAll('[data-cursor="medium"]');
-    medLinks.forEach((item) => {
-      item.addEventListener("mouseenter", () => onMouseEnterLink(4));
-      item.addEventListener("mouseleave", onMouseLeaveLink);
-    });
+    // Show cursor immediately if mouse is already in the window and not mobile
+    if (!isMobile) {
+      show();
+    }
 
-    let hugeLinks = document.querySelectorAll('[data-cursor="huge"]');
-    hugeLinks.forEach((item) => {
-      item.addEventListener("mouseenter", () => onMouseEnterLink(5));
-      item.addEventListener("mouseleave", onMouseLeaveLink);
-    });
+    // Only add mouse event listeners on non-mobile devices
+    if (!isMobile) {
+      let hideLinks = document.querySelectorAll("[data-cursor-hide]");
+      hideLinks.forEach((item) => {
+        item.addEventListener("mouseenter", hide);
+        item.addEventListener("mouseleave", show);
+      });
 
-    document.addEventListener("mousedown", onMouseDown);
-    document.addEventListener("mouseup", onMouseUp);
-    document.addEventListener("mousemove", onMouseMove);
-    document.body.addEventListener("mouseenter", onMouseEnter);
-    document.body.addEventListener("mouseleave", onMouseLeave);
+      let smallLinks = document.querySelectorAll('[data-cursor="small"]');
+      smallLinks.forEach((item) => {
+        item.addEventListener("mouseenter", () => onMouseEnterLink(3));
+        item.addEventListener("mouseleave", onMouseLeaveLink);
+      });
+
+      let medLinks = document.querySelectorAll('[data-cursor="medium"]');
+      medLinks.forEach((item) => {
+        item.addEventListener("mouseenter", () => onMouseEnterLink(4));
+        item.addEventListener("mouseleave", onMouseLeaveLink);
+      });
+
+      let hugeLinks = document.querySelectorAll('[data-cursor="huge"]');
+      hugeLinks.forEach((item) => {
+        item.addEventListener("mouseenter", () => onMouseEnterLink(5));
+        item.addEventListener("mouseleave", onMouseLeaveLink);
+      });
+
+      document.addEventListener("mousedown", onMouseDown);
+      document.addEventListener("mouseup", onMouseUp);
+      document.addEventListener("mousemove", onMouseMove);
+      document.body.addEventListener("mouseenter", onMouseEnter);
+      document.body.addEventListener("mouseleave", onMouseLeave);
+    }
 
     return () => {
-      hideLinks.forEach((item) => {
-        item.removeEventListener("mouseenter", hide);
-        item.removeEventListener("mouseleave", show);
-      });
-      [...smallLinks, ...medLinks, ...hugeLinks].forEach((item) => {
-        item.removeEventListener("mouseenter", () => onMouseEnterLink);
-        item.removeEventListener("mouseleave", onMouseLeaveLink);
-      });
-      document.removeEventListener("mousedown", onMouseDown);
-      document.removeEventListener("mouseup", onMouseUp);
-      document.removeEventListener("mousemove", onMouseMove);
-      document.body.removeEventListener("mouseenter", onMouseEnter);
-      document.body.removeEventListener("mouseleave", onMouseLeave);
+      window.removeEventListener("resize", checkMobile);
+
+      if (!isMobile) {
+        let hideLinks = document.querySelectorAll("[data-cursor-hide]");
+        let smallLinks = document.querySelectorAll('[data-cursor="small"]');
+        let medLinks = document.querySelectorAll('[data-cursor="medium"]');
+        let hugeLinks = document.querySelectorAll('[data-cursor="huge"]');
+
+        hideLinks.forEach((item) => {
+          item.removeEventListener("mouseenter", hide);
+          item.removeEventListener("mouseleave", show);
+        });
+        [...smallLinks, ...medLinks, ...hugeLinks].forEach((item) => {
+          item.removeEventListener("mouseenter", () => onMouseEnterLink);
+          item.removeEventListener("mouseleave", onMouseLeaveLink);
+        });
+        document.removeEventListener("mousedown", onMouseDown);
+        document.removeEventListener("mouseup", onMouseUp);
+        document.removeEventListener("mousemove", onMouseMove);
+        document.body.removeEventListener("mouseenter", onMouseEnter);
+        document.body.removeEventListener("mouseleave", onMouseLeave);
+      }
     };
   }, []);
 
@@ -209,6 +243,11 @@ const Cursor = () => {
     };
     followMouse();
   }, []);
+
+  // Don't render cursor on mobile devices
+  if (isMobile) {
+    return null;
+  }
 
   return type !== "hidden" ? (
     <div className={`cursor-wrapper ${type}`}>
