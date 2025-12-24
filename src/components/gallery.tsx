@@ -90,7 +90,7 @@ export const Gallery = () => {
       ref={sectionRef}
       id="gallery"
       data-gallery
-      className="gallery py-16 lg:py-24 relative z-20 bg-black text-foreground transition-colors duration-300"
+      className="gallery py-16 lg:py-24 relative z-30 bg-black text-foreground transition-colors duration-300"
     >
       <div className="container mx-auto px-5 space-y-12">
         {/* Header with tabs and gallery title */}

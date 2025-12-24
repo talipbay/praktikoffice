@@ -61,12 +61,12 @@ export const Amenities = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-16 lg:py-24 relative z-20 bg-black text-foreground transition-colors duration-300"
+      className="py-16 lg:py-24 relative z-30 bg-black text-foreground transition-colors duration-300"
     >
       <div className="container mx-auto px-5 space-y-16">
         {/* Header */}
         <div className="text-center space-y-4">
-          <h2 className="text-3xl lg:text-4xl xl:text-5xl font-light font-sans font-medium leading-tight text-foreground">
+          <h2 className="text-3xl lg:text-4xl xl:text-5xl font-light font-sans leading-tight text-foreground">
             Продуманная инфраструктура
           </h2>
         </div>
