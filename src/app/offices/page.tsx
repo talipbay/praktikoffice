@@ -197,7 +197,7 @@ export default function OfficesPage() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   return (
-    <div className="relative z-10 bg-background text-foreground font-inter">
+    <div className="relative z-5 bg-background text-foreground font-inter">
       <div className="container mx-auto px-5 pt-24 pb-16">
         <h1 className="text-6xl lg:text-8xl xl:text-9xl font-light font-melodrama leading-tight mb-8">
           offices.

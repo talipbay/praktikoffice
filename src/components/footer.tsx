@@ -135,7 +135,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
     <footer
       id="footer"
       data-footer
-      className="sticky bottom-0 h-screen bg-black text-foreground z-10 flex flex-col transition-colors duration-300"
+      className="sticky bottom-0 h-screen bg-black text-foreground z-0 flex flex-col transition-colors duration-300"
     >
       <div className="flex-1 flex flex-col justify-around container mx-auto p-5">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16 mt-16">
@@ -368,27 +368,6 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
             </form>
           </div>
         </div>
-
-        {/* <div className="overflow-hidden bg-black border-foreground/20 relative">
-          <div className="animate-marquee whitespace-nowrap">
-            <span className="text-4xl lg:text-[8rem] xl:text-[12rem] font-bold font-manrope mx-6 text-foreground">
-              praktik
-            </span>
-            <span className="text-4xl lg:text-[8rem] xl:text-[12rem] font-bold font-melodrama mx-6 text-foreground">
-              office
-            </span>
-            <span className="text-4xl lg:text-[8rem] xl:text-[12rem] font-bold font-manrope mx-6 text-foreground">
-              praktik
-            </span>
-            <span className="text-4xl lg:text-[8rem] xl:text-[12rem] font-bold font-melodrama mx-6 text-foreground">
-              office
-            </span>
-          </div>
-
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-linear-to-r from-black to-transparent pointer-events-none z-10"></div>
-
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-linear-to-l from-black to-transparent pointer-events-none z-10"></div>
-        </div> */}
 
         <div className="flex justify-between items-end mt-16">
           <p className="text-xs opacity-60">© 2026 Все права защищены</p>
