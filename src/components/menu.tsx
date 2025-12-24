@@ -128,7 +128,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 z-40 bg-background text-foreground mx-auto"
+          className="fixed inset-0 z-40 bg-black text-foreground mx-auto"
           onClick={onClose}
         >
           <motion.div
@@ -258,10 +258,10 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                   </div>
 
                   {/* Top gradient overlay */}
-                  <div className="absolute top-0 left-0 right-0 h-24 bg-linear-to-b from-background via-background/80 to-transparent pointer-events-none z-10"></div>
+                  <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black via-black/80 to-transparent pointer-events-none z-10"></div>
 
                   {/* Bottom gradient overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 h-24 bg-linear-to-t from-background via-background/80 to-transparent pointer-events-none z-10"></div>
+                  <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black via-black/80 to-transparent pointer-events-none z-10"></div>
                 </div>
               </div>
 

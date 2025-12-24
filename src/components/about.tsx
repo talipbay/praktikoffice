@@ -2,7 +2,7 @@
 
 export const About = () => {
   return (
-    <section className="py-16 lg:py-24 relative z-20 bg-background text-foreground transition-colors duration-300">
+    <section className="py-16 lg:py-24 relative z-20 bg-black text-foreground transition-colors duration-300">
       <div className="container mx-auto px-5 space-y-12">
         {/* Main heading at the top */}
         <div className="text-center">

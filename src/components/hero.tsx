@@ -42,7 +42,7 @@ export const Hero = () => {
   const topBorderRadius = (1 - scrollProgress) * 500; // From 50px to 0px
 
   return (
-    <div className="flex flex-col mx-auto justify-center items-center relative z-30 bg-background transition-colors duration-300">
+    <div className="flex flex-col mx-auto justify-center items-center relative z-30 bg-black transition-colors duration-300">
       <div className="container mx-auto min-h-[calc(100vh-100px)] flex flex-col items-center justify-center">
         <h1
           className="leading-normal text-4xl md:text-8xl font-extrabold text-center text-foreground transition-colors duration-300"

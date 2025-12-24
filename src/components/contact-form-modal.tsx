@@ -173,7 +173,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-background border border-foreground/20 rounded-2xl p-8 w-full max-w-md relative"
+            className="bg-black border border-foreground/20 rounded-2xl p-8 w-full max-w-md relative"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
@@ -286,7 +286,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                   name="officeType"
                   value={formData.officeType}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-3 bg-background border border-foreground/20 rounded-lg text-sm text-foreground focus:border-foreground focus:outline-none transition-colors"
+                  className="w-full px-3 py-3 bg-black border border-foreground/20 rounded-lg text-sm text-foreground focus:border-foreground focus:outline-none transition-colors"
                   data-cursor="small"
                 >
                   <option value="office">Офис</option>

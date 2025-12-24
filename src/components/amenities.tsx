@@ -61,7 +61,7 @@ export const Amenities = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-16 lg:py-24 relative z-20 bg-background text-foreground transition-colors duration-300"
+      className="py-16 lg:py-24 relative z-20 bg-black text-foreground transition-colors duration-300"
     >
       <div className="container mx-auto px-5 space-y-16">
         {/* Header */}
