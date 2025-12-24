@@ -72,7 +72,7 @@ export const Footer = () => {
       // Telegram Bot configuration
       const TELEGRAM_BOT_TOKEN =
         "8507260245:AAFoyElkM1bfT6ztcI8OLT5D8IHI6jnJ2i4";
-      const TELEGRAM_CHAT_ID = "569529167";
+      const TELEGRAM_CHAT_IDS = ["569529167", "7629492001"]; // Multiple recipients
 
       // Prepare Telegram message
       const telegramMessage = `🔔 *Новая заявка с сайта praktikoffice.kz*
@@ -90,24 +90,32 @@ export const Footer = () => {
 📝 *Источник:* Форма в футере сайта
 🌐 *Сайт:* praktikoffice.kz`;
 
-      // Send Telegram notification
-      const telegramResponse = await fetch(
-        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-        {
+      // Send Telegram notification to multiple users
+      const telegramPromises = TELEGRAM_CHAT_IDS.map((chatId) =>
+        fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            chat_id: TELEGRAM_CHAT_ID,
+            chat_id: chatId,
             text: telegramMessage,
             parse_mode: "Markdown",
           }),
-        }
+        })
       );
 
+      const telegramResponses = await Promise.all(telegramPromises);
+
       console.log("Email sent successfully:", response);
-      console.log("Telegram notification sent:", telegramResponse.ok);
+      console.log(
+        "Telegram notifications sent to:",
+        TELEGRAM_CHAT_IDS.length,
+        "users"
+      );
+      telegramResponses.forEach((resp, index) => {
+        console.log(`Telegram notification ${index + 1}:`, resp.ok);
+      });
       setSubmitMessage("Спасибо! Мы свяжемся с вами в ближайшее время.");
       setFormData({ name: "", phone: "", officeType: "office" });
     } catch (error) {

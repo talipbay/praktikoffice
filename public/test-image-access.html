@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Image Access</title>
+</head>
+<body>
+    <h1>Image Access Test</h1>
+    <h2>Coworking Images:</h2>
+    <img src="/gallery/coworking/coworking-1.webp" alt="Coworking 1" style="width: 200px; margin: 10px;" onerror="this.style.border='2px solid red';">
+    <img src="/gallery/coworking/coworking-2.webp" alt="Coworking 2" style="width: 200px; margin: 10px;" onerror="this.style.border='2px solid red';">
+    
+    <h2>Office Images:</h2>
+    <img src="/gallery/offices/office-1.webp" alt="Office 1" style="width: 200px; margin: 10px;" onerror="this.style.border='2px solid red';">
+    <img src="/gallery/offices/office-2.webp" alt="Office 2" style="width: 200px; margin: 10px;" onerror="this.style.border='2px solid red';">
+    
+    <h2>Meeting Images:</h2>
+    <img src="/gallery/meeting/meeting-1.webp" alt="Meeting 1" style="width: 200px; margin: 10px;" onerror="this.style.border='2px solid red';">
+    <img src="/gallery/meeting/meeting-2.webp" alt="Meeting 2" style="width: 200px; margin: 10px;" onerror="this.style.border='2px solid red';">
+    
+    <script>
+        console.log('Current hostname:', window.location.hostname);
+        console.log('Current protocol:', window.location.protocol);
+        console.log('Current port:', window.location.port);
+    </script>
+</body>
+</html>

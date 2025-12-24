@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useColorContext } from "@/contexts/ColorContext";
+import { getAssetPath } from "@/lib/assets";
 
 const categories = [
   { id: "coworking", name: "open space", font: "font-manrope font-bold" },
@@ -42,6 +44,19 @@ export const Gallery = () => {
   const [activeCategory, setActiveCategory] = useState("coworking");
   const sectionRef = useRef<HTMLElement>(null);
   const { setScrollProgress } = useColorContext();
+  const router = useRouter();
+
+  // Navigation mapping
+  const categoryRoutes = {
+    coworking: "/open-space",
+    offices: "/offices",
+    meeting: "/meeting-room",
+  };
+
+  const handleLearnMore = () => {
+    const route = categoryRoutes[activeCategory as keyof typeof categoryRoutes];
+    router.push(route);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -133,7 +148,7 @@ export const Gallery = () => {
                 data-cursor="medium"
               >
                 <Image
-                  src={image}
+                  src={getAssetPath(image)}
                   alt={`${
                     categories.find((c) => c.id === activeCategory)?.name
                   } ${index + 1}`}
@@ -145,6 +160,11 @@ export const Gallery = () => {
                   placeholder="blur"
                   blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                   priority={index < 3}
+                  onError={(e) => {
+                    console.error(
+                      `Failed to load image: ${getAssetPath(image)}`
+                    );
+                  }}
                 />
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
 
@@ -157,6 +177,18 @@ export const Gallery = () => {
               </div>
             )
           )}
+        </div>
+
+        {/* Learn More Button */}
+        <div className="flex justify-center mt-12">
+          <button
+            onClick={handleLearnMore}
+            className="group relative px-8 py-4 bg-transparent border-2 border-foreground text-foreground rounded-lg hover:bg-foreground hover:text-background transition-all duration-300 font-medium text-lg"
+            data-cursor="small"
+          >
+            <span className="relative z-10">узнать подробнее</span>
+            <div className="absolute inset-0 bg-foreground scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-lg" />
+          </button>
         </div>
       </div>
     </section>
