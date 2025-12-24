@@ -66,8 +66,8 @@ export const Amenities = () => {
       <div className="container mx-auto px-5 space-y-16">
         {/* Header */}
         <div className="text-center space-y-4">
-          <h2 className="text-6xl lg:text-8xl xl:text-9xl font-light font-melodrama leading-tight text-foreground">
-            amenities.
+          <h2 className="text-3xl lg:text-4xl xl:text-5xl font-light font-sans font-medium leading-tight text-foreground">
+            Продуманная инфраструктура
           </h2>
         </div>
 

@@ -1,65 +1,47 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { useColorContext } from "@/contexts/ColorContext";
-import { getAssetPath } from "@/lib/assets";
 
 const categories = [
-  { id: "offices", name: "офисы", font: "font-melodrama italic" },
-  { id: "meeting", name: "переговорные", font: "font-sans font-bold" },
-  { id: "coworking", name: "коворкинг", font: "font-melodrama font-light" },
-  { id: "lounge", name: "лаундж зона", font: "font-sans font-medium" },
-  { id: "fitness", name: "фитнес зона", font: "font-melodrama font-normal" },
+  { id: "coworking", name: "open space", font: "font-manrope font-bold" },
+  { id: "offices", name: "office", font: "font-manrope font-bold" },
+  { id: "meeting", name: "meeting room", font: "font-manrope font-bold" },
 ];
 
 // Gallery images organized by category
 const galleryImages = {
+  coworking: [
+    "/gallery/coworking/coworking-1.webp",
+    "/gallery/coworking/coworking-2.webp",
+    "/gallery/coworking/coworking-3.webp",
+    "/gallery/coworking/coworking-4.webp",
+    "/gallery/coworking/coworking-5.webp",
+    "/gallery/coworking/coworking-6.webp",
+  ],
   offices: [
-    "/gallery/offices/office-1.jpg",
-    "/gallery/offices/office-2.jpg",
-    "/gallery/offices/office-3.jpg",
-    "/gallery/offices/office-4.jpg",
-    "/gallery/offices/office-5.jpg",
-    "/gallery/offices/office-6.jpg",
+    "/gallery/offices/office-1.webp",
+    "/gallery/offices/office-2.webp",
+    "/gallery/offices/office-3.webp",
+    "/gallery/offices/office-4.webp",
+    "/gallery/offices/office-5.webp",
+    "/gallery/offices/office-6.webp",
   ],
   meeting: [
-    "/gallery/meeting/meeting-1.jpg",
-    "/gallery/meeting/meeting-2.jpg",
-    "/gallery/meeting/meeting-3.jpg",
-    "/gallery/meeting/meeting-4.jpg",
-    "/gallery/meeting/meeting-5.jpg",
-    "/gallery/meeting/meeting-6.jpg",
-  ],
-  coworking: [
-    "/gallery/coworking/coworking-1.jpg",
-    "/gallery/coworking/coworking-2.jpg",
-    "/gallery/coworking/coworking-3.jpg",
-    "/gallery/coworking/coworking-4.jpg",
-    "/gallery/coworking/coworking-5.jpg",
-    "/gallery/coworking/coworking-6.jpg",
-  ],
-  lounge: [
-    "/gallery/lounge/lounge-1.jpg",
-    "/gallery/lounge/lounge-2.jpg",
-    "/gallery/lounge/lounge-3.jpg",
-    "/gallery/lounge/lounge-4.jpg",
-    "/gallery/lounge/lounge-5.jpg",
-    "/gallery/lounge/lounge-6.jpg",
-  ],
-  fitness: [
-    "/gallery/fitness/fitness-1.jpg",
-    "/gallery/fitness/fitness-2.jpg",
-    "/gallery/fitness/fitness-3.jpg",
-    "/gallery/fitness/fitness-4.jpg",
-    "/gallery/fitness/fitness-5.jpg",
-    "/gallery/fitness/fitness-6.jpg",
+    "/gallery/meeting/meeting-1.webp",
+    "/gallery/meeting/meeting-6.webp",
+    "/gallery/meeting/meeting-2.webp",
+    "/gallery/meeting/meeting-3.webp",
+    "/gallery/meeting/meeting-5.webp",
+    "/gallery/meeting/meeting-4.webp",
   ],
 };
 
 export const Gallery = () => {
-  const [activeCategory, setActiveCategory] = useState("offices");
+  const [activeCategory, setActiveCategory] = useState("coworking");
   const sectionRef = useRef<HTMLElement>(null);
-  const { setScrollProgress, backgroundColor, textColor } = useColorContext();
+  const { setScrollProgress } = useColorContext();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -91,7 +73,9 @@ export const Gallery = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-16 lg:py-24 relative z-20 bg-background text-foreground transition-colors duration-300"
+      id="gallery"
+      data-gallery
+      className="gallery py-16 lg:py-24 relative z-20 bg-background text-foreground transition-colors duration-300"
     >
       <div className="container mx-auto px-5 space-y-12">
         {/* Header with tabs and gallery title */}
@@ -148,17 +132,19 @@ export const Gallery = () => {
                 className="relative aspect-4/3 overflow-hidden rounded-lg bg-gray-800 group cursor-pointer"
                 data-cursor="medium"
               >
-                <img
+                <Image
                   src={image}
                   alt={`${
                     categories.find((c) => c.id === activeCategory)?.name
                   } ${index + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  onError={(e) => {
-                    // Fallback to hero image if gallery image doesn't exist
-                    (e.target as HTMLImageElement).src =
-                      getAssetPath("/hero.jpg");
-                  }}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  loading={index < 3 ? "eager" : "lazy"}
+                  quality={75}
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                  priority={index < 3}
                 />
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
 

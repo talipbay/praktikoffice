@@ -2,6 +2,7 @@
 
 import { useLenis } from "lenis/react";
 import { useRef, useState } from "react";
+import Image from "next/image";
 import { getAssetPath } from "@/lib/assets";
 
 export const Hero = () => {
@@ -61,14 +62,19 @@ export const Hero = () => {
           borderTopLeftRadius: `${topBorderRadius}px`,
           borderTopRightRadius: `${topBorderRadius}px`,
           width: `${widthPercentage}%`,
-          backgroundImage: `url("${getAssetPath("/hero.jpg")}")`,
-          backgroundPosition: "center center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
           translate: "0px -100px",
-          backgroundColor: "white",
         }}
-      />
+      >
+        <Image
+          src={getAssetPath("/hero.webp")}
+          alt="Premium service offices"
+          fill
+          className="object-cover"
+          priority
+          quality={85}
+          sizes="100vw"
+        />
+      </div>
     </div>
   );
 };

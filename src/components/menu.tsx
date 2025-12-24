@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { getAssetPath } from "@/lib/assets";
+import { useRouter } from "next/navigation";
 
 interface MenuProps {
   isOpen: boolean;
@@ -15,27 +16,102 @@ const menuItems = [
   { id: "contact", label: "CONTACT" },
 ];
 
+const spaceTypes = [
+  { id: "open-space", label: "open space" },
+  { id: "office", label: "office" },
+  { id: "meeting-room", label: "meeting room" },
+];
+
 const carouselImages = [
-  getAssetPath("/hero.jpg"),
-  getAssetPath("/hero.jpg"),
-  getAssetPath("/hero.jpg"),
-  getAssetPath("/hero.jpg"),
-  getAssetPath("/hero.jpg"),
-  getAssetPath("/hero.jpg"),
+  // Coworking images
+  "/gallery/coworking/coworking-1.webp",
+  "/gallery/coworking/coworking-2.webp",
+  "/gallery/coworking/coworking-3.webp",
+  "/gallery/coworking/coworking-4.webp",
+  "/gallery/coworking/coworking-5.webp",
+  "/gallery/coworking/coworking-6.webp",
+  // Office images
+  "/gallery/offices/office-1.webp",
+  "/gallery/offices/office-2.webp",
+  "/gallery/offices/office-3.webp",
+  "/gallery/offices/office-4.webp",
+  "/gallery/offices/office-5.webp",
+  "/gallery/offices/office-6.webp",
+  // Meeting room images
+  "/gallery/meeting/meeting-1.webp",
+  "/gallery/meeting/meeting-2.webp",
+  "/gallery/meeting/meeting-3.webp",
+  "/gallery/meeting/meeting-4.webp",
+  "/gallery/meeting/meeting-5.webp",
+  "/gallery/meeting/meeting-6.webp",
 ];
 
 export const Menu = ({ isOpen, onClose }: MenuProps) => {
+  const router = useRouter();
+  const [showSpaceTypes, setShowSpaceTypes] = useState(false);
+
+  const handleMenuClick = (itemId: string) => {
+    if (itemId === "home") {
+      setShowSpaceTypes(false); // Reset submenu
+      router.push("/");
+      onClose();
+    } else if (itemId === "spaces") {
+      // Toggle space types visibility instead of navigating
+      setShowSpaceTypes(!showSpaceTypes);
+    } else if (itemId === "contact") {
+      setShowSpaceTypes(false); // Reset submenu
+      // First close menu, then jump to footer component
+      onClose();
+      setTimeout(() => {
+        // For sticky footer, scroll to bottom of page
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: "smooth",
+        });
+
+        // Fallback: try to find footer element
+        const footer =
+          document.querySelector("footer") ||
+          document.querySelector("[data-footer]") ||
+          document.getElementById("footer");
+        if (footer) {
+          footer.scrollIntoView({ behavior: "smooth", block: "end" });
+        }
+      }, 300); // Wait for menu close animation
+    }
+  };
+
+  const handleSpaceTypeClick = (spaceTypeId: string) => {
+    // Close menu first, then navigate to the appropriate page
+    onClose();
+    setTimeout(() => {
+      // Navigate to the corresponding page
+      if (spaceTypeId === "open-space") {
+        router.push("/open-space");
+      } else if (spaceTypeId === "office") {
+        router.push("/offices");
+      } else if (spaceTypeId === "meeting-room") {
+        router.push("/meeting-room");
+      }
+    }, 300); // Wait for menu close animation
+  };
   // No state needed for continuous scroll
 
   // Handle escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        setShowSpaceTypes(false); // Reset submenu
+        onClose();
+      }
     };
 
     if (isOpen) {
       document.addEventListener("keydown", handleEscape);
       document.body.style.overflow = "hidden";
+    } else {
+      // Reset submenu when menu closes
+      setShowSpaceTypes(false);
     }
 
     return () => {
@@ -67,13 +143,16 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
             <div className="hidden lg:grid lg:grid-cols-3 h-full container mx-auto">
               {/* Left Side - Navigation */}
               <div className="flex flex-col container justify-center items-start space-y-2 px-5">
-                {menuItems.map((item) => (
+                {menuItems.map((item, index) => (
                   <div key={item.id} className="relative overflow-hidden">
                     <motion.h2
                       className="text-6xl xl:text-8xl font-extralight  font-melodrama cursor-pointer select-none"
-                      whileHover="hover"
+                      whileHover={
+                        item.id === "spaces" && showSpaceTypes ? "" : "hover"
+                      }
                       initial="initial"
                       data-cursor="huge"
+                      onClick={() => handleMenuClick(item.id)}
                     >
                       <motion.div
                         variants={{
@@ -91,17 +170,59 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                           hover: { y: 0 },
                         }}
                         transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }}
+                        animate={{
+                          opacity:
+                            item.id === "spaces" && showSpaceTypes ? 0 : 1,
+                        }}
                       >
                         {item.label}
                       </motion.div>
                     </motion.h2>
+
+                    {/* Show space types when SPACES is clicked */}
+                    <AnimatePresence>
+                      {item.id === "spaces" && showSpaceTypes && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{
+                            duration: 0.5,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
+                          className="flex flex-row gap-4 mt-6"
+                        >
+                          {spaceTypes.map((spaceType, spaceIndex) => (
+                            <motion.div
+                              key={spaceType.id}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{
+                                duration: 0.4,
+                                delay: spaceIndex * 0.1,
+                                ease: [0.22, 1, 0.36, 1],
+                              }}
+                              className="cursor-pointer"
+                              onClick={() => handleSpaceTypeClick(spaceType.id)}
+                              data-cursor="small"
+                            >
+                              <div className="bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                                <span className="text-md font-light text-white">
+                                  {spaceType.label}
+                                </span>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 ))}
               </div>
 
               {/* Middle - Vertical Scrolling Images */}
               <div className="flex items-center justify-center px-16 relative">
-                <div className="relative w-full max-w-xs h-[100vh] overflow-hidden rounded-3xl">
+                <div className="relative w-full max-w-xs h-screen overflow-hidden rounded-3xl">
                   {/* Continuous vertical scrolling container */}
                   <div className="flex flex-col animate-scroll-up">
                     {/* Triple images for seamless infinite loop */}
@@ -115,7 +236,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                         className="shrink-0 w-full aspect-4/3 mb-6"
                       >
                         <img
-                          src={image}
+                          src={getAssetPath(image)}
                           alt={`Gallery image ${
                             (index % carouselImages.length) + 1
                           }`}
@@ -129,7 +250,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                             }`}
                           onError={(e) => {
                             (e.target as HTMLImageElement).src =
-                              getAssetPath("/hero.jpg");
+                              getAssetPath("/hero.webp");
                           }}
                         />
                       </div>
@@ -149,7 +270,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                 {/* Contact Info */}
                 <div className="text-left space-y-6">
                   <div>
-                    <p className="text-sm opacity-60 mb-2">mail</p>
+                    <p className="text-sm opacity-60 mb-2">почта</p>
                     <a
                       href="mailto:manager@praktikoffice.kz"
                       className="text-lg hover:opacity-70 transition-opacity"
@@ -159,7 +280,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                     </a>
                   </div>
                   <div>
-                    <p className="text-sm opacity-60 mb-2">phone</p>
+                    <p className="text-sm opacity-60 mb-2">телефон</p>
                     <a
                       href="tel:+77017117221"
                       className="text-lg hover:opacity-70 transition-opacity"
@@ -169,7 +290,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                     </a>
                   </div>
                   <div>
-                    <p className="text-sm opacity-60 mb-2">social</p>
+                    <p className="text-sm opacity-60 mb-2">соц. сети</p>
                     <div className="space-y-2">
                       <a
                         href="https://www.instagram.com/praktikoffice/"
@@ -192,22 +313,6 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                     </div>
                   </div>
                 </div>
-
-                {/* Action Buttons */}
-                <div className=" mt-12 justify-start">
-                  <button
-                    className="block text-lg font-medium hover:opacity-70 transition-opacity"
-                    data-cursor="small"
-                  >
-                    book now
-                  </button>
-                  <button
-                    className="block text-lg font-medium hover:opacity-70 transition-opacity"
-                    data-cursor="small"
-                  >
-                    privacy
-                  </button>
-                </div>
               </div>
             </div>
 
@@ -215,13 +320,16 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
             <div className="lg:hidden flex flex-col h-full p-8">
               {/* Navigation */}
               <div className="flex-1 flex flex-col justify-center space-y-2">
-                {menuItems.map((item) => (
+                {menuItems.map((item, index) => (
                   <div key={item.id} className="relative overflow-hidden">
                     <motion.h2
                       className="text-5xl md:text-6xl font-extralight font-melodrama cursor-pointer select-none"
-                      whileHover="hover"
+                      whileHover={
+                        item.id === "spaces" && showSpaceTypes ? "" : "hover"
+                      }
                       initial="initial"
                       data-cursor="huge"
+                      onClick={() => handleMenuClick(item.id)}
                     >
                       <motion.div
                         variants={{
@@ -239,32 +347,58 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                           hover: { y: 0 },
                         }}
                         transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }}
+                        animate={{
+                          opacity:
+                            item.id === "spaces" && showSpaceTypes ? 0 : 1,
+                        }}
                       >
                         {item.label}
                       </motion.div>
                     </motion.h2>
+
+                    {/* Show space types when SPACES is clicked - Mobile */}
+                    <AnimatePresence>
+                      {item.id === "spaces" && showSpaceTypes && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{
+                            duration: 0.5,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
+                          className="flex flex-wrap gap-3 mt-4"
+                        >
+                          {spaceTypes.map((spaceType, spaceIndex) => (
+                            <motion.div
+                              key={spaceType.id}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{
+                                duration: 0.4,
+                                delay: spaceIndex * 0.1,
+                                ease: [0.22, 1, 0.36, 1],
+                              }}
+                              className="cursor-pointer"
+                              onClick={() => handleSpaceTypeClick(spaceType.id)}
+                              data-cursor="small"
+                            >
+                              <div className="bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                                <span className="text-sm font-light text-white">
+                                  {spaceType.label}
+                                </span>
+                              </div>
+                            </motion.div>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 ))}
               </div>
 
               {/* Bottom Section - Two Columns */}
               <div className="grid grid-cols-2 gap-8 mt-12">
-                {/* Left Column - Actions */}
-                <div className="space-y-4">
-                  <button
-                    className="block text-lg font-medium hover:opacity-70 transition-opacity"
-                    data-cursor="small"
-                  >
-                    book now
-                  </button>
-                  <button
-                    className="block text-lg font-medium hover:opacity-70 transition-opacity"
-                    data-cursor="small"
-                  >
-                    privacy
-                  </button>
-                </div>
-
                 {/* Right Column - Contact */}
                 <div className="space-y-4">
                   <div>

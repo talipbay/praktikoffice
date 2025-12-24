@@ -33,22 +33,10 @@ interface ColorProviderProps {
 export const ColorProvider = ({ children }: ColorProviderProps) => {
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  // Define color values using CSS custom properties
-  // Default (gray): --background: rgb(51 51 51), --foreground: rgb(249 249 249)
-  // Gallery (black): rgb(0 0 0), rgb(255 255 255)
-
-  // Calculate colors based on scroll progress (0 = gray, 1 = black)
-  const backgroundColor = `rgb(${Math.round(
-    51 + (0 - 51) * scrollProgress
-  )} ${Math.round(51 + (0 - 51) * scrollProgress)} ${Math.round(
-    51 + (0 - 51) * scrollProgress
-  )})`;
-
-  const textColor = `rgb(${Math.round(
-    249 + (255 - 249) * scrollProgress
-  )} ${Math.round(249 + (255 - 249) * scrollProgress)} ${Math.round(
-    249 + (255 - 249) * scrollProgress
-  )})`;
+  // Fixed colors - no transition based on scroll
+  // Always use black background and white text
+  const backgroundColor = "rgb(0 0 0)"; // Always black
+  const textColor = "rgb(255 255 255)"; // Always white
 
   // Amenities can also control the scroll progress (for reverting colors)
   const setAmenitiesProgress = (progress: number) => {
@@ -66,8 +54,8 @@ export const ColorProvider = ({ children }: ColorProviderProps) => {
     // Also apply to body for immediate effect
     document.body.style.backgroundColor = backgroundColor;
     document.body.style.color = textColor;
-    document.body.style.transition =
-      "background-color 0.3s ease, color 0.3s ease";
+    // Remove transition since colors are now fixed
+    document.body.style.transition = "";
   }, [backgroundColor, textColor]);
 
   return (

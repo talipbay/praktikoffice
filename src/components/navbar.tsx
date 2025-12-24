@@ -11,7 +11,7 @@ export const Navbar = () => {
     <>
       <div className="flex container mx-auto p-5 justify-between fixed top-0 left-0 right-0 z-50 text-foreground transition-colors duration-300">
         <h1 className="text-4xl font-bold" data-cursor="medium">
-          praktik.
+          <a href="/">praktik.</a>
         </h1>
 
         <div className="flex gap-4 items-center" data-cursor="small">
