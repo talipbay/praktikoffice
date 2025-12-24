@@ -135,7 +135,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
     <footer
       id="footer"
       data-footer
-      className="sticky bottom-0 h-screen bg-black text-foreground z-0 flex flex-col transition-colors duration-300"
+      className="sticky bottom-0 h-screen bg-black text-foreground z-10 flex flex-col transition-colors duration-300"
     >
       <div className="flex-1 flex flex-col justify-around container mx-auto p-5">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16 mt-16">
