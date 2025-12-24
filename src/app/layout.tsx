@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { Manrope, Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import ReactLenis from "lenis/react";
@@ -10,6 +10,12 @@ import { getAssetPath } from "@/lib/assets";
 
 const manropeSans = Manrope({
   variable: "--font-manrope-sans",
+});
+
+const inter = Inter({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -59,7 +65,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${manropeSans.variable} bg-black antialiased min-h-vh relative`}
+        className={`${manropeSans.variable} ${inter.variable} bg-black antialiased min-h-vh relative`}
       >
         <ColorProvider>
           <ReactLenis root />

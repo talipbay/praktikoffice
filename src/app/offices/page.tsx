@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { ContactFormModal } from "@/components/contact-form-modal";
+import { getAssetPath } from "@/lib/assets";
 
 const officeOptions = [
   {
@@ -196,7 +197,7 @@ export default function OfficesPage() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   return (
-    <div className="relative z-10 bg-background text-foreground">
+    <div className="relative z-10 bg-background text-foreground font-inter">
       <div className="container mx-auto px-5 pt-24 pb-16">
         <h1 className="text-6xl lg:text-8xl xl:text-9xl font-light font-melodrama leading-tight mb-8">
           offices.
@@ -289,7 +290,9 @@ export default function OfficesPage() {
           <div className="space-y-4">
             <div className="relative aspect-4/3 overflow-hidden rounded-lg">
               <Image
-                src={allOffices[selectedOffice].images[selectedImage]}
+                src={getAssetPath(
+                  allOffices[selectedOffice].images[selectedImage]
+                )}
                 alt={`${allOffices[selectedOffice].name} - фото ${
                   selectedImage + 1
                 }`}
@@ -313,7 +316,7 @@ export default function OfficesPage() {
                   data-cursor="small"
                 >
                   <Image
-                    src={image}
+                    src={getAssetPath(image)}
                     alt={`${allOffices[selectedOffice].name} - миниатюра ${
                       index + 1
                     }`}

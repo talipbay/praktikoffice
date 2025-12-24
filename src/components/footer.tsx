@@ -2,11 +2,14 @@
 
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import emailjs from "@emailjs/browser";
 
 export const Footer = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
+    company: "",
     phone: "",
     officeType: "office",
   });
@@ -40,6 +43,7 @@ export const Footer = () => {
       // Prepare template parameters
       const templateParams = {
         from_name: formData.name,
+        from_company: formData.company,
         from_phone: formData.phone,
         service_type:
           formData.officeType === "office"
@@ -49,6 +53,7 @@ export const Footer = () => {
             : "Коворкинг",
         to_name: "Praktik Office",
         message: `Новая заявка от ${formData.name}
+${formData.company ? `Компания: ${formData.company}` : ""}
 Телефон: ${formData.phone}
 Тип услуги: ${
           formData.officeType === "office"
@@ -78,6 +83,7 @@ export const Footer = () => {
       const telegramMessage = `🔔 *Новая заявка с сайта praktikoffice.kz*
 
 👤 *Имя:* ${formData.name}
+${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
 📞 *Телефон:* ${formData.phone}
 🏢 *Тип услуги:* ${
         formData.officeType === "office"
@@ -117,7 +123,7 @@ export const Footer = () => {
         console.log(`Telegram notification ${index + 1}:`, resp.ok);
       });
       setSubmitMessage("Спасибо! Мы свяжемся с вами в ближайшее время.");
-      setFormData({ name: "", phone: "", officeType: "office" });
+      setFormData({ name: "", company: "", phone: "", officeType: "office" });
     } catch (error) {
       console.error("Submission error:", error);
       setSubmitMessage("Произошла ошибка при отправке. Попробуйте еще раз.");
@@ -201,19 +207,25 @@ export const Footer = () => {
             <div className="flex flex-wrap gap-2 max-w-xs">
               <Badge
                 variant="outline"
-                className="bg-transparent border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors duration-300"
+                className="bg-transparent border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors duration-300 cursor-pointer"
+                onClick={() => router.push("/offices")}
+                data-cursor="small"
               >
                 офисы
               </Badge>
               <Badge
                 variant="outline"
-                className="bg-transparent border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors duration-300"
+                className="bg-transparent border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors duration-300 cursor-pointer"
+                onClick={() => router.push("/meeting-room")}
+                data-cursor="small"
               >
                 переговорные
               </Badge>
               <Badge
                 variant="outline"
-                className="bg-transparent border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors duration-300"
+                className="bg-transparent border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors duration-300 cursor-pointer"
+                onClick={() => router.push("/open-space")}
+                data-cursor="small"
               >
                 коворкинг
               </Badge>
@@ -263,6 +275,25 @@ export const Footer = () => {
 
               <div>
                 <label
+                  htmlFor="company"
+                  className="block text-xs opacity-60 mb-2"
+                >
+                  название компании
+                </label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 bg-transparent border border-foreground/20 rounded-md text-sm text-foreground placeholder-foreground/50 focus:border-foreground focus:outline-none transition-colors"
+                  placeholder="Название вашей компании"
+                  data-cursor="small"
+                />
+              </div>
+
+              <div>
+                <label
                   htmlFor="phone"
                   className="block text-xs opacity-60 mb-2"
                 >
@@ -273,7 +304,10 @@ export const Footer = () => {
                   id="phone"
                   name="phone"
                   value={formData.phone}
-                  onChange={handleInputChange}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9+\-\s()]/g, "");
+                    setFormData((prev) => ({ ...prev, phone: value }));
+                  }}
                   required
                   className="w-full px-3 py-2 bg-transparent border border-foreground/20 rounded-md text-sm text-foreground placeholder-foreground/50 focus:border-foreground focus:outline-none transition-colors"
                   placeholder="+7 (___) ___-__-__"

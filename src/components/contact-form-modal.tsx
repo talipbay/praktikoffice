@@ -17,6 +17,7 @@ export const ContactFormModal = ({
 }: ContactFormModalProps) => {
   const [formData, setFormData] = useState({
     name: "",
+    company: "",
     phone: "",
     officeType: defaultService,
   });
@@ -50,6 +51,7 @@ export const ContactFormModal = ({
       // Prepare template parameters
       const templateParams = {
         from_name: formData.name,
+        from_company: formData.company,
         from_phone: formData.phone,
         service_type:
           formData.officeType === "office"
@@ -59,6 +61,7 @@ export const ContactFormModal = ({
             : "Коворкинг",
         to_name: "Praktik Office",
         message: `Новая заявка от ${formData.name}
+${formData.company ? `Компания: ${formData.company}` : ""}
 Телефон: ${formData.phone}
 Тип услуги: ${
           formData.officeType === "office"
@@ -88,6 +91,7 @@ export const ContactFormModal = ({
       const telegramMessage = `🔔 *Новая заявка с сайта praktikoffice.kz*
 
 👤 *Имя:* ${formData.name}
+${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
 📞 *Телефон:* ${formData.phone}
 🏢 *Тип услуги:* ${
         formData.officeType === "office"
@@ -127,7 +131,12 @@ export const ContactFormModal = ({
         console.log(`Telegram notification ${index + 1}:`, resp.ok);
       });
       setSubmitMessage("Спасибо! Мы свяжемся с вами в ближайшее время.");
-      setFormData({ name: "", phone: "", officeType: defaultService });
+      setFormData({
+        name: "",
+        company: "",
+        phone: "",
+        officeType: defaultService,
+      });
 
       // Close modal after successful submission
       setTimeout(() => {
@@ -225,6 +234,25 @@ export const ContactFormModal = ({
 
               <div>
                 <label
+                  htmlFor="modal-company"
+                  className="block text-xs opacity-60 mb-2"
+                >
+                  название компании
+                </label>
+                <input
+                  type="text"
+                  id="modal-company"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-3 bg-transparent border border-foreground/20 rounded-lg text-sm text-foreground placeholder-foreground/50 focus:border-foreground focus:outline-none transition-colors"
+                  placeholder="Название вашей компании"
+                  data-cursor="small"
+                />
+              </div>
+
+              <div>
+                <label
                   htmlFor="modal-phone"
                   className="block text-xs opacity-60 mb-2"
                 >
@@ -235,7 +263,10 @@ export const ContactFormModal = ({
                   id="modal-phone"
                   name="phone"
                   value={formData.phone}
-                  onChange={handleInputChange}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9+\-\s()]/g, "");
+                    setFormData((prev) => ({ ...prev, phone: value }));
+                  }}
                   required
                   className="w-full px-3 py-3 bg-transparent border border-foreground/20 rounded-lg text-sm text-foreground placeholder-foreground/50 focus:border-foreground focus:outline-none transition-colors"
                   placeholder="+7 (___) ___-__-__"

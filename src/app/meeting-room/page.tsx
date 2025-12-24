@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { ContactFormModal } from "@/components/contact-form-modal";
+import { getAssetPath } from "@/lib/assets";
 
 const meetingRoomOptions = [
   {
@@ -130,7 +131,7 @@ export default function MeetingRoomPage() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   return (
-    <div className="relative z-10 bg-background text-foreground">
+    <div className="relative z-10 bg-background text-foreground font-inter">
       {/* Header */}
       <div className="container mx-auto px-5 pt-24 pb-16">
         <h1 className="text-6xl lg:text-8xl xl:text-9xl font-light font-melodrama leading-tight mb-8">
@@ -248,7 +249,9 @@ export default function MeetingRoomPage() {
             {/* Main Image */}
             <div className="relative aspect-4/3 overflow-hidden rounded-lg">
               <Image
-                src={meetingRoomOptions[selectedRoom].images[selectedImage]}
+                src={getAssetPath(
+                  meetingRoomOptions[selectedRoom].images[selectedImage]
+                )}
                 alt={`Переговорная ${
                   meetingRoomOptions[selectedRoom].name
                 } - фото ${selectedImage + 1}`}
@@ -273,7 +276,7 @@ export default function MeetingRoomPage() {
                   data-cursor="small"
                 >
                   <Image
-                    src={image}
+                    src={getAssetPath(image)}
                     alt={`Переговорная ${
                       meetingRoomOptions[selectedRoom].name
                     } - миниатюра ${index + 1}`}
