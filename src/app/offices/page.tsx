@@ -403,17 +403,6 @@ export default function OfficesPage() {
                   <li>• Паркинг</li>
                 </ul>
               </div>
-
-              <div className="bg-foreground/5 p-6 rounded-lg">
-                <h4 className="font-medium mb-3">Готовы арендовать офис?</h4>
-                <p className="text-sm opacity-70 mb-4">
-                  Свяжитесь с нами для консультации и просмотра офисов
-                </p>
-                <div className="space-y-2 text-sm">
-                  <p>📧 manager@praktikoffice.kz</p>
-                  <p>📞 +7 701 711 72 21</p>
-                </div>
-              </div>
             </div>
           </div>
         </div>
