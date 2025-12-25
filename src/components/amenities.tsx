@@ -4,24 +4,25 @@ import { useEffect, useRef } from "react";
 import { useColorContext } from "@/contexts/ColorContext";
 import {
   ChefHat,
-  Printer,
-  Building2,
+  Sparkles,
+  MoonStar,
   Lock,
   Gamepad2,
   Car,
   Bed,
   Video,
+  RefreshCcw,
 } from "lucide-react";
 
 const amenities = [
-  { id: "kitchen", name: "кухня", icon: ChefHat },
-  { id: "printing", name: "распечатка", icon: Printer },
-  { id: "prayer", name: "место для молитвы", icon: Building2 },
+  { id: "kitchen", name: "kitchen lounge", icon: ChefHat },
+  { id: "printing", name: "yoga room", icon: RefreshCcw },
+  { id: "prayer", name: "prayer rooms", icon: MoonStar },
   { id: "lockers", name: "локеры", icon: Lock },
-  { id: "gaming", name: "игровая зона", icon: Gamepad2 },
+  { id: "gaming", name: "play station zones", icon: Gamepad2 },
   { id: "parking", name: "паркинг", icon: Car },
-  { id: "sleep", name: "капсула для сна", icon: Bed },
-  { id: "zoom", name: "zoom комната", icon: Video },
+  { id: "sleep", name: "wellness room", icon: Sparkles },
+  { id: "zoom", name: "skype rooms", icon: Video },
 ];
 
 export const Amenities = () => {

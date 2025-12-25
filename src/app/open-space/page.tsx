@@ -170,8 +170,8 @@ export default function OpenSpacePage() {
 
         {/* Additional Services Section */}
         <div className="mt-24 pt-16 border-t border-foreground/20">
-          <h2 className="text-4xl font-light font-melodrama mb-12">
-            дополнительные удобства
+          <h2 className="text-4xl font-light font-sans mb-12">
+            Дополнительные удобства
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

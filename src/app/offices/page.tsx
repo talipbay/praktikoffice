@@ -241,7 +241,7 @@ export default function OfficesPage() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 gap-6">
+              {/* <div className="grid grid-cols-2 gap-6">
                 <div>
                   <p className="text-sm opacity-60 mb-2">размер</p>
                   <p className="text-xl font-medium">
@@ -254,7 +254,7 @@ export default function OfficesPage() {
                     {allOffices[selectedOffice].capacity}
                   </p>
                 </div>
-              </div>
+              </div> */}
               <div>
                 <p className="text-sm opacity-60 mb-2">цена</p>
                 <p className="text-3xl font-bold text-orange-500">
@@ -330,8 +330,8 @@ export default function OfficesPage() {
           </div>
         </div>
         <div className="mt-24 pt-16 border-t border-foreground/20">
-          <h2 className="text-4xl font-light font-melodrama mb-12">
-            что включено в стоимость
+          <h2 className="text-4xl font-light font-sans mb-12">
+            Что включено в стоимость
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -351,9 +351,6 @@ export default function OfficesPage() {
                     <li>• Ресепшн</li>
                     <li>• Бронирование переговорных комнат</li>
                     <li>• Техническая поддержка</li>
-                    <li>
-                      • Конфиденциальные переговорные комнаты (3 часа включено)
-                    </li>
                     <li>• Zoom-комнаты</li>
                     <li>• Принтерная зона (A4 и А3 форматы)</li>
                     <li>• Локеры</li>

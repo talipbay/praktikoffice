@@ -219,7 +219,6 @@ export default function MeetingRoomPage() {
               </div>
 
               <div>
-                <p className="text-sm opacity-60 mb-4">что включено</p>
                 <div className="flex flex-wrap gap-2">
                   {meetingRoomOptions[selectedRoom].features.map(
                     (feature, index) => (
@@ -292,8 +291,8 @@ export default function MeetingRoomPage() {
 
         {/* Additional Information */}
         <div className="mt-24 pt-16 border-t border-foreground/20">
-          <h2 className="text-4xl font-light font-melodrama mb-12">
-            что включено в стоимость
+          <h2 className="text-4xl font-light font-sans mb-12">
+            Что включено в стоимость
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
