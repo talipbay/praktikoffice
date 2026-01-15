@@ -1,19 +1,14 @@
-# Caddyfile for praktikoffice.kz
-# Simple and clean configuration
+# Simple Caddyfile for praktikoffice.kz
 
 {
     email admin@praktikoffice.kz
+    # Use staging for testing (remove this line for production)
+    # acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
 }
 
 praktikoffice.kz {
     encode gzip
     reverse_proxy localhost:3000
-    
-    header {
-        Strict-Transport-Security "max-age=31536000"
-        X-Frame-Options "SAMEORIGIN"
-        X-Content-Type-Options "nosniff"
-    }
     
     log {
         output file /var/log/caddy/access.log

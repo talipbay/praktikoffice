@@ -1,19 +1,10 @@
-# Temporary HTTP-only Caddyfile (no SSL)
-# Use this if SSL continues to fail
+# HTTP only - no SSL
 
-http://praktikoffice.kz {
+http://praktikoffice.kz, http://www.praktikoffice.kz {
     encode gzip
-    
-    # Reverse proxy to static file server on port 3000
     reverse_proxy localhost:3000
     
-    # Logging
     log {
         output stdout
-        format console
     }
-}
-
-http://www.praktikoffice.kz {
-    redir http://praktikoffice.kz{uri} permanent
 }
