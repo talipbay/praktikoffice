@@ -7,6 +7,7 @@ import Cursor from "@/components/cursor";
 import { Footer } from "@/components/footer";
 import { ColorProvider } from "@/contexts/ColorContext";
 import { getAssetPath } from "@/lib/assets";
+import { organizationSchema } from "@/lib/structured-data";
 
 const manropeSans = Manrope({
   variable: "--font-manrope-sans",
@@ -19,8 +20,81 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Praktik - Smart Office",
-  description: "Аренда Офисов Класса А | Астана | Коворкинг",
+  metadataBase: new URL("https://praktikoffice.kz"),
+  title: {
+    default:
+      "Praktik Office - Сервисные Офисы Класса А в Астане | Коворкинг и Переговорные",
+    template: "%s | Praktik Office",
+  },
+  description:
+    "Сервисные офисы класса А в Астане с форматом «всё включено». Аренда офисов, коворкинг, переговорные комнаты. Доступ 24/7, юридический адрес, инфраструктура премиум-класса.",
+  keywords: [
+    "офисы астана",
+    "аренда офиса астана",
+    "коворкинг астана",
+    "переговорные комнаты астана",
+    "офис класса а астана",
+    "сервисные офисы астана",
+    "бизнес центр астана",
+    "praktik office",
+    "praktikoffice",
+    "офисы в аренду астана",
+    "коворкинг пространство",
+    "аренда переговорной",
+    "офис с юридическим адресом",
+    "премиум офисы астана",
+  ],
+  authors: [{ name: "Praktik Office" }],
+  creator: "Praktik Office",
+  publisher: "Praktik Office",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    locale: "ru_RU",
+    url: "https://praktikoffice.kz",
+    siteName: "Praktik Office",
+    title: "Praktik Office - Сервисные Офисы Класса А в Астане",
+    description:
+      "Сервисные офисы класса А с форматом «всё включено». Аренда офисов, коворкинг, переговорные комнаты в Астане. Доступ 24/7, премиум инфраструктура.",
+    images: [
+      {
+        url: "/hero.webp",
+        width: 1200,
+        height: 630,
+        alt: "Praktik Office - Премиум офисы в Астане",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Praktik Office - Сервисные Офисы Класса А в Астане",
+    description:
+      "Аренда офисов класса А, коворкинг и переговорные комнаты в Астане. Формат «всё включено», доступ 24/7.",
+    images: ["/hero.webp"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "https://praktikoffice.kz",
+  },
+  verification: {
+    // Add your verification codes here when available
+    // google: 'your-google-verification-code',
+    // yandex: 'your-yandex-verification-code',
+  },
 };
 
 export default function RootLayout({
@@ -31,7 +105,7 @@ export default function RootLayout({
   const fontBasePath = getAssetPath("/fonts");
 
   return (
-    <html lang="en">
+    <html lang="ru">
       <head>
         <style
           dangerouslySetInnerHTML={{
@@ -61,6 +135,12 @@ export default function RootLayout({
               font-display: swap;
             }
           `,
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
           }}
         />
       </head>

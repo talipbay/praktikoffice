@@ -67,7 +67,7 @@ export const Hero = () => {
       >
         <Image
           src={getAssetPath("/hero.webp")}
-          alt="Premium service offices"
+          alt="Praktik Office - Премиум офисы класса А в Астане с современным дизайном и панорамными окнами"
           fill
           className="object-cover"
           priority

@@ -1,0 +1,10 @@
+# robots.txt for praktikoffice.kz
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://praktikoffice.kz/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1

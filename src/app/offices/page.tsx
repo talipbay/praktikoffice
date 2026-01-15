@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { ContactFormModal } from "@/components/contact-form-modal";
 import { getAssetPath } from "@/lib/assets";
+import { officeRentalSchema, breadcrumbSchema } from "@/lib/structured-data";
 
 const officeOptions = [
   {
@@ -198,6 +199,23 @@ export default function OfficesPage() {
 
   return (
     <div className="relative z-5 bg-black text-foreground font-inter">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(officeRentalSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([
+              { name: "Главная", url: "https://praktikoffice.kz/" },
+              { name: "Офисы", url: "https://praktikoffice.kz/offices/" },
+            ])
+          ),
+        }}
+      />
       <div className="container mx-auto px-5 pt-24 pb-16">
         <h1 className="text-6xl lg:text-8xl xl:text-9xl font-light font-melodrama leading-tight mb-8">
           offices.

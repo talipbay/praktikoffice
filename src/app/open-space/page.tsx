@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { ContactFormModal } from "@/components/contact-form-modal";
 import { getAssetPath } from "@/lib/assets";
+import { coworkingSchema, breadcrumbSchema } from "@/lib/structured-data";
 
 const openSpaceImages = [
   "/gallery/coworking/coworking-1.webp",
@@ -36,6 +37,26 @@ export default function OpenSpacePage() {
 
   return (
     <div className="relative z-5 bg-black text-foreground font-inter">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(coworkingSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([
+              { name: "Главная", url: "https://praktikoffice.kz/" },
+              {
+                name: "Коворкинг",
+                url: "https://praktikoffice.kz/open-space/",
+              },
+            ])
+          ),
+        }}
+      />
       {/* Header */}
       <div className="container mx-auto px-5 pt-24 pb-16">
         <h1 className="text-6xl lg:text-8xl xl:text-9xl font-light font-melodrama leading-tight mb-8">
