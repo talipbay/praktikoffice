@@ -77,7 +77,7 @@ ${formData.company ? `Компания: ${formData.company}` : ""}
       // Telegram Bot configuration
       const TELEGRAM_BOT_TOKEN =
         "8507260245:AAFoyElkM1bfT6ztcI8OLT5D8IHI6jnJ2i4";
-      const TELEGRAM_CHAT_IDS = ["569529167", "7629492001"]; // Multiple recipients
+      const TELEGRAM_CHAT_IDS = ["569529167", "7629492001", "520591256"]; // Multiple recipients
 
       // Prepare Telegram message
       const telegramMessage = `🔔 *Новая заявка с сайта praktikoffice.kz*
