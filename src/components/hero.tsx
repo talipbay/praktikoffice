@@ -3,9 +3,11 @@
 import { useLenis } from "lenis/react";
 import { useRef, useState } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { getAssetPath } from "@/lib/assets";
 
 export const Hero = () => {
+  const t = useTranslations('hero');
   const imageRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -45,12 +47,16 @@ export const Hero = () => {
     <div className="flex flex-col mx-auto justify-center items-center relative z-30 bg-black transition-colors duration-300">
       <div className="container mx-auto min-h-[calc(100vh-100px)] flex flex-col items-center justify-center">
         <h1
-          className="leading-normal text-4xl md:text-8xl font-extrabold text-center text-foreground transition-colors duration-300"
+          className="leading-normal text-6xl md:text-8xl font-extrabold text-center text-foreground transition-colors duration-300"
           data-cursor="huge"
         >
-          premium service <br></br>{" "}
-          <span className="italic font-light font-melodrama text-6xl md:text-9xl">
-            offices.
+          {t('title')} <br></br>{" "}
+          <span className="italic font-light text-4xl md:text-6xl">
+            &
+          </span>
+          <br></br>{" "}
+          <span className="italic font-light font-melodrama text-4xl md:text-6xl">
+            {t('subtitle')}
           </span>
         </h1>
       </div>

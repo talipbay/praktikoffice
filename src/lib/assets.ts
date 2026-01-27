@@ -1,4 +1,15 @@
 export function getAssetPath(path: string): string {
+  // If it's a Strapi URL (starts with http/https), return as-is
+  if (path.startsWith('http://') || path.startsWith('https://')) {
+    return path;
+  }
+
+  // If it's a Strapi upload path, prepend Strapi URL
+  if (path.startsWith('/uploads/')) {
+    const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+    return `${strapiUrl}${path}`;
+  }
+
   // Check if we're in production build for GitHub Pages
   const isGitHubPages =
     typeof window !== "undefined"

@@ -1,0 +1,101 @@
+{
+  "nav": {
+    "home": "Home",
+    "gallery": "Gallery",
+    "offices": "Offices",
+    "meetingRooms": "Meeting Rooms",
+    "openSpace": "Coworking",
+    "contact": "Contact"
+  },
+  "menu": {
+    "home": "HOME",
+    "spaces": "SPACES",
+    "contact": "CONTACT",
+    "openSpace": "open space",
+    "office": "office",
+    "meetingRoom": "meeting room",
+    "emailLabel": "mail",
+    "phoneLabel": "phone",
+    "socialLabel": "social"
+  },
+  "hero": {
+    "title": "premium serviced offices",
+    "subtitle": "coworking."
+  },
+  "about": {
+    "heading": "class A.",
+    "description1": "Praktik Office is a Class A serviced office space offering an all-inclusive format, designed for companies and professionals who value comfort and reliability. We have thoughtfully created a work environment where all essential services and infrastructure are available in one place, eliminating the need for additional administration.",
+    "description2": "Residency frees you from operational tasks and allows you to start working immediately in a fully equipped, ready-to-use space.",
+    "advantages": "Key benefits of residency:",
+    "features": {
+      "legalAddress": "Legal address",
+      "access247": "24/7 access",
+      "classAInfrastructure": "Class A infrastructure",
+      "meetingRooms": "Meeting rooms",
+      "allInclusive": "All-inclusive format",
+      "adminServices": "Administrative services",
+      "comfortableWorkspaces": "Comfortable workspaces"
+    }
+  },
+  "gallery": {
+    "title": "gallery.",
+    "openSpace": "open space",
+    "office": "office",
+    "meetingRoom": "meeting room",
+    "learnMore": "learn more"
+  },
+  "amenities": {
+    "title": "thoughtful Infrastructure",
+    "kitchen": "kitchen lounge",
+    "yoga": "yoga room",
+    "prayer": "prayer rooms",
+    "lockers": "lockers",
+    "gaming": "playstation zones",
+    "parking": "parking",
+    "wellness": "relax room",
+    "skype": "skype rooms"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "service": "Service",
+    "message": "Message",
+    "send": "Send",
+    "success": "Message sent!",
+    "error": "Sending error"
+  },
+  "footer": {
+    "contacts": "Contacts",
+    "address": "address",
+    "addressValue": "Syganak St. 60/4, Block 'Offices A', 26th floor",
+    "email": "email",
+    "phone": "phone",
+    "social": "social",
+    "services": "Services",
+    "offices": "offices",
+    "meetingRooms": "meeting rooms",
+    "coworking": "coworking",
+    "lounge": "lounge zone",
+    "fitness": "fitness zone",
+    "formTitle": "Submit Application",
+    "formDescription": "Leave your contacts and our manager will contact you",
+    "name": "name",
+    "namePlaceholder": "Your name",
+    "company": "company name",
+    "companyPlaceholder": "Your company name",
+    "phoneLabel": "phone",
+    "phonePlaceholder": "+7 (___) ___-__-__",
+    "officeType": "space type",
+    "officeOption": "Office",
+    "meetingOption": "Meeting Room",
+    "coworkingOption": "Coworking",
+    "submit": "Submit Application",
+    "sending": "Sending...",
+    "successMessage": "Thank you! We will contact you shortly.",
+    "errorMessage": "An error occurred while sending. Please try again.",
+    "copyright": "© 2026 All rights reserved",
+    "madeBy": "MADE BY ALIKHAN TALIPBAYEV"
+  }
+}

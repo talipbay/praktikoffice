@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Manrope, Inter } from "next/font/google";
-import "./globals.css";
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+import { notFound } from 'next/navigation';
+import { locales } from '@/i18n/config';
+import "../globals.css";
 import { Navbar } from "@/components/navbar";
 import ReactLenis from "lenis/react";
 import Cursor from "@/components/cursor";
@@ -38,74 +42,38 @@ export const metadata: Metadata = {
     "бизнес центр астана",
     "praktik office",
     "praktikoffice",
-    "офисы в аренду астана",
-    "коворкинг пространство",
-    "аренда переговорной",
-    "офис с юридическим адресом",
-    "премиум офисы астана",
   ],
-  authors: [{ name: "Praktik Office" }],
-  creator: "Praktik Office",
-  publisher: "Praktik Office",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  openGraph: {
-    type: "website",
-    locale: "ru_RU",
-    url: "https://praktikoffice.kz",
-    siteName: "Praktik Office",
-    title: "Praktik Office - Сервисные Офисы Класса А в Астане",
-    description:
-      "Сервисные офисы класса А с форматом «всё включено». Аренда офисов, коворкинг, переговорные комнаты в Астане. Доступ 24/7, премиум инфраструктура.",
-    images: [
-      {
-        url: "/hero.webp",
-        width: 1200,
-        height: 630,
-        alt: "Praktik Office - Премиум офисы в Астане",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Praktik Office - Сервисные Офисы Класса А в Астане",
-    description:
-      "Аренда офисов класса А, коворкинг и переговорные комнаты в Астане. Формат «всё включено», доступ 24/7.",
-    images: ["/hero.webp"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
   alternates: {
     canonical: "https://praktikoffice.kz",
-  },
-  verification: {
-    // Add your verification codes here when available
-    // google: 'your-google-verification-code',
-    // yandex: 'your-yandex-verification-code',
+    languages: {
+      'kk-KZ': 'https://praktikoffice.kz/kz',
+      'ru-RU': 'https://praktikoffice.kz/ru',
+      'en-US': 'https://praktikoffice.kz/en',
+    },
   },
 };
 
-export default function RootLayout({
+export default async function LocaleLayout({
   children,
-}: Readonly<{
+  params
+}: {
   children: React.ReactNode;
-}>) {
+  params: Promise<{ locale: string }>;
+}) {
+  // Await params in Next.js 15+
+  const { locale } = await params;
+  
+  // Validate locale
+  type Locale = typeof locales[number];
+  if (!locales.includes(locale as Locale)) {
+    notFound();
+  }
+
+  const messages = await getMessages();
   const fontBasePath = getAssetPath("/fonts");
 
   return (
-    <html lang="ru">
+    <html lang={locale}>
       <head>
         <link rel="icon" href="/favicon.jpg" type="image/jpeg" />
         <link rel="shortcut icon" href="/favicon.jpg" type="image/jpeg" />
@@ -150,13 +118,15 @@ export default function RootLayout({
       <body
         className={`${manropeSans.variable} ${inter.variable} bg-black antialiased min-h-vh relative`}
       >
-        <ColorProvider>
-          <ReactLenis root />
-          <Cursor />
-          <Navbar />
-          {children}
-          <Footer />
-        </ColorProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ColorProvider>
+            <ReactLenis root />
+            <Cursor />
+            <Navbar locale={locale} />
+            {children}
+            <Footer />
+          </ColorProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

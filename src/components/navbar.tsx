@@ -3,18 +3,20 @@
 import { useState } from "react";
 import { Squash as Hamburger } from "hamburger-react";
 import { Menu } from "./menu";
+import { LanguageSwitcher } from "./language-switcher";
 
-export const Navbar = () => {
+export const Navbar = ({ locale = 'ru' }: { locale?: string }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <>
       <div className="flex container mx-auto p-5 justify-between fixed top-0 left-0 right-0 z-50 text-foreground transition-colors duration-300">
         <h1 className="text-4xl font-bold" data-cursor="medium">
-          <a href="/">praktik.</a>
+          <a href={`/${locale}/`}>praktik.</a>
         </h1>
 
         <div className="flex gap-4 items-center" data-cursor="small">
+          <LanguageSwitcher />
           <Hamburger
             toggled={isMenuOpen}
             toggle={setIsMenuOpen}

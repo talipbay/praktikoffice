@@ -3,48 +3,52 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { useColorContext } from "@/contexts/ColorContext";
 import { getAssetPath } from "@/lib/assets";
 
-const categories = [
-  { id: "coworking", name: "open space", font: "font-manrope font-bold" },
-  { id: "offices", name: "office", font: "font-manrope font-bold" },
-  { id: "meeting", name: "meeting room", font: "font-manrope font-bold" },
-];
-
-// Gallery images organized by category
-const galleryImages = {
-  coworking: [
-    "/gallery/coworking/coworking-1.webp",
-    "/gallery/coworking/coworking-2.webp",
-    "/gallery/coworking/coworking-3.webp",
-    "/gallery/coworking/coworking-4.webp",
-    "/gallery/coworking/coworking-5.webp",
-    "/gallery/coworking/coworking-6.webp",
-  ],
-  offices: [
-    "/gallery/offices/office-1.webp",
-    "/gallery/offices/office-2.webp",
-    "/gallery/offices/office-3.webp",
-    "/gallery/offices/office-4.webp",
-    "/gallery/offices/office-5.webp",
-    "/gallery/offices/office-6.webp",
-  ],
-  meeting: [
-    "/gallery/meeting/meeting-1.webp",
-    "/gallery/meeting/meeting-6.webp",
-    "/gallery/meeting/meeting-2.webp",
-    "/gallery/meeting/meeting-3.webp",
-    "/gallery/meeting/meeting-5.webp",
-    "/gallery/meeting/meeting-4.webp",
-  ],
-};
-
 export const Gallery = () => {
+  const t = useTranslations('gallery');
   const [activeCategory, setActiveCategory] = useState("coworking");
   const sectionRef = useRef<HTMLElement>(null);
   const { setScrollProgress } = useColorContext();
   const router = useRouter();
+  const locale = useLocale(); // Get current locale
+
+  // Categories with translations
+  const categories = [
+    { id: "coworking", name: t('openSpace'), font: "font-manrope font-bold" },
+    { id: "offices", name: t('office'), font: "font-manrope font-bold" },
+    { id: "meeting", name: t('meetingRoom'), font: "font-manrope font-bold" },
+  ];
+
+  // Gallery images organized by category
+  const galleryImages = {
+    coworking: [
+      "/gallery/coworking/coworking-1.webp",
+      "/gallery/coworking/coworking-2.webp",
+      "/gallery/coworking/coworking-3.webp",
+      "/gallery/coworking/coworking-4.webp",
+      "/gallery/coworking/coworking-5.webp",
+      "/gallery/coworking/coworking-6.webp",
+    ],
+    offices: [
+      "/gallery/offices/office-1.webp",
+      "/gallery/offices/office-2.webp",
+      "/gallery/offices/office-3.webp",
+      "/gallery/offices/office-4.webp",
+      "/gallery/offices/office-5.webp",
+      "/gallery/offices/office-6.webp",
+    ],
+    meeting: [
+      "/gallery/meeting/meeting-1.webp",
+      "/gallery/meeting/meeting-6.webp",
+      "/gallery/meeting/meeting-2.webp",
+      "/gallery/meeting/meeting-3.webp",
+      "/gallery/meeting/meeting-5.webp",
+      "/gallery/meeting/meeting-4.webp",
+    ],
+  };
 
   // Navigation mapping
   const categoryRoutes = {
@@ -55,7 +59,7 @@ export const Gallery = () => {
 
   const handleLearnMore = () => {
     const route = categoryRoutes[activeCategory as keyof typeof categoryRoutes];
-    router.push(route);
+    router.push(`/${locale}${route}`);
   };
 
   useEffect(() => {
@@ -133,7 +137,7 @@ export const Gallery = () => {
           {/* Right side - Gallery title */}
           <div>
             <h2 className="text-6xl lg:text-8xl xl:text-9xl font-light font-melodrama leading-tight text-foreground">
-              gallery.
+              {t('title')}
             </h2>
           </div>
         </div>
@@ -160,7 +164,7 @@ export const Gallery = () => {
                   placeholder="blur"
                   blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                   priority={index < 3}
-                  onError={(e) => {
+                  onError={() => {
                     console.error(
                       `Failed to load image: ${getAssetPath(image)}`
                     );
@@ -186,7 +190,7 @@ export const Gallery = () => {
             className="group relative px-8 py-4 bg-transparent border-2 border-foreground text-foreground rounded-lg hover:bg-foreground hover:text-background transition-all duration-300 font-medium text-lg"
             data-cursor="small"
           >
-            <span className="relative z-10">узнать подробнее</span>
+            <span className="relative z-10">{t('learnMore')}</span>
             <div className="absolute inset-0 bg-foreground scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-lg" />
           </button>
         </div>

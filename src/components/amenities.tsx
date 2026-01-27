@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useColorContext } from "@/contexts/ColorContext";
+import { useTranslations } from "next-intl";
 import {
   ChefHat,
   Sparkles,
@@ -9,25 +10,25 @@ import {
   Lock,
   Gamepad2,
   Car,
-  Bed,
   Video,
   RefreshCcw,
 } from "lucide-react";
 
-const amenities = [
-  { id: "kitchen", name: "kitchen lounge", icon: ChefHat },
-  { id: "printing", name: "yoga room", icon: RefreshCcw },
-  { id: "prayer", name: "prayer rooms", icon: MoonStar },
-  { id: "lockers", name: "локеры", icon: Lock },
-  { id: "gaming", name: "play station zones", icon: Gamepad2 },
-  { id: "parking", name: "паркинг", icon: Car },
-  { id: "sleep", name: "wellness room", icon: Sparkles },
-  { id: "zoom", name: "skype rooms", icon: Video },
-];
-
 export const Amenities = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { setAmenitiesProgress } = useColorContext();
+  const t = useTranslations('amenities');
+
+  const amenities = [
+    { id: "kitchen", name: t('kitchen'), icon: ChefHat },
+    { id: "yoga", name: t('yoga'), icon: RefreshCcw },
+    { id: "prayer", name: t('prayer'), icon: MoonStar },
+    { id: "lockers", name: t('lockers'), icon: Lock },
+    { id: "gaming", name: t('gaming'), icon: Gamepad2 },
+    { id: "parking", name: t('parking'), icon: Car },
+    { id: "wellness", name: t('wellness'), icon: Sparkles },
+    { id: "skype", name: t('skype'), icon: Video },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,8 +68,8 @@ export const Amenities = () => {
       <div className="container mx-auto px-5 space-y-16">
         {/* Header */}
         <div className="text-center space-y-4">
-          <h2 className="text-3xl lg:text-4xl xl:text-5xl font-light font-sans leading-tight text-foreground">
-            Продуманная инфраструктура
+          <h2 className="text-3xl lg:text-4xl xl:text-5xl font-light font-inter leading-tight text-foreground">
+            {t('title')}
           </h2>
         </div>
 

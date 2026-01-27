@@ -4,23 +4,12 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { getAssetPath } from "@/lib/assets";
 import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 
 interface MenuProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
-const menuItems = [
-  { id: "home", label: "HOME" },
-  { id: "spaces", label: "SPACES" },
-  { id: "contact", label: "CONTACT" },
-];
-
-const spaceTypes = [
-  { id: "open-space", label: "open space" },
-  { id: "office", label: "office" },
-  { id: "meeting-room", label: "meeting room" },
-];
 
 const carouselImages = [
   // Coworking images
@@ -48,12 +37,26 @@ const carouselImages = [
 
 export const Menu = ({ isOpen, onClose }: MenuProps) => {
   const router = useRouter();
+  const locale = useLocale(); // Get current locale
+  const t = useTranslations('menu');
   const [showSpaceTypes, setShowSpaceTypes] = useState(false);
+
+  const menuItems = [
+    { id: "home", label: t('home') },
+    { id: "spaces", label: t('spaces') },
+    { id: "contact", label: t('contact') },
+  ];
+
+  const spaceTypes = [
+    { id: "open-space", label: t('openSpace') },
+    { id: "office", label: t('office') },
+    { id: "meeting-room", label: t('meetingRoom') },
+  ];
 
   const handleMenuClick = (itemId: string) => {
     if (itemId === "home") {
       setShowSpaceTypes(false); // Reset submenu
-      router.push("/");
+      router.push(`/${locale}/`);
       onClose();
     } else if (itemId === "spaces") {
       // Toggle space types visibility instead of navigating
@@ -85,13 +88,13 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
     // Close menu first, then navigate to the appropriate page
     onClose();
     setTimeout(() => {
-      // Navigate to the corresponding page
+      // Navigate to the corresponding page with locale
       if (spaceTypeId === "open-space") {
-        router.push("/open-space");
+        router.push(`/${locale}/open-space`);
       } else if (spaceTypeId === "office") {
-        router.push("/offices");
+        router.push(`/${locale}/offices`);
       } else if (spaceTypeId === "meeting-room") {
-        router.push("/meeting-room");
+        router.push(`/${locale}/meeting-room`);
       }
     }, 300); // Wait for menu close animation
   };
@@ -109,9 +112,6 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
     if (isOpen) {
       document.addEventListener("keydown", handleEscape);
       document.body.style.overflow = "hidden";
-    } else {
-      // Reset submenu when menu closes
-      setShowSpaceTypes(false);
     }
 
     return () => {
@@ -119,6 +119,13 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen, onClose]);
+
+  // Reset submenu when menu closes
+  useEffect(() => {
+    if (!isOpen) {
+      setShowSpaceTypes(false);
+    }
+  }, [isOpen]);
 
   return (
     <AnimatePresence>
@@ -146,7 +153,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                 {menuItems.map((item, index) => (
                   <div key={item.id} className="relative overflow-hidden">
                     <motion.h2
-                      className="text-6xl xl:text-8xl font-extralight  font-melodrama cursor-pointer select-none"
+                      className="text-6xl xl:text-8xl font-extralight font-melodrama cursor-pointer select-none"
                       whileHover={
                         item.id === "spaces" && showSpaceTypes ? "" : "hover"
                       }
@@ -270,7 +277,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                 {/* Contact Info */}
                 <div className="text-left space-y-6">
                   <div>
-                    <p className="text-sm opacity-60 mb-2">почта</p>
+                    <p className="text-sm opacity-60 mb-2">{t('emailLabel')}</p>
                     <a
                       href="mailto:manager@praktikoffice.kz"
                       className="text-lg hover:opacity-70 transition-opacity"
@@ -280,7 +287,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                     </a>
                   </div>
                   <div>
-                    <p className="text-sm opacity-60 mb-2">телефон</p>
+                    <p className="text-sm opacity-60 mb-2">{t('phoneLabel')}</p>
                     <a
                       href="tel:+77017117221"
                       className="text-lg hover:opacity-70 transition-opacity"
@@ -290,7 +297,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                     </a>
                   </div>
                   <div>
-                    <p className="text-sm opacity-60 mb-2">соц. сети</p>
+                    <p className="text-sm opacity-60 mb-2">{t('socialLabel')}</p>
                     <div className="space-y-2">
                       <a
                         href="https://www.instagram.com/praktikoffice/"
@@ -320,7 +327,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
             <div className="lg:hidden flex flex-col h-full p-8">
               {/* Navigation */}
               <div className="flex-1 flex flex-col justify-center space-y-2">
-                {menuItems.map((item, index) => (
+                {menuItems.map((item) => (
                   <div key={item.id} className="relative overflow-hidden">
                     <motion.h2
                       className="text-5xl md:text-6xl font-extralight font-melodrama cursor-pointer select-none"
@@ -402,7 +409,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                 {/* Right Column - Contact */}
                 <div className="space-y-4">
                   <div>
-                    <p className="text-sm opacity-60 mb-1">mail</p>
+                    <p className="text-sm opacity-60 mb-1">{t('emailLabel')}</p>
                     <a
                       href="mailto:manager@praktikoffice.kz"
                       className="text-sm hover:opacity-70 transition-opacity block"
@@ -412,7 +419,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                     </a>
                   </div>
                   <div>
-                    <p className="text-sm opacity-60 mb-1">phone</p>
+                    <p className="text-sm opacity-60 mb-1">{t('phoneLabel')}</p>
                     <a
                       href="tel:+77017117221"
                       className="text-sm hover:opacity-70 transition-opacity block"
@@ -422,7 +429,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                     </a>
                   </div>
                   <div>
-                    <p className="text-sm opacity-60 mb-1">social</p>
+                    <p className="text-sm opacity-60 mb-1">{t('socialLabel')}</p>
                     <div className="space-y-1">
                       <a
                         href="https://www.instagram.com/praktikoffice/"

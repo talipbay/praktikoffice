@@ -151,25 +151,25 @@ const Cursor = () => {
 
     // Only add mouse event listeners on non-mobile devices
     if (!isMobile) {
-      let hideLinks = document.querySelectorAll("[data-cursor-hide]");
+      const hideLinks = document.querySelectorAll("[data-cursor-hide]");
       hideLinks.forEach((item) => {
         item.addEventListener("mouseenter", hide);
         item.addEventListener("mouseleave", show);
       });
 
-      let smallLinks = document.querySelectorAll('[data-cursor="small"]');
+      const smallLinks = document.querySelectorAll('[data-cursor="small"]');
       smallLinks.forEach((item) => {
         item.addEventListener("mouseenter", () => onMouseEnterLink(3));
         item.addEventListener("mouseleave", onMouseLeaveLink);
       });
 
-      let medLinks = document.querySelectorAll('[data-cursor="medium"]');
+      const medLinks = document.querySelectorAll('[data-cursor="medium"]');
       medLinks.forEach((item) => {
         item.addEventListener("mouseenter", () => onMouseEnterLink(4));
         item.addEventListener("mouseleave", onMouseLeaveLink);
       });
 
-      let hugeLinks = document.querySelectorAll('[data-cursor="huge"]');
+      const hugeLinks = document.querySelectorAll('[data-cursor="huge"]');
       hugeLinks.forEach((item) => {
         item.addEventListener("mouseenter", () => onMouseEnterLink(5));
         item.addEventListener("mouseleave", onMouseLeaveLink);
@@ -186,10 +186,10 @@ const Cursor = () => {
       window.removeEventListener("resize", checkMobile);
 
       if (!isMobile) {
-        let hideLinks = document.querySelectorAll("[data-cursor-hide]");
-        let smallLinks = document.querySelectorAll('[data-cursor="small"]');
-        let medLinks = document.querySelectorAll('[data-cursor="medium"]');
-        let hugeLinks = document.querySelectorAll('[data-cursor="huge"]');
+        const hideLinks = document.querySelectorAll("[data-cursor-hide]");
+        const smallLinks = document.querySelectorAll('[data-cursor="small"]');
+        const medLinks = document.querySelectorAll('[data-cursor="medium"]');
+        const hugeLinks = document.querySelectorAll('[data-cursor="huge"]');
 
         hideLinks.forEach((item) => {
           item.removeEventListener("mouseenter", hide);

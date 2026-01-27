@@ -1,13 +1,16 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 export const About = () => {
+  const t = useTranslations('about');
   return (
     <section className="py-16 lg:py-24 relative z-20 bg-black text-foreground transition-colors duration-300">
       <div className="container mx-auto px-5 space-y-12">
         {/* Main heading at the top */}
         <div className="text-center">
           <h2 className="text-6xl lg:text-8xl xl:text-9xl font-bold font-melodrama leading-tight text-left">
-            class A.
+            {t('heading')}
           </h2>
         </div>
 
@@ -16,20 +19,15 @@ export const About = () => {
           {/* First column */}
           <div>
             <p className="text-lg lg:text-xl leading-relaxed text-foreground">
-              <strong>Praktik Office</strong> — сервисные офисы класса A с
-              форматом «всё включено», созданные для компаний и специалистов,
-              выбирающих комфорт и надёжность. Мы продумали рабочую среду так,
-              чтобы все ключевые сервисы и инфраструктура были доступны в одном
-              пространстве и не требовали дополнительного администрирования.
+              {t('description1')}
             </p>
           </div>
 
           {/* Second column with bubbles */}
           <div className="space-y-8">
             <p className="text-lg lg:text-xl leading-relaxed text-foreground">
-              Резидентство освобождает от операционных задач и позволяет сразу
-              приступить к работе в полностью готовом пространстве. <br></br>
-              Основные преимущества резидентства:
+              {t('description2')} <br></br>
+              {t('advantages')}
             </p>
 
             {/* Feature bubbles under second column */}
@@ -43,7 +41,7 @@ export const About = () => {
                 }}
                 data-cursor="small"
               >
-                <div className="relative z-10">Юридический адрес</div>
+                <div className="relative z-10">{t('features.legalAddress')}</div>
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{
@@ -62,7 +60,7 @@ export const About = () => {
                 }}
                 data-cursor="small"
               >
-                <div className="relative z-10">Доступ 24/7</div>
+                <div className="relative z-10">{t('features.access247')}</div>
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{
@@ -81,7 +79,7 @@ export const About = () => {
                 }}
                 data-cursor="small"
               >
-                <div className="relative z-10">Инфраструктура класса A</div>
+                <div className="relative z-10">{t('features.classAInfrastructure')}</div>
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{
@@ -100,7 +98,7 @@ export const About = () => {
                 }}
                 data-cursor="small"
               >
-                <div className="relative z-10">Переговорные комнаты</div>
+                <div className="relative z-10">{t('features.meetingRooms')}</div>
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{
@@ -119,7 +117,7 @@ export const About = () => {
                 }}
                 data-cursor="small"
               >
-                <div className="relative z-10">Формат «всё включено»</div>
+                <div className="relative z-10">{t('features.allInclusive')}</div>
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{
@@ -138,7 +136,7 @@ export const About = () => {
                 }}
                 data-cursor="small"
               >
-                <div className="relative z-10">Административные сервисы</div>
+                <div className="relative z-10">{t('features.adminServices')}</div>
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{
@@ -157,7 +155,7 @@ export const About = () => {
                 }}
                 data-cursor="small"
               >
-                <div className="relative z-10">Комфортные рабочие зоны</div>
+                <div className="relative z-10">{t('features.comfortableWorkspaces')}</div>
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{

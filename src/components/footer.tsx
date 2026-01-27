@@ -3,10 +3,13 @@
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import emailjs from "@emailjs/browser";
 
 export const Footer = () => {
   const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations('footer');
   const [formData, setFormData] = useState({
     name: "",
     company: "",
@@ -122,11 +125,11 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
       telegramResponses.forEach((resp, index) => {
         console.log(`Telegram notification ${index + 1}:`, resp.ok);
       });
-      setSubmitMessage("Спасибо! Мы свяжемся с вами в ближайшее время.");
+      setSubmitMessage(t('successMessage'));
       setFormData({ name: "", company: "", phone: "", officeType: "office" });
     } catch (error) {
       console.error("Submission error:", error);
-      setSubmitMessage("Произошла ошибка при отправке. Попробуйте еще раз.");
+      setSubmitMessage(t('errorMessage'));
     } finally {
       setIsSubmitting(false);
     }
@@ -143,17 +146,17 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
           <div className="space-y-6">
             <div>
               <h3 className="text-lg font-semibold mb-4 text-foreground">
-                Контакты
+                {t('contacts')}
               </h3>
             </div>
             <div>
-              <p className="text-xs opacity-60 mb-2">адрес</p>
+              <p className="text-xs opacity-60 mb-2">{t('address')}</p>
               <p className="text-sm">
-                ул. Сыганак 60/4, Блок «Офисы А», 26 этаж
+                {t('addressValue')}
               </p>
             </div>
             <div>
-              <p className="text-xs opacity-60 mb-2">почта</p>
+              <p className="text-xs opacity-60 mb-2">{t('email')}</p>
               <a
                 href="mailto:manager@praktikoffice.kz"
                 className="text-sm hover:opacity-70 transition-opacity block"
@@ -163,7 +166,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
               </a>
             </div>
             <div>
-              <p className="text-xs opacity-60 mb-2">телефон</p>
+              <p className="text-xs opacity-60 mb-2">{t('phone')}</p>
               <a
                 href="tel:+77017117226"
                 className="text-sm hover:opacity-70 transition-opacity block"
@@ -173,7 +176,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
               </a>
             </div>
             <div>
-              <p className="text-xs opacity-60 mb-2">соц. сети</p>
+              <p className="text-xs opacity-60 mb-2">{t('social')}</p>
               <div className="space-y-1">
                 <a
                   href="https://www.instagram.com/praktikoffice/"
@@ -201,45 +204,45 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
           <div className="space-y-6">
             <div>
               <h3 className="text-lg font-semibold mb-4 text-foreground">
-                Услуги
+                {t('services')}
               </h3>
             </div>
             <div className="flex flex-wrap gap-2 max-w-xs">
               <Badge
                 variant="outline"
                 className="bg-transparent border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors duration-300 cursor-pointer"
-                onClick={() => router.push("/offices")}
+                onClick={() => router.push(`/${locale}/offices`)}
                 data-cursor="small"
               >
-                офисы
+                {t('offices')}
               </Badge>
               <Badge
                 variant="outline"
                 className="bg-transparent border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors duration-300 cursor-pointer"
-                onClick={() => router.push("/meeting-room")}
+                onClick={() => router.push(`/${locale}/meeting-room`)}
                 data-cursor="small"
               >
-                переговорные
+                {t('meetingRooms')}
               </Badge>
               <Badge
                 variant="outline"
                 className="bg-transparent border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors duration-300 cursor-pointer"
-                onClick={() => router.push("/open-space")}
+                onClick={() => router.push(`/${locale}/open-space`)}
                 data-cursor="small"
               >
-                коворкинг
+                {t('coworking')}
               </Badge>
               <Badge
                 variant="outline"
                 className="bg-transparent border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors duration-300"
               >
-                лаунж зона
+                {t('lounge')}
               </Badge>
               <Badge
                 variant="outline"
                 className="bg-transparent border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors duration-300"
               >
-                фитнес зона
+                {t('fitness')}
               </Badge>
             </div>
           </div>
@@ -248,17 +251,17 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
           <div className="space-y-6">
             <div>
               <h3 className="text-lg font-semibold mb-4 text-foreground">
-                Оставить заявку
+                {t('formTitle')}
               </h3>
               <p className="text-sm opacity-70 mb-6">
-                Оставьте свои контакты, и наш менеджер свяжется с вами
+                {t('formDescription')}
               </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-xs opacity-60 mb-2">
-                  имя
+                  {t('name')}
                 </label>
                 <input
                   type="text"
@@ -268,7 +271,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                   onChange={handleInputChange}
                   required
                   className="w-full px-3 py-2 bg-transparent border border-foreground/20 rounded-md text-sm text-foreground placeholder-foreground/50 focus:border-foreground focus:outline-none transition-colors"
-                  placeholder="Ваше имя"
+                  placeholder={t('namePlaceholder')}
                   data-cursor="small"
                 />
               </div>
@@ -278,7 +281,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                   htmlFor="company"
                   className="block text-xs opacity-60 mb-2"
                 >
-                  название компании
+                  {t('company')}
                 </label>
                 <input
                   type="text"
@@ -287,7 +290,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                   value={formData.company}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 bg-transparent border border-foreground/20 rounded-md text-sm text-foreground placeholder-foreground/50 focus:border-foreground focus:outline-none transition-colors"
-                  placeholder="Название вашей компании"
+                  placeholder={t('companyPlaceholder')}
                   data-cursor="small"
                 />
               </div>
@@ -297,7 +300,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                   htmlFor="phone"
                   className="block text-xs opacity-60 mb-2"
                 >
-                  телефон
+                  {t('phoneLabel')}
                 </label>
                 <input
                   type="tel"
@@ -310,7 +313,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                   }}
                   required
                   className="w-full px-3 py-2 bg-transparent border border-foreground/20 rounded-md text-sm text-foreground placeholder-foreground/50 focus:border-foreground focus:outline-none transition-colors"
-                  placeholder="+7 (___) ___-__-__"
+                  placeholder={t('phonePlaceholder')}
                   data-cursor="small"
                 />
               </div>
@@ -320,7 +323,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                   htmlFor="officeType"
                   className="block text-xs opacity-60 mb-2"
                 >
-                  тип помещения
+                  {t('officeType')}
                 </label>
                 <select
                   id="officeType"
@@ -331,16 +334,16 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                   data-cursor="small"
                 >
                   <option value="office" className="bg-black text-foreground">
-                    Офис
+                    {t('officeOption')}
                   </option>
                   <option value="meeting" className="bg-black text-foreground">
-                    Переговорная
+                    {t('meetingOption')}
                   </option>
                   <option
                     value="coworking"
                     className="bg-black text-foreground"
                   >
-                    Коворкинг
+                    {t('coworkingOption')}
                   </option>
                 </select>
               </div>
@@ -351,13 +354,13 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                 className="w-full px-6 py-2 bg-foreground text-background rounded-md text-sm font-medium hover:opacity-80 disabled:opacity-50 transition-opacity"
                 data-cursor="small"
               >
-                {isSubmitting ? "Отправка..." : "Отправить заявку"}
+                {isSubmitting ? t('sending') : t('submit')}
               </button>
 
               {submitMessage && (
                 <p
                   className={`text-sm ${
-                    submitMessage.includes("Спасибо")
+                    submitMessage.includes("Спасибо") || submitMessage.includes("Thank") || submitMessage.includes("Рахмет")
                       ? "text-green-400"
                       : "text-red-400"
                   }`}
@@ -370,10 +373,10 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
         </div>
 
         <div className="flex justify-between items-end mt-16">
-          <p className="text-xs opacity-60">© 2026 Все права защищены</p>
+          <p className="text-xs opacity-60">{t('copyright')}</p>
           <div className="flex items-center gap-2 text-xs opacity-60">
             <div className="w-2 h-2 bg-foreground rounded-full"></div>
-            <span>MADE BY ALIKHAN TALIPBAYEV</span>
+            <span>{t('madeBy')}</span>
           </div>
         </div>
       </div>
