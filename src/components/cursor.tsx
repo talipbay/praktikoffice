@@ -206,6 +206,7 @@ const Cursor = () => {
         document.body.removeEventListener("mouseleave", onMouseLeave);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

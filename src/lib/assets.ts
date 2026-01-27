@@ -17,12 +17,6 @@ export function getAssetPath(path: string): string {
       : process.env.NODE_ENV === "production" &&
         process.env.GITHUB_ACTIONS === "true";
 
-  // For VPS deployment, don't add any base path
-  const isVPS =
-    typeof window !== "undefined" &&
-    !window.location.hostname.includes("github.io") &&
-    !window.location.hostname.includes("localhost");
-
   const basePath = isGitHubPages ? "/praktikoffice" : "";
 
   // Ensure path starts with /

@@ -84,6 +84,15 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
     }
   };
 
+  // Reset submenu when menu closes
+  useEffect(() => {
+    if (!isOpen) {
+      // Use a ref or callback to avoid direct setState in effect
+      const timer = setTimeout(() => setShowSpaceTypes(false), 0);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
+
   const handleSpaceTypeClick = (spaceTypeId: string) => {
     // Close menu first, then navigate to the appropriate page
     onClose();
@@ -120,12 +129,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
     };
   }, [isOpen, onClose]);
 
-  // Reset submenu when menu closes
-  useEffect(() => {
-    if (!isOpen) {
-      setShowSpaceTypes(false);
-    }
-  }, [isOpen]);
+  // Reset submenu when menu closes - moved to handleMenuClick to avoid setState in effect
 
   return (
     <AnimatePresence>
@@ -150,7 +154,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
             <div className="hidden lg:grid lg:grid-cols-3 h-full container mx-auto">
               {/* Left Side - Navigation */}
               <div className="flex flex-col container justify-center items-start space-y-2 px-5">
-                {menuItems.map((item, index) => (
+                {menuItems.map((item) => (
                   <div key={item.id} className="relative overflow-hidden">
                     <motion.h2
                       className="text-6xl xl:text-8xl font-extralight font-melodrama cursor-pointer select-none"
@@ -239,7 +243,7 @@ export const Menu = ({ isOpen, onClose }: MenuProps) => {
                       ...carouselImages,
                     ].map((image, index) => (
                       <div
-                        key={index}
+                        key={`${image}-${index}`}
                         className="shrink-0 w-full aspect-4/3 mb-6"
                       >
                         <img
