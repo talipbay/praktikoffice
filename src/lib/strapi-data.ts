@@ -51,6 +51,26 @@ export async function fetchOfficesData(locale: string = 'ru'): Promise<OfficeDat
       // Strapi v5 uses flat structure (no attributes wrapper)
       const data = office.attributes || office;
       
+      // Get images
+      const images = (data.images || []).map((img: any) => {
+        // Handle both Strapi v4 and v5 image formats
+        if (img.url) {
+          return img.url.startsWith('http') ? img.url : `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${img.url}`;
+        }
+        if (img.attributes?.url) {
+          const url = img.attributes.url;
+          return url.startsWith('http') ? url : `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${url}`;
+        }
+        return '';
+      }).filter(Boolean);
+      
+      // Use fallback images if none provided
+      const finalImages = images.length > 0 ? images : [
+        "/gallery/offices/office-1.webp",
+        "/gallery/offices/office-2.webp",
+        "/gallery/offices/office-3.webp",
+      ];
+      
       return {
         id: data.slug || office.documentId || `office-${office.id}`,
         name: data.name || 'Unnamed Office',
@@ -58,17 +78,7 @@ export async function fetchOfficesData(locale: string = 'ru'): Promise<OfficeDat
         capacity: data.capacity || '',
         price: data.price || '',
         featureKeys: data.features || [],
-        images: (data.images || []).map((img: any) => {
-          // Handle both Strapi v4 and v5 image formats
-          if (img.url) {
-            return img.url.startsWith('http') ? img.url : `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${img.url}`;
-          }
-          if (img.attributes?.url) {
-            const url = img.attributes.url;
-            return url.startsWith('http') ? url : `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${url}`;
-          }
-          return '';
-        }).filter(Boolean),
+        images: finalImages,
       };
     });
     
@@ -99,6 +109,25 @@ export async function fetchMeetingRoomsData(locale: string = 'ru'): Promise<Meet
       // Strapi v5 uses flat structure (no attributes wrapper)
       const data = room.attributes || room;
       
+      // Get images
+      const images = (data.images || []).map((img: any) => {
+        if (img.url) {
+          return img.url.startsWith('http') ? img.url : `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${img.url}`;
+        }
+        if (img.attributes?.url) {
+          const url = img.attributes.url;
+          return url.startsWith('http') ? url : `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${url}`;
+        }
+        return '';
+      }).filter(Boolean);
+      
+      // Use fallback images if none provided
+      const finalImages = images.length > 0 ? images : [
+        "/gallery/meeting/meeting-1.webp",
+        "/gallery/meeting/meeting-2.webp",
+        "/gallery/meeting/meeting-3.webp",
+      ];
+      
       return {
         id: data.slug || room.documentId || `meeting-${room.id}`,
         name: data.name || 'Unnamed Room',
@@ -106,16 +135,7 @@ export async function fetchMeetingRoomsData(locale: string = 'ru'): Promise<Meet
         capacity: data.capacity || '',
         price: data.price || '',
         featureKeys: data.features || [],
-        images: (data.images || []).map((img: any) => {
-          if (img.url) {
-            return img.url.startsWith('http') ? img.url : `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${img.url}`;
-          }
-          if (img.attributes?.url) {
-            const url = img.attributes.url;
-            return url.startsWith('http') ? url : `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${url}`;
-          }
-          return '';
-        }).filter(Boolean),
+        images: finalImages,
         descriptionKey: data.slug || room.documentId || `meeting-${room.id}`,
         specialFeatureKey: data.slug || room.documentId || `meeting-${room.id}`,
       };
