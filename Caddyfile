@@ -1,0 +1,79 @@
+# Caddyfile for Praktik Office
+
+# Main website
+praktikoffice.kz {
+    reverse_proxy localhost:3000
+    
+    encode gzip
+    
+    # Security headers
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        X-XSS-Protection "1; mode=block"
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
+    
+    # Cache static assets
+    @static {
+        path *.css *.js *.jpg *.jpeg *.png *.gif *.ico *.svg *.woff *.woff2 *.ttf *.eot
+    }
+    header @static Cache-Control "public, max-age=31536000, immutable"
+    
+    # Logs
+    log {
+        output file /var/log/caddy/praktikoffice.log
+        format json
+    }
+}
+
+# Strapi CMS (admin panel)
+cms.praktikoffice.kz {
+    reverse_proxy localhost:1337
+    
+    encode gzip
+    
+    # Security headers
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        X-XSS-Protection "1; mode=block"
+    }
+    
+    # Logs
+    log {
+        output file /var/log/caddy/strapi.log
+        format json
+    }
+}
+
+# Alternative: If you want Strapi API on subdomain
+api.praktikoffice.kz {
+    reverse_proxy localhost:1337
+    
+    encode gzip
+    
+    # CORS headers for API
+    header {
+        Access-Control-Allow-Origin "*"
+        Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+        Access-Control-Allow-Headers "Content-Type, Authorization"
+    }
+    
+    # Logs
+    log {
+        output file /var/log/caddy/api.log
+        format json
+    }
+}
+
+# Development/Local setup (comment out in production)
+# localhost:80 {
+#     reverse_proxy localhost:3000
+# }
+# 
+# localhost:1337 {
+#     reverse_proxy localhost:1337
+# }

@@ -1,0 +1,41 @@
+module.exports = {
+  apps: [
+    {
+      name: 'strapi',
+      cwd: './strapi',
+      script: 'npm',
+      args: 'start',
+      env: {
+        NODE_ENV: 'production',
+        HOST: '0.0.0.0',
+        PORT: 1337,
+      },
+      instances: 1,
+      exec_mode: 'fork',
+      autorestart: true,
+      watch: false,
+      max_memory_restart: '1G',
+      error_file: './logs/strapi-error.log',
+      out_file: './logs/strapi-out.log',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+    },
+    {
+      name: 'nextjs',
+      cwd: './',
+      script: 'npm',
+      args: 'start',
+      env: {
+        NODE_ENV: 'production',
+        PORT: 3000,
+      },
+      instances: 1,
+      exec_mode: 'fork',
+      autorestart: true,
+      watch: false,
+      max_memory_restart: '1G',
+      error_file: './logs/nextjs-error.log',
+      out_file: './logs/nextjs-out.log',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+    },
+  ],
+};

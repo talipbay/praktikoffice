@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { ContactFormModal } from "@/components/contact-form-modal";
 import { getAssetPath } from "@/lib/assets";
@@ -14,19 +15,17 @@ const officeOptions = [
     size: "24 м²",
     capacity: "до 8 человек",
     price: "4,000 $/месяц",
-    features: [
-      "8 рабочих мест",
-      "Переговорная зона",
-      "Просторная планировка",
-      "Зона отдыха",
+    featureKeys: [
+      "workplaces_8",
+      "meetingZone",
+      "spaciousLayout",
+      "loungeArea",
     ],
     images: [
       "/gallery/offices/office-3.webp",
       "/gallery/offices/office-4.webp",
       "/gallery/offices/office-5.webp",
     ],
-    description:
-      "Просторный офис для команды с отдельными зонами для работы и встреч.",
   },
   {
     id: "office-k11",
@@ -34,18 +33,17 @@ const officeOptions = [
     size: "24 м²",
     capacity: "до 8 человек",
     price: "4,000 $/месяц",
-    features: [
-      "8 рабочих мест",
-      "Переговорная зона",
-      "Современная мебель",
-      "Отличная планировка",
+    featureKeys: [
+      "workplaces_8",
+      "meetingZone",
+      "modernFurniture",
+      "excellentLayout",
     ],
     images: [
       "/gallery/offices/office-4.webp",
       "/gallery/offices/office-5.webp",
       "/gallery/offices/office-6.webp",
     ],
-    description: "Современный офис для команды с удобной рабочей средой.",
   },
   {
     id: "office-k14",
@@ -53,19 +51,17 @@ const officeOptions = [
     size: "18 м²",
     capacity: "до 6 человек",
     price: "2,700 $/месяц",
-    features: [
-      "6 рабочих мест",
-      "Зона для встреч",
-      "Хорошее освещение",
-      "Удобная планировка",
+    featureKeys: [
+      "workplaces_6",
+      "meetingArea",
+      "goodLighting",
+      "convenientLayout",
     ],
     images: [
       "/gallery/offices/office-2.webp",
       "/gallery/offices/office-3.webp",
       "/gallery/offices/office-4.webp",
     ],
-    description:
-      "Удобный офис для команды среднего размера с зоной для коллабораций.",
   },
   {
     id: "office-k17",
@@ -73,19 +69,17 @@ const officeOptions = [
     size: "30 м²",
     capacity: "до 10 человек",
     price: "5,000 $/месяц",
-    features: [
-      "10 рабочих мест",
-      "Большая переговорная",
-      "Зона отдыха",
-      "Премиум планировка",
+    featureKeys: [
+      "workplaces_10",
+      "largeMeetingRoom",
+      "loungeArea",
+      "premiumLayout",
     ],
     images: [
       "/gallery/offices/office-2.webp",
       "/gallery/offices/office-4.webp",
       "/gallery/offices/office-6.webp",
     ],
-    description:
-      "Премиальный офис для большой команды с максимальным комфортом.",
   },
 ];
 const moreOffices = [
@@ -95,19 +89,17 @@ const moreOffices = [
     size: "24 м²",
     capacity: "до 8 человек",
     price: "4,000 $/месяц",
-    features: [
-      "8 рабочих мест",
-      "Зона для презентаций",
-      "Комфортная среда",
-      "Функциональная планировка",
+    featureKeys: [
+      "workplaces_8",
+      "presentationZone",
+      "comfortableEnvironment",
+      "functionalLayout",
     ],
     images: [
       "/gallery/offices/office-5.webp",
       "/gallery/offices/office-6.webp",
       "/gallery/offices/office-1.webp",
     ],
-    description:
-      "Функциональный офис с зоной для презентаций и командной работы.",
   },
   {
     id: "office-k19",
@@ -115,19 +107,17 @@ const moreOffices = [
     size: "12 м²",
     capacity: "до 4 человек",
     price: "1,800 $/месяц",
-    features: [
-      "4 рабочих места",
-      "Естественное освещение",
-      "Компактная планировка",
-      "Доступ к общим зонам",
+    featureKeys: [
+      "workplaces_4",
+      "naturalLighting",
+      "compactLayout",
+      "accessToCommonAreas",
     ],
     images: [
       "/gallery/offices/office-1.webp",
       "/gallery/offices/office-2.webp",
       "/gallery/offices/office-3.webp",
     ],
-    description:
-      "Компактный офис для небольшой команды с эффективным использованием пространства.",
   },
   {
     id: "office-k31",
@@ -135,18 +125,17 @@ const moreOffices = [
     size: "24 м²",
     capacity: "до 8 человек",
     price: "4,000 $/месяц",
-    features: [
-      "8 рабочих мест",
-      "Удобное расположение",
-      "Современное оборудование",
-      "Гибкая планировка",
+    featureKeys: [
+      "workplaces_8",
+      "convenientLocation",
+      "modernEquipment",
+      "flexibleLayout",
     ],
     images: [
       "/gallery/offices/office-6.webp",
       "/gallery/offices/office-1.webp",
       "/gallery/offices/office-2.webp",
     ],
-    description: "Удобно расположенный офис с современным оборудованием.",
   },
   {
     id: "office-k38",
@@ -154,20 +143,18 @@ const moreOffices = [
     size: "36 м²",
     capacity: "до 12 человек",
     price: "6,000 $/месяц",
-    features: [
-      "12 рабочих мест",
-      "Большая переговорная",
-      "Зона отдыха",
-      "Отдельные рабочие зоны",
-      "Максимальный комфорт",
+    featureKeys: [
+      "workplaces_12",
+      "largeMeetingRoom",
+      "loungeArea",
+      "separateWorkZones",
+      "maximumComfort",
     ],
     images: [
       "/gallery/offices/office-3.webp",
       "/gallery/offices/office-5.webp",
       "/gallery/offices/office-1.webp",
     ],
-    description:
-      "Самый просторный офис для крупной команды с отдельными рабочими зонами.",
   },
   {
     id: "office-k41",
@@ -175,19 +162,17 @@ const moreOffices = [
     size: "27 м²",
     capacity: "до 9 человек",
     price: "4,500 $/месяц",
-    features: [
-      "9 рабочих мест",
-      "Расширенная рабочая зона",
-      "Зона для встреч",
-      "Дополнительное пространство",
+    featureKeys: [
+      "workplaces_9",
+      "expandedWorkZone",
+      "meetingArea",
+      "additionalSpace",
     ],
     images: [
       "/gallery/offices/office-1.webp",
       "/gallery/offices/office-3.webp",
       "/gallery/offices/office-5.webp",
     ],
-    description:
-      "Расширенный офис для большой команды с дополнительными удобствами.",
   },
 ];
 
@@ -196,6 +181,7 @@ export default function OfficesPage() {
   const [selectedOffice, setSelectedOffice] = useState(0);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const t = useTranslations("offices");
 
   return (
     <div className="relative z-5 bg-black text-foreground font-inter">
@@ -218,11 +204,10 @@ export default function OfficesPage() {
       />
       <div className="container mx-auto px-5 pt-24 pb-16">
         <h1 className="text-6xl lg:text-8xl xl:text-9xl font-light font-melodrama leading-tight mb-8">
-          offices.
+          {t("title")}
         </h1>
         <p className="text-lg opacity-70 max-w-2xl">
-          Индивидуальные офисы для команд разного размера с современной мебелью
-          и всем необходимым оборудованием
+          {t("subtitle")}
         </p>
       </div>
 
@@ -255,7 +240,7 @@ export default function OfficesPage() {
                   {allOffices[selectedOffice].name}
                 </h2>
                 <p className="text-lg opacity-70 mb-6">
-                  {allOffices[selectedOffice].description}
+                  {t("description")}
                 </p>
               </div>
 
@@ -274,22 +259,22 @@ export default function OfficesPage() {
                 </div>
               </div> */}
               <div>
-                <p className="text-sm opacity-60 mb-2">цена</p>
+                <p className="text-sm opacity-60 mb-2">{t("price")}</p>
                 <p className="text-3xl font-bold text-orange-500">
                   {allOffices[selectedOffice].price}
                 </p>
               </div>
 
               <div>
-                <p className="text-sm opacity-60 mb-4">включено</p>
+                <p className="text-sm opacity-60 mb-4">{t("included")}</p>
                 <div className="flex flex-wrap gap-2">
-                  {allOffices[selectedOffice].features.map((feature, index) => (
+                  {allOffices[selectedOffice].featureKeys.map((featureKey, index) => (
                     <Badge
                       key={index}
                       variant="outline"
                       className="bg-transparent border-foreground text-foreground"
                     >
-                      {feature}
+                      {t(`officeFeatures.${featureKey}`)}
                     </Badge>
                   ))}
                 </div>
@@ -300,7 +285,7 @@ export default function OfficesPage() {
                 data-cursor="small"
                 onClick={() => setIsContactModalOpen(true)}
               >
-                Забронировать офис
+                {t("bookButton")}
               </button>
             </div>
           </div>
@@ -349,46 +334,44 @@ export default function OfficesPage() {
         </div>
         <div className="mt-24 pt-16 border-t border-foreground/20">
           <h2 className="text-4xl font-light font-sans mb-12">
-            Что включено в стоимость
+            {t("whatsIncluded.title")}
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
               <p className="text-lg opacity-80 mb-8 leading-relaxed">
-                В стоимость входит полный набор сервисов, доступ к
-                инфраструктуре 24/7 и участие во всех мероприятиях сообщества
-                Praktik Office.
+                {t("whatsIncluded.description")}
               </p>
 
               <div className="space-y-8">
                 <div>
                   <h3 className="text-xl font-medium mb-4 text-orange-500">
-                    Сервисы
+                    {t("whatsIncluded.services.title")}
                   </h3>
                   <ul className="space-y-2 text-sm opacity-80">
-                    <li>• Ресепшн</li>
-                    <li>• Бронирование переговорных комнат</li>
-                    <li>• Техническая поддержка</li>
-                    <li>• Zoom-комнаты</li>
-                    <li>• Принтерная зона (A4 и А3 форматы)</li>
-                    <li>• Локеры</li>
-                    <li>• Гардероб</li>
-                    <li>• Смарт-столы</li>
-                    <li>• Регулярные мероприятия для резидентов</li>
-                    <li>• Все коммунальные услуги включены</li>
+                    <li>{t("whatsIncluded.services.reception")}</li>
+                    <li>{t("whatsIncluded.services.booking")}</li>
+                    <li>{t("whatsIncluded.services.support")}</li>
+                    <li>{t("whatsIncluded.services.skype")}</li>
+                    <li>{t("whatsIncluded.services.printing")}</li>
+                    <li>{t("whatsIncluded.services.lockers")}</li>
+                    <li>{t("whatsIncluded.services.wardrobe")}</li>
+                    <li>{t("whatsIncluded.services.smartDesks")}</li>
+                    <li>{t("whatsIncluded.services.events")}</li>
+                    <li>{t("whatsIncluded.services.utilities")}</li>
                   </ul>
                 </div>
 
                 <div>
                   <h3 className="text-xl font-medium mb-4 text-orange-500">
-                    Комфорт и отдых
+                    {t("whatsIncluded.comfort.title")}
                   </h3>
                   <ul className="space-y-2 text-sm opacity-80">
-                    <li>• Лаунж-зона</li>
-                    <li>• Кухни</li>
-                    <li>• Фитнес-зона</li>
-                    <li>• PS-game зоны с настольными играми</li>
-                    <li>• Намазхана</li>
+                    <li>{t("whatsIncluded.comfort.lounge")}</li>
+                    <li>{t("whatsIncluded.comfort.kitchens")}</li>
+                    <li>{t("whatsIncluded.comfort.fitness")}</li>
+                    <li>{t("whatsIncluded.comfort.gaming")}</li>
+                    <li>{t("whatsIncluded.comfort.prayer")}</li>
                   </ul>
                 </div>
               </div>
@@ -397,25 +380,24 @@ export default function OfficesPage() {
             <div className="space-y-8">
               <div>
                 <h3 className="text-xl font-medium mb-4 text-orange-500">
-                  Питание
+                  {t("whatsIncluded.food.title")}
                 </h3>
                 <ul className="space-y-2 text-sm opacity-80">
-                  <li>• Чай</li>
-                  <li>• Кофе</li>
-                  <li>• Вода</li>
-                  <li>• Снэки</li>
-                  <li>• Выпечка</li>
-                  <li>• Свежие фрукты и овощи</li>
+                  <li>{t("whatsIncluded.food.tea")}</li>
+                  <li>{t("whatsIncluded.food.coffee")}</li>
+                  <li>{t("whatsIncluded.food.water")}</li>
+                  <li>{t("whatsIncluded.food.snacks")}</li>
+                  <li>{t("whatsIncluded.food.fruits")}</li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="text-xl font-medium mb-4 text-orange-500">
-                  За дополнительную плату
+                  {t("whatsIncluded.additional.title")}
                 </h3>
                 <ul className="space-y-2 text-sm opacity-80">
-                  <li>• Юридический адрес</li>
-                  <li>• Паркинг</li>
+                  <li>{t("whatsIncluded.additional.legalAddress")}</li>
+                  <li>{t("whatsIncluded.additional.parking")}</li>
                 </ul>
               </div>
             </div>

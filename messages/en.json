@@ -97,5 +97,225 @@
     "errorMessage": "An error occurred while sending. Please try again.",
     "copyright": "© 2026 All rights reserved",
     "madeBy": "MADE BY ALIKHAN TALIPBAYEV"
+  },
+  "openSpace": {
+    "title": "open space.",
+    "subtitle": "A modern coworking space for productive work in a comfortable atmosphere",
+    "tariffName": "Nomad Plan",
+    "tariffDescription": "Full-day access to the coworking space with a maximum range of services and amenities.",
+    "workingHours": "working hours",
+    "schedule": "Daytime, 9:00 AM – 8:00 PM",
+    "price": "price",
+    "priceValue": "15,000 KZT",
+    "whatsIncluded": "what's included",
+    "features": {
+      "openSpace": "Flexible seating in the open space",
+      "meetingRoom": "Unlimited access to a 4-person meeting room and Skype room",
+      "refreshments": "Complimentary coffee, tea, water, snacks, and fresh fruits",
+      "printing": "Free printing",
+      "amenities": "Access to the yoga room and prayer room"
+    },
+    "bookButton": "Book a Spot",
+    "benefits": {
+      "title": "Coworking benefits",
+      "professional": "• Professional working environment",
+      "networking": "• Networking and new connections",
+      "internet": "• High-speed internet",
+      "wellness": "• Yoga room and relaxation areas"
+    },
+    "additionalAmenities": {
+      "title": "Additional amenities",
+      "workspace": {
+        "title": "Work zone",
+        "flexible": "• Flexible seating",
+        "ergonomic": "• Ergonomic workstations",
+        "wifi": "• High-speed Wi-Fi",
+        "outlets": "• Power outlets at every desk",
+        "lighting": "• Comfortable lighting"
+      },
+      "meetingRooms": {
+        "title": "Meeting rooms",
+        "unlimited": "• Unlimited access to a 4-person meeting room",
+        "skype": "• Skype room for video calls",
+        "equipment": "• Presentation equipment",
+        "privacy": "• Private and quiet atmosphere"
+      },
+      "comfort": {
+        "title": "Comfort",
+        "yoga": "• Yoga room",
+        "prayer": "• Prayer room",
+        "lounge": "• Relaxation areas",
+        "kitchen": "• Fully equipped kitchen"
+      }
+    },
+    "freeServices": {
+      "title": "Complimentary services",
+      "beverages": {
+        "title": "Beverages and snacks",
+        "coffee": "• Coffee",
+        "tea": "• Tea",
+        "water": "• Water",
+        "snacks": "• Snacks",
+        "fruits": "• Fresh fruit"
+      },
+      "office": {
+        "title": "Office services",
+        "printing": "• Document printing",
+        "scanning": "• Scanning",
+        "copying": "• Copying"
+      }
+    }
+  },
+  "offices": {
+    "title": "offices.",
+    "subtitle": "Private offices for teams of different sizes, fully furnished and equipped",
+    "description": "A spacious office designed for teams, featuring dedicated areas for focused work and meetings.",
+    "size": "size",
+    "capacity": "capacity",
+    "price": "price",
+    "included": "included",
+    "bookButton": "Book Office",
+    "officeFeatures": {
+      "workplaces_4": "4 workplaces",
+      "workplaces_6": "6 workplaces",
+      "workplaces_8": "8 workplaces",
+      "workplaces_9": "9 workplaces",
+      "workplaces_10": "10 workplaces",
+      "workplaces_12": "12 workplaces",
+      "meetingZone": "Meeting zone",
+      "spaciousLayout": "Spacious layout",
+      "loungeArea": "Lounge area",
+      "modernFurniture": "Modern furniture",
+      "excellentLayout": "Excellent layout",
+      "meetingArea": "Meeting area",
+      "goodLighting": "Good lighting",
+      "convenientLayout": "Convenient layout",
+      "largeMeetingRoom": "Large meeting room",
+      "premiumLayout": "Premium layout",
+      "presentationZone": "Presentation zone",
+      "comfortableEnvironment": "Comfortable environment",
+      "functionalLayout": "Functional layout",
+      "naturalLighting": "Natural lighting",
+      "compactLayout": "Compact layout",
+      "accessToCommonAreas": "Access to common areas",
+      "convenientLocation": "Convenient location",
+      "modernEquipment": "Modern equipment",
+      "flexibleLayout": "Flexible layout",
+      "separateWorkZones": "Separate work zones",
+      "maximumComfort": "Maximum comfort",
+      "expandedWorkZone": "Expanded work zone",
+      "additionalSpace": "Additional space"
+    },
+    "whatsIncluded": {
+      "title": "What's included in the price",
+      "description": "The price includes a full range of services, 24/7 access to all infrastructure, and participation in all Praktik Office community events.",
+      "services": {
+        "title": "Services",
+        "reception": "• Reception",
+        "booking": "• Meeting room booking",
+        "support": "• Technical support",
+        "skype": "• Skype rooms",
+        "printing": "• Printing area (A4 and A3 formats)",
+        "lockers": "• Lockers",
+        "wardrobe": "• Coatroom",
+        "smartDesks": "• Smart desks",
+        "events": "• Regular resident events",
+        "utilities": "• All utilities included"
+      },
+      "comfort": {
+        "title": "Comfort & leisure",
+        "lounge": "• Lounge area",
+        "kitchens": "• Kitchens",
+        "fitness": "• Fitness zone",
+        "gaming": "• PS gaming zones with board games",
+        "prayer": "• Prayer room"
+      },
+      "food": {
+        "title": "Food & beverages",
+        "tea": "• Tea",
+        "coffee": "• Coffee",
+        "water": "• Water",
+        "snacks": "• Snacks",
+        "fruits": "• Fresh fruits and vegetables"
+      },
+      "additional": {
+        "title": "Available at an additional cost",
+        "legalAddress": "• Legal address",
+        "parking": "• Parking"
+      }
+    }
+  },
+  "meetingRooms": {
+    "title": "meeting rooms.",
+    "subtitle": "Modern meeting rooms equipped with professional technology for meetings and presentations",
+    "roomPrefix": "Meeting room",
+    "area": "area",
+    "capacity": "capacity",
+    "price": "price",
+    "workingHours": "working hours",
+    "schedule": "09:00 - 20:00",
+    "specialFeature": "Room feature",
+    "bookButton": "Book Meeting Room",
+    "roomDescriptions": {
+      "p6": "A meeting room for up to 6 people, featuring unique smart glass to create a private and focused atmosphere.",
+      "p8": "A meeting room for up to 8 people with modern equipment and smart glass.",
+      "p10": "A spacious meeting room for up to 10 people with an area of 37 m².",
+      "p12": "A premium meeting room for up to 12 people with panoramic city views and a full set of equipment.",
+      "p16": "A large meeting room for up to 16 people with theatre-style seating options and flexible space organization."
+    },
+    "roomFeatures": {
+      "smartGlass": "Smart glass with privacy mode",
+      "coworkingAccess": "Access to coworking area",
+      "kitchenCoffee": "Kitchen and coffee point",
+      "whiteboardOnRequest": "Whiteboard (upon request)",
+      "spaciousRoom": "Spacious room",
+      "tvWithClicker": "TV with clicker",
+      "whiteboard": "Whiteboard",
+      "ownCoffeePoint": "Own coffee point",
+      "outletsOnTable": "Power outlets on table",
+      "panoramicView": "Panoramic city view",
+      "extraChairs": "Extra chairs (upon request)",
+      "theaterSeating": "Theatre-style seating",
+      "flexibleSpace": "Flexible space layout"
+    },
+    "specialFeatures": {
+      "p6": "Smart glass with adjustable opacity. With one touch, the space instantly transforms into a private meeting environment.",
+      "p8": "Smart glass with adjustable opacity. With one touch, the space instantly transforms into a private meeting environment.",
+      "p10": "Large area of 37 m² for comfortable meetings",
+      "p12": "Smart glass with privacy mode and panoramic city view",
+      "p16": "Theatre-style seating available. Flexible approach to event formats"
+    },
+    "whatsIncluded": {
+      "title": "What's included in the price",
+      "description": "The meeting room rental includes access to the coworking area, where you can use the kitchen and coffee point during your booking.",
+      "basic": {
+        "title": "Basic services",
+        "coworking": "• Access to the coworking area",
+        "kitchen": "• Kitchen and coffee point",
+        "wifi": "• High-speed Wi-Fi",
+        "cleaning": "• Room cleaning",
+        "support": "• Technical support"
+      },
+      "equipment": {
+        "title": "Equipment",
+        "tv": "• TV for presentations (rooms P6,P12, P16)",
+        "whiteboard": "• Whiteboard",
+        "outlets": "• Power outlets on the table",
+        "smartGlass": "• Smart glass with privacy mode"
+      },
+      "additional": {
+        "title": "Additional services",
+        "chairs": "• Extra chairs (upon request)",
+        "catering": "• Catering arrangements",
+        "eventSupport": "• Event technical support"
+      },
+      "features": {
+        "title": "Features",
+        "smartGlass": "• Smart glass for privacy",
+        "cityView": "• Panoramic city view (P12,P10)",
+        "theater": "• Theatre-style seating (P16)",
+        "flexible": "• Flexible space layout"
+      }
+    }
   }
 }

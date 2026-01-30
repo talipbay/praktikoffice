@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { ContactFormModal } from "@/components/contact-form-modal";
 import { getAssetPath } from "@/lib/assets";
 import { coworkingSchema, breadcrumbSchema } from "@/lib/structured-data";
@@ -15,24 +16,10 @@ const openSpaceImages = [
   "/gallery/coworking/coworking-6.webp",
 ];
 
-const nomadTariff = {
-  name: "Тариф Номад",
-  schedule: "День 9:00-20:00",
-  price: "15,000 ₸",
-  features: [
-    "Свободное размещение в open space",
-    "Безлимит в переговорную на 4 человека и скайп-рум",
-    "Бесплатные кофе, чай, вода, снэки и фрукты",
-    "Бесплатная распечатка",
-    "Доступ к фитнес залу, душевым кабинкам, намазхане",
-  ],
-  description:
-    "Полный дневной доступ к коворкинг-пространству с максимальным набором услуг и удобств.",
-};
-
 export default function OpenSpacePage() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const t = useTranslations("openSpace");
 
   return (
     <div className="relative z-5 bg-black text-foreground font-inter">
@@ -59,11 +46,10 @@ export default function OpenSpacePage() {
       {/* Header */}
       <div className="container mx-auto px-5 pt-24 pb-16">
         <h1 className="text-6xl lg:text-8xl xl:text-9xl font-light font-melodrama leading-tight mb-8">
-          open space.
+          {t("title")}
         </h1>
         <p className="text-lg opacity-70 max-w-2xl">
-          Современное коворкинг-пространство для продуктивной работы в
-          комфортной атмосфере
+          {t("subtitle")}
         </p>
       </div>
 
@@ -77,37 +63,51 @@ export default function OpenSpacePage() {
               <div className="space-y-6">
                 <div>
                   <h2 className="text-4xl font-semibold mb-2">
-                    {nomadTariff.name}
+                    {t("tariffName")}
                   </h2>
                   <p className="text-lg opacity-70 mb-6">
-                    {nomadTariff.description}
+                    {t("tariffDescription")}
                   </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-6">
                   <div>
-                    <p className="text-sm opacity-60 mb-2">время работы</p>
+                    <p className="text-sm opacity-60 mb-2">{t("workingHours")}</p>
                     <p className="text-xl font-medium">
-                      {nomadTariff.schedule}
+                      {t("schedule")}
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm opacity-60 mb-2">стоимость</p>
+                    <p className="text-sm opacity-60 mb-2">{t("price")}</p>
                     <p className="text-3xl font-bold text-orange-500">
-                      {nomadTariff.price}
+                      {t("priceValue")}
                     </p>
                   </div>
                 </div>
 
                 <div>
-                  <p className="text-sm opacity-60 mb-4">что включено</p>
+                  <p className="text-sm opacity-60 mb-4">{t("whatsIncluded")}</p>
                   <div className="space-y-3">
-                    {nomadTariff.features.map((feature, index) => (
-                      <div key={index} className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <p className="text-sm opacity-80">{feature}</p>
-                      </div>
-                    ))}
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-sm opacity-80">{t("features.openSpace")}</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-sm opacity-80">{t("features.meetingRoom")}</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-sm opacity-80">{t("features.refreshments")}</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-sm opacity-80">{t("features.printing")}</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <p className="text-sm opacity-80">{t("features.amenities")}</p>
+                    </div>
                   </div>
                 </div>
 
@@ -116,7 +116,7 @@ export default function OpenSpacePage() {
                   data-cursor="small"
                   onClick={() => setIsContactModalOpen(true)}
                 >
-                  Забронировать место
+                  {t("bookButton")}
                 </button>
               </div>
             </div>
@@ -125,24 +125,24 @@ export default function OpenSpacePage() {
             <div className="space-y-6">
               <div>
                 <h3 className="text-2xl font-medium mb-4">
-                  Преимущества коворкинга
+                  {t("benefits.title")}
                 </h3>
                 <div className="grid grid-cols-1 gap-4">
                   <div className="flex items-center gap-3">
                     <span className="text-sm">
-                      - Профессиональная рабочая атмосфера
+                      {t("benefits.professional")}
                     </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-sm">
-                      - Нетворкинг и новые знакомства
+                      {t("benefits.networking")}
                     </span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-sm">- Высокоскоростной интернет</span>
+                    <span className="text-sm">{t("benefits.internet")}</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-sm">- Фитнес-зал и зоны отдыха</span>
+                    <span className="text-sm">{t("benefits.wellness")}</span>
                   </div>
                 </div>
               </div>
@@ -191,46 +191,44 @@ export default function OpenSpacePage() {
         {/* Additional Services Section */}
         <div className="mt-24 pt-16 border-t border-foreground/20">
           <h2 className="text-4xl font-light font-sans mb-12">
-            Дополнительные удобства
+            {t("additionalAmenities.title")}
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="bg-foreground/5 p-6 rounded-lg">
               <h3 className="text-xl font-medium mb-4 text-orange-500">
-                Рабочая зона
+                {t("additionalAmenities.workspace.title")}
               </h3>
               <ul className="space-y-2 text-sm opacity-80">
-                <li>• Свободное размещение</li>
-                <li>• Эргономичные рабочие места</li>
-                <li>• Высокоскоростной Wi-Fi</li>
-                <li>• Розетки на каждом столе</li>
-                <li>• Комфортное освещение</li>
+                <li>{t("additionalAmenities.workspace.flexible")}</li>
+                <li>{t("additionalAmenities.workspace.ergonomic")}</li>
+                <li>{t("additionalAmenities.workspace.wifi")}</li>
+                <li>{t("additionalAmenities.workspace.outlets")}</li>
+                <li>{t("additionalAmenities.workspace.lighting")}</li>
               </ul>
             </div>
 
             <div className="bg-foreground/5 p-6 rounded-lg">
               <h3 className="text-xl font-medium mb-4 text-orange-500">
-                Переговорные
+                {t("additionalAmenities.meetingRooms.title")}
               </h3>
               <ul className="space-y-2 text-sm opacity-80">
-                <li>• Безлимитный доступ</li>
-                <li>• Комната на 4 человека</li>
-                <li>• Скайп-рум для видеозвонков</li>
-                <li>• Презентационное оборудование</li>
-                <li>• Приватная атмосфера</li>
+                <li>{t("additionalAmenities.meetingRooms.unlimited")}</li>
+                <li>{t("additionalAmenities.meetingRooms.skype")}</li>
+                <li>{t("additionalAmenities.meetingRooms.equipment")}</li>
+                <li>{t("additionalAmenities.meetingRooms.privacy")}</li>
               </ul>
             </div>
 
             <div className="bg-foreground/5 p-6 rounded-lg">
               <h3 className="text-xl font-medium mb-4 text-orange-500">
-                Комфорт
+                {t("additionalAmenities.comfort.title")}
               </h3>
               <ul className="space-y-2 text-sm opacity-80">
-                <li>• Фитнес-зал</li>
-                <li>• Душевые кабинки</li>
-                <li>• Намазхана</li>
-                <li>• Зоны отдыха</li>
-                <li>• Кухня с техникой</li>
+                <li>{t("additionalAmenities.comfort.yoga")}</li>
+                <li>{t("additionalAmenities.comfort.prayer")}</li>
+                <li>{t("additionalAmenities.comfort.lounge")}</li>
+                <li>{t("additionalAmenities.comfort.kitchen")}</li>
               </ul>
             </div>
           </div>
@@ -239,26 +237,25 @@ export default function OpenSpacePage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div>
                 <h3 className="text-xl font-medium mb-4 text-orange-500">
-                  Бесплатные услуги
+                  {t("freeServices.title")}
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <h4 className="font-medium mb-2">Напитки и еда</h4>
+                    <h4 className="font-medium mb-2">{t("freeServices.beverages.title")}</h4>
                     <ul className="space-y-1 text-sm opacity-80">
-                      <li>• Кофе</li>
-                      <li>• Чай</li>
-                      <li>• Вода</li>
-                      <li>• Снэки</li>
-                      <li>• Свежие фрукты</li>
+                      <li>{t("freeServices.beverages.coffee")}</li>
+                      <li>{t("freeServices.beverages.tea")}</li>
+                      <li>{t("freeServices.beverages.water")}</li>
+                      <li>{t("freeServices.beverages.snacks")}</li>
+                      <li>{t("freeServices.beverages.fruits")}</li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-medium mb-2">Офисные услуги</h4>
+                    <h4 className="font-medium mb-2">{t("freeServices.office.title")}</h4>
                     <ul className="space-y-1 text-sm opacity-80">
-                      <li>• Распечатка документов</li>
-                      <li>• Сканирование</li>
-                      <li>• Копирование</li>
-                      <li>• Канцелярские принадлежности</li>
+                      <li>{t("freeServices.office.printing")}</li>
+                      <li>{t("freeServices.office.scanning")}</li>
+                      <li>{t("freeServices.office.copying")}</li>
                     </ul>
                   </div>
                 </div>

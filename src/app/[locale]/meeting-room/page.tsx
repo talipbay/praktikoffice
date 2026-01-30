@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { ContactFormModal } from "@/components/contact-form-modal";
 import { getAssetPath } from "@/lib/assets";
@@ -14,22 +15,19 @@ const meetingRoomOptions = [
     size: "15 м²",
     capacity: "6 мест",
     price: "12,500 ₸/час",
-    features: [
-      "Смарт-стекло с затемнением",
-      "Доступ к коворкинг-зоне",
-      "Кухня и кофе-пойнт",
-      "Маркерная доска (по запросу)",
+    featureKeys: [
+      "smartGlass",
+      "coworkingAccess",
+      "kitchenCoffee",
+      "whiteboardOnRequest",
     ],
     images: [
       "/gallery/meeting/meeting-1.webp",
       "/gallery/meeting/meeting-2.webp",
       "/gallery/meeting/meeting-3.webp",
     ],
-    description:
-      "Переговорная комната на 6 мест с уникальным смарт-стеклом для создания приватной атмосферы.",
-    workingHours: "09:00 - 20:00",
-    specialFeature:
-      "Смарт-стекло с функцией затемнения. Одним нажатием создаёт приватную атмосферу для переговоров",
+    descriptionKey: "p6",
+    specialFeatureKey: "p6",
   },
   {
     id: "meeting-p8",
@@ -37,22 +35,19 @@ const meetingRoomOptions = [
     size: "20 м²",
     capacity: "8 мест",
     price: "15,000 ₸/час",
-    features: [
-      "Смарт-стекло с затемнением",
-      "Доступ к коворкинг-зоне",
-      "Кухня и кофе-пойнт",
-      "Маркерная доска (по запросу)",
+    featureKeys: [
+      "smartGlass",
+      "coworkingAccess",
+      "kitchenCoffee",
+      "whiteboardOnRequest",
     ],
     images: [
       "/gallery/meeting/meeting-2.webp",
       "/gallery/meeting/meeting-3.webp",
       "/gallery/meeting/meeting-4.webp",
     ],
-    description:
-      "Переговорная комната на 8 мест с современным оборудованием и смарт-стеклом.",
-    workingHours: "09:00 - 20:00",
-    specialFeature:
-      "Смарт-стекло с функцией затемнения. Одним нажатием создаёт приватную атмосферу для переговоров",
+    descriptionKey: "p8",
+    specialFeatureKey: "p8",
   },
   {
     id: "meeting-p10",
@@ -60,19 +55,18 @@ const meetingRoomOptions = [
     size: "37 м²",
     capacity: "10 мест",
     price: "25,000 ₸/час",
-    features: [
-      "Доступ к коворкинг-зоне",
-      "Кухня и кофе-пойнт",
-      "Просторное помещение",
+    featureKeys: [
+      "coworkingAccess",
+      "kitchenCoffee",
+      "spaciousRoom",
     ],
     images: [
       "/gallery/meeting/meeting-3.webp",
       "/gallery/meeting/meeting-4.webp",
       "/gallery/meeting/meeting-5.webp",
     ],
-    description: "Просторная переговорная комната на 10 мест площадью 37 м².",
-    workingHours: "09:00 - 20:00",
-    specialFeature: "Большая площадь 37 м² для комфортных переговоров",
+    descriptionKey: "p10",
+    specialFeatureKey: "p10",
   },
   {
     id: "meeting-p12",
@@ -80,25 +74,22 @@ const meetingRoomOptions = [
     size: "30 м²",
     capacity: "12 мест",
     price: "25,000 ₸/час",
-    features: [
-      "Смарт-стекло с затемнением",
-      "Телевизор с кликером",
-      "Маркерная доска",
-      "Собственный кофе-пойнт",
-      "Розетки на столе",
-      "Панорамный вид на город",
-      "Дополнительные стулья (по запросу)",
+    featureKeys: [
+      "smartGlass",
+      "tvWithClicker",
+      "whiteboard",
+      "ownCoffeePoint",
+      "outletsOnTable",
+      "panoramicView",
+      "extraChairs",
     ],
     images: [
       "/gallery/meeting/meeting-4.webp",
       "/gallery/meeting/meeting-5.webp",
       "/gallery/meeting/meeting-6.webp",
     ],
-    description:
-      "Премиальная переговорная на 12 мест с панорамным видом на город и полным набором оборудования.",
-    workingHours: "09:00 - 20:00",
-    specialFeature:
-      "Смарт-стекло с функцией затемнения и панорамный вид на город",
+    descriptionKey: "p12",
+    specialFeatureKey: "p12",
   },
   {
     id: "meeting-p16",
@@ -106,30 +97,28 @@ const meetingRoomOptions = [
     size: "38 м²",
     capacity: "16 человек",
     price: "25,000 ₸/час",
-    features: [
-      "Смарт-стекло с затемнением",
-      "Телевизор с кликером",
-      "Маркерная доска",
-      "Доступ к коворкинг-зоне",
-      "Театральная рассадка",
-      "Гибкая организация пространства",
+    featureKeys: [
+      "smartGlass",
+      "tvWithClicker",
+      "whiteboard",
+      "coworkingAccess",
+      "theaterSeating",
+      "flexibleSpace",
     ],
     images: [
       "/gallery/meeting/meeting-5.webp",
       "/gallery/meeting/meeting-6.webp",
       "/gallery/meeting/meeting-1.webp",
     ],
-    description:
-      "Большая переговорная на 16 человек с возможностью театральной рассадки и гибкой организацией пространства.",
-    workingHours: "09:00 - 20:00",
-    specialFeature:
-      "Возможна театральная рассадка. Гибкий подход к формату мероприятий",
+    descriptionKey: "p16",
+    specialFeatureKey: "p16",
   },
 ];
 export default function MeetingRoomPage() {
   const [selectedRoom, setSelectedRoom] = useState(0);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const t = useTranslations("meetingRooms");
 
   return (
     <div className="relative z-5 bg-black text-foreground font-inter">
@@ -156,11 +145,10 @@ export default function MeetingRoomPage() {
       {/* Header */}
       <div className="container mx-auto px-5 pt-24 pb-16">
         <h1 className="text-6xl lg:text-8xl xl:text-9xl font-light font-melodrama leading-tight mb-8">
-          meeting rooms.
+          {t("title")}
         </h1>
         <p className="text-lg opacity-70 max-w-2xl">
-          Современные переговорные комнаты с профессиональным оборудованием для
-          встреч и презентаций
+          {t("subtitle")}
         </p>
       </div>
 
@@ -193,22 +181,22 @@ export default function MeetingRoomPage() {
             <div className="space-y-6">
               <div>
                 <h2 className="text-3xl font-semibold mb-4">
-                  Переговорная {meetingRoomOptions[selectedRoom].name}
+                  {t("roomPrefix")} {meetingRoomOptions[selectedRoom].name}
                 </h2>
                 <p className="text-lg opacity-70 mb-6">
-                  {meetingRoomOptions[selectedRoom].description}
+                  {t(`roomDescriptions.${meetingRoomOptions[selectedRoom].descriptionKey}`)}
                 </p>
               </div>
 
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <p className="text-sm opacity-60 mb-2">площадь</p>
+                  <p className="text-sm opacity-60 mb-2">{t("area")}</p>
                   <p className="text-xl font-medium">
                     {meetingRoomOptions[selectedRoom].size}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm opacity-60 mb-2">вместимость</p>
+                  <p className="text-sm opacity-60 mb-2">{t("capacity")}</p>
                   <p className="text-xl font-medium">
                     {meetingRoomOptions[selectedRoom].capacity}
                   </p>
@@ -216,39 +204,39 @@ export default function MeetingRoomPage() {
               </div>
 
               <div>
-                <p className="text-sm opacity-60 mb-2">стоимость</p>
+                <p className="text-sm opacity-60 mb-2">{t("price")}</p>
                 <p className="text-3xl font-bold text-orange-500">
                   {meetingRoomOptions[selectedRoom].price}
                 </p>
               </div>
 
               <div>
-                <p className="text-sm opacity-60 mb-2">время работы</p>
+                <p className="text-sm opacity-60 mb-2">{t("workingHours")}</p>
                 <p className="text-lg font-medium">
-                  {meetingRoomOptions[selectedRoom].workingHours}
+                  {t("schedule")}
                 </p>
               </div>
 
               {/* Special Feature */}
               <div className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20">
                 <h4 className="font-medium mb-2 text-orange-500">
-                  Особенность помещения
+                  {t("specialFeature")}
                 </h4>
                 <p className="text-sm opacity-80">
-                  {meetingRoomOptions[selectedRoom].specialFeature}
+                  {t(`specialFeatures.${meetingRoomOptions[selectedRoom].specialFeatureKey}`)}
                 </p>
               </div>
 
               <div>
                 <div className="flex flex-wrap gap-2">
-                  {meetingRoomOptions[selectedRoom].features.map(
-                    (feature, index) => (
+                  {meetingRoomOptions[selectedRoom].featureKeys.map(
+                    (featureKey, index) => (
                       <Badge
                         key={index}
                         variant="outline"
                         className="bg-transparent border-foreground text-foreground"
                       >
-                        {feature}
+                        {t(`roomFeatures.${featureKey}`)}
                       </Badge>
                     )
                   )}
@@ -260,7 +248,7 @@ export default function MeetingRoomPage() {
                 data-cursor="small"
                 onClick={() => setIsContactModalOpen(true)}
               >
-                Забронировать переговорную
+                {t("bookButton")}
               </button>
             </div>
           </div>
@@ -313,42 +301,38 @@ export default function MeetingRoomPage() {
         {/* Additional Information */}
         <div className="mt-24 pt-16 border-t border-foreground/20">
           <h2 className="text-4xl font-light font-sans mb-12">
-            Что включено в стоимость
+            {t("whatsIncluded.title")}
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
               <p className="text-lg opacity-80 mb-8 leading-relaxed">
-                В стоимость аренды переговорной входит доступ к коворкинг-зоне,
-                где вы можете пользоваться кухней и кофе-пойнтом во время
-                аренды.
+                {t("whatsIncluded.description")}
               </p>
 
               <div className="space-y-8">
                 <div>
                   <h3 className="text-xl font-medium mb-4 text-orange-500">
-                    Базовые услуги
+                    {t("whatsIncluded.basic.title")}
                   </h3>
                   <ul className="space-y-2 text-sm opacity-80">
-                    <li>• Доступ к коворкинг-зоне</li>
-                    <li>• Кухня и кофе-пойнт</li>
-                    <li>• Wi-Fi высокой скорости</li>
-                    <li>• Кондиционирование</li>
-                    <li>• Уборка помещения</li>
-                    <li>• Техническая поддержка</li>
+                    <li>{t("whatsIncluded.basic.coworking")}</li>
+                    <li>{t("whatsIncluded.basic.kitchen")}</li>
+                    <li>{t("whatsIncluded.basic.wifi")}</li>
+                    <li>{t("whatsIncluded.basic.cleaning")}</li>
+                    <li>{t("whatsIncluded.basic.support")}</li>
                   </ul>
                 </div>
 
                 <div>
                   <h3 className="text-xl font-medium mb-4 text-orange-500">
-                    Оборудование
+                    {t("whatsIncluded.equipment.title")}
                   </h3>
                   <ul className="space-y-2 text-sm opacity-80">
-                    <li>• Телевизор для презентаций (в П12, П16)</li>
-                    <li>• Кликер для презентаций</li>
-                    <li>• Маркерная доска</li>
-                    <li>• Розетки на столе</li>
-                    <li>• Смарт-стекло с затемнением</li>
+                    <li>{t("whatsIncluded.equipment.tv")}</li>
+                    <li>{t("whatsIncluded.equipment.whiteboard")}</li>
+                    <li>{t("whatsIncluded.equipment.outlets")}</li>
+                    <li>{t("whatsIncluded.equipment.smartGlass")}</li>
                   </ul>
                 </div>
               </div>
@@ -357,25 +341,24 @@ export default function MeetingRoomPage() {
             <div className="space-y-8">
               <div>
                 <h3 className="text-xl font-medium mb-4 text-orange-500">
-                  Дополнительные услуги
+                  {t("whatsIncluded.additional.title")}
                 </h3>
                 <ul className="space-y-2 text-sm opacity-80">
-                  <li>• Дополнительные стулья (по запросу)</li>
-                  <li>• Маркерная доска (по запросу для П6, П8)</li>
-                  <li>• Организация кейтеринга</li>
-                  <li>• Техническая поддержка мероприятий</li>
+                  <li>{t("whatsIncluded.additional.chairs")}</li>
+                  <li>{t("whatsIncluded.additional.catering")}</li>
+                  <li>{t("whatsIncluded.additional.eventSupport")}</li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="text-xl font-medium mb-4 text-orange-500">
-                  Особенности
+                  {t("whatsIncluded.features.title")}
                 </h3>
                 <ul className="space-y-2 text-sm opacity-80">
-                  <li>• Смарт-стекло для приватности</li>
-                  <li>• Панорамный вид на город (П12)</li>
-                  <li>• Театральная рассадка (П16)</li>
-                  <li>• Гибкая организация пространства</li>
+                  <li>{t("whatsIncluded.features.smartGlass")}</li>
+                  <li>{t("whatsIncluded.features.cityView")}</li>
+                  <li>{t("whatsIncluded.features.theater")}</li>
+                  <li>{t("whatsIncluded.features.flexible")}</li>
                 </ul>
               </div>
             </div>
