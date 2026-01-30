@@ -85,25 +85,44 @@ export async function fetchOfficesData(locale: string = 'ru'): Promise<OfficeDat
  */
 export async function fetchMeetingRoomsData(locale: string = 'ru'): Promise<MeetingRoomData[]> {
   try {
+    console.log('Fetching meeting rooms from Strapi for locale:', locale);
     const response = await getMeetingRooms(locale);
     
+    console.log('Strapi meeting rooms response:', JSON.stringify(response, null, 2));
+    
     if (!response.data || !Array.isArray(response.data)) {
+      console.log('No meeting room data or not an array:', response);
       return [];
     }
 
-    return response.data.map((room: any) => ({
-      id: room.attributes.slug,
-      name: room.attributes.name,
-      size: room.attributes.size,
-      capacity: room.attributes.capacity,
-      price: room.attributes.price,
-      featureKeys: room.attributes.features || [],
-      images: room.attributes.images?.data?.map((img: any) => 
-        getStrapiImageUrl(img)
-      ) || [],
-      descriptionKey: room.attributes.slug, // Use slug as description key
-      specialFeatureKey: room.attributes.slug, // Use slug as special feature key
-    }));
+    const rooms = response.data.map((room: any) => {
+      // Strapi v5 uses flat structure (no attributes wrapper)
+      const data = room.attributes || room;
+      
+      return {
+        id: data.slug || room.documentId || `meeting-${room.id}`,
+        name: data.name || 'Unnamed Room',
+        size: data.size || '',
+        capacity: data.capacity || '',
+        price: data.price || '',
+        featureKeys: data.features || [],
+        images: (data.images || []).map((img: any) => {
+          if (img.url) {
+            return img.url.startsWith('http') ? img.url : `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${img.url}`;
+          }
+          if (img.attributes?.url) {
+            const url = img.attributes.url;
+            return url.startsWith('http') ? url : `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${url}`;
+          }
+          return '';
+        }).filter(Boolean),
+        descriptionKey: data.slug || room.documentId || `meeting-${room.id}`,
+        specialFeatureKey: data.slug || room.documentId || `meeting-${room.id}`,
+      };
+    });
+    
+    console.log('Transformed meeting rooms:', rooms);
+    return rooms;
   } catch (error) {
     console.error('Error fetching meeting rooms from Strapi:', error);
     return [];
@@ -115,19 +134,31 @@ export async function fetchMeetingRoomsData(locale: string = 'ru'): Promise<Meet
  */
 export async function fetchCoworkingTariffsData(locale: string = 'ru'): Promise<CoworkingTariffData[]> {
   try {
+    console.log('Fetching coworking tariffs from Strapi for locale:', locale);
     const response = await getCoworkingTariffs(locale);
     
+    console.log('Strapi coworking tariffs response:', JSON.stringify(response, null, 2));
+    
     if (!response.data || !Array.isArray(response.data)) {
+      console.log('No coworking tariff data or not an array:', response);
       return [];
     }
 
-    return response.data.map((tariff: any) => ({
-      name: tariff.attributes.name,
-      schedule: tariff.attributes.schedule,
-      price: tariff.attributes.price,
-      description: tariff.attributes.description,
-      featureKeys: tariff.attributes.features || [],
-    }));
+    const tariffs = response.data.map((tariff: any) => {
+      // Strapi v5 uses flat structure (no attributes wrapper)
+      const data = tariff.attributes || tariff;
+      
+      return {
+        name: data.name || 'Unnamed Tariff',
+        schedule: data.schedule || '',
+        price: data.price || '',
+        description: data.description || '',
+        featureKeys: data.features || [],
+      };
+    });
+    
+    console.log('Transformed coworking tariffs:', tariffs);
+    return tariffs;
   } catch (error) {
     console.error('Error fetching coworking tariffs from Strapi:', error);
     return [];
@@ -135,13 +166,33 @@ export async function fetchCoworkingTariffsData(locale: string = 'ru'): Promise<
 }
 
 /**
- * Fetch coworking images from gallery
+ * Fetch coworking images from Strapi
  */
 export async function fetchCoworkingImages(locale: string = 'ru'): Promise<string[]> {
   try {
-    // You can implement this to fetch from gallery-categories
-    // For now, return empty array and use fallback images
-    return [];
+    console.log('Fetching coworking images from Strapi for locale:', locale);
+    const response = await getCoworkingTariffs(locale);
+    
+    if (!response.data || !Array.isArray(response.data) || response.data.length === 0) {
+      console.log('No coworking data for images');
+      return [];
+    }
+
+    // Get images from the first tariff
+    const data = response.data[0].attributes || response.data[0];
+    const images = (data.images || []).map((img: any) => {
+      if (img.url) {
+        return img.url.startsWith('http') ? img.url : `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${img.url}`;
+      }
+      if (img.attributes?.url) {
+        const url = img.attributes.url;
+        return url.startsWith('http') ? url : `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${url}`;
+      }
+      return '';
+    }).filter(Boolean);
+    
+    console.log('Coworking images:', images);
+    return images;
   } catch (error) {
     console.error('Error fetching coworking images from Strapi:', error);
     return [];

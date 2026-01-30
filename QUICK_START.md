@@ -115,13 +115,19 @@ pm2 logs nextjs --lines 100
 
 Before deploying:
 - [ ] Strapi is running (`pm2 list`)
-- [ ] Content is added in Strapi admin
+- [ ] Content is added in Strapi admin for:
+  - [ ] Offices (at least 1)
+  - [ ] Meeting Rooms (at least 1)
+  - [ ] Coworking Tariff (at least 1)
 - [ ] Content is **Published** (not Draft)
 - [ ] **API is public** (Settings → Roles → Public → check find/findOne)
 - [ ] Run `./scripts/fix-401-error.sh` - should return 200
 - [ ] Run `./scripts/fix-cache-issue.sh`
 - [ ] Clear browser cache
-- [ ] Test the site
+- [ ] Test all pages:
+  - [ ] `/ru/offices`
+  - [ ] `/ru/meeting-room`
+  - [ ] `/ru/open-space`
 
 ---
 
