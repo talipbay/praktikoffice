@@ -47,17 +47,30 @@ export async function fetchOfficesData(locale: string = 'ru'): Promise<OfficeDat
       return [];
     }
 
-    const offices = response.data.map((office: any) => ({
-      id: office.attributes.slug,
-      name: office.attributes.name,
-      size: office.attributes.size,
-      capacity: office.attributes.capacity,
-      price: office.attributes.price,
-      featureKeys: office.attributes.features || [],
-      images: office.attributes.images?.data?.map((img: any) => 
-        getStrapiImageUrl(img)
-      ) || [],
-    }));
+    const offices = response.data.map((office: any) => {
+      // Strapi v5 uses flat structure (no attributes wrapper)
+      const data = office.attributes || office;
+      
+      return {
+        id: data.slug || office.documentId || `office-${office.id}`,
+        name: data.name || 'Unnamed Office',
+        size: data.size || '',
+        capacity: data.capacity || '',
+        price: data.price || '',
+        featureKeys: data.features || [],
+        images: (data.images || []).map((img: any) => {
+          // Handle both Strapi v4 and v5 image formats
+          if (img.url) {
+            return img.url.startsWith('http') ? img.url : `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${img.url}`;
+          }
+          if (img.attributes?.url) {
+            const url = img.attributes.url;
+            return url.startsWith('http') ? url : `${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'}${url}`;
+          }
+          return '';
+        }).filter(Boolean),
+      };
+    });
     
     console.log('Transformed offices:', offices);
     return offices;
