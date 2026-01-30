@@ -1,293 +1,188 @@
-# Deploy with Strapi - Quick Guide
+# Deploying with Strapi - Complete Guide
 
-## ✅ Build Successful!
+## The Problem: Cached Data
 
-Your Next.js app now builds successfully with Strapi integration.
+When you see hardcoded data even though Strapi has content, it's because Next.js cached the page during build time when Strapi was empty or not running.
 
-## 🚀 Deployment Steps
+## Solution: Complete Rebuild Process
 
-### 1. Make Sure Strapi is Running
+### Step 1: Verify Strapi Has Data
 
 ```bash
-pm2 list
-# Should show "strapi" as online
-
-# If not:
-pm2 restart strapi
+# Run verification script
+./scripts/verify-strapi-data.sh
 ```
 
-### 2. Set Environment Variables
+This will check:
+- ✅ Strapi is running
+- ✅ Offices endpoint has data
+- ✅ Meeting rooms endpoint has data
+- ✅ Coworking tariffs endpoint has data
 
-Make sure `.env.local` has:
+**Important**: Make sure your content is **Published** (not Draft) in Strapi admin!
+
+### Step 2: Rebuild and Restart
+
+```bash
+# Run the rebuild script
+./scripts/rebuild-and-restart.sh
+```
+
+This script will:
+1. Stop PM2 process
+2. Clear all Next.js cache (.next directory)
+3. Rebuild the application
+4. Restart PM2 process
+
+### Step 3: Clear Browser Cache
+
+After rebuild, you MUST clear your browser cache:
+
+- **Chrome/Firefox**: `Ctrl+Shift+R` (Windows/Linux) or `Cmd+Shift+R` (Mac)
+- **Safari**: `Cmd+Option+R`
+
+Or open in incognito/private mode.
+
+### Step 4: Verify It's Working
+
+```bash
+# Check PM2 logs
+pm2 logs nextjs --lines 50
+```
+
+Look for these log messages:
+```
+Fetching from Strapi: http://localhost:1337/api/offices?populate=*&locale=ru
+Strapi response received: {...}
+Using Strapi data - found X offices
+```
+
+If you see "Using fallback office data", something is wrong.
+
+## Common Issues
+
+### Issue 1: Still Seeing Old Data
+
+**Cause**: Browser cache or Next.js cache not cleared
+
+**Solution**:
+```bash
+# On server
+pm2 stop nextjs
+rm -rf .next
+pnpm run build
+pm2 restart nextjs
+
+# In browser
+Hard refresh (Ctrl+Shift+R or Cmd+Shift+R)
+```
+
+### Issue 2: "Using fallback office data" in logs
+
+**Cause**: Strapi not running or no data
+
+**Solution**:
+```bash
+# Check if Strapi is running
+pm2 list
+
+# If not running, start it
+pm2 start strapi
+
+# Verify data exists
+./scripts/verify-strapi-data.sh
+```
+
+### Issue 3: Content Not Showing
+
+**Cause**: Content is in Draft state
+
+**Solution**:
+1. Go to Strapi admin: `http://localhost:1337/admin`
+2. Open your content (Offices, Meeting Rooms, etc.)
+3. Click "Publish" button (not just Save)
+
+### Issue 4: Images Not Loading
+
+**Cause**: Images not uploaded or wrong URL
+
+**Solution**:
+1. Check image URLs in Strapi response
+2. Make sure images are uploaded in Strapi Media Library
+3. Verify `NEXT_PUBLIC_STRAPI_URL` in `.env.local`
+
+## Environment Variables
+
+Make sure these are set in `.env.local`:
 
 ```bash
 NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
+NEXT_PUBLIC_STRAPI_API_TOKEN=your_token_here
 ```
 
-For production, use your domain:
+After changing environment variables:
 ```bash
-NEXT_PUBLIC_STRAPI_URL=https://cms.praktikoffice.kz
+./scripts/rebuild-and-restart.sh
 ```
 
-### 3. Set Strapi API Permissions
+## Production Deployment Checklist
 
-1. Go to: http://localhost:1337/admin
-2. **Settings → Users & Permissions → Roles → Public**
-3. Enable `find` and `findOne` for:
-   - ✅ Office
-   - ✅ Meeting-room  
-   - ✅ Coworking-tariff
-4. Click **Save**
+- [ ] Strapi is running and accessible
+- [ ] All content is Published (not Draft)
+- [ ] Images are uploaded to Strapi
+- [ ] Environment variables are set correctly
+- [ ] Run `./scripts/verify-strapi-data.sh` - all checks pass
+- [ ] Run `./scripts/rebuild-and-restart.sh`
+- [ ] Clear browser cache and test
+- [ ] Check PM2 logs for errors
 
-### 4. Add Content in Strapi
-
-#### Add an Office:
-
-1. **Content Manager → Office → Create new entry**
-2. Fill in:
-   ```
-   Name: Офис К10
-   Slug: office-k10
-   Size: 24 м²
-   Capacity: до 8 человек
-   Price: 4,000 $/месяц
-   Features: ["workplaces_8", "meetingZone", "spaciousLayout", "loungeArea"]
-   Images: Upload 3-6 images
-   isAvailable: ON
-   ```
-3. **Save** and **Publish**
-4. Add translations (English, Kazakh)
-
-Repeat for all offices: K10, K11, K14, K17, K18, K19, K31, K38, K41
-
-### 5. Test API Connection
+## Quick Commands Reference
 
 ```bash
-# Test if Strapi returns data
-curl "http://localhost:1337/api/offices?populate=*&locale=ru"
+# Verify Strapi data
+./scripts/verify-strapi-data.sh
 
-# Should return JSON with your offices
-```
+# Rebuild and restart
+./scripts/rebuild-and-restart.sh
 
-### 6. Start with PM2
+# Check logs
+pm2 logs nextjs --lines 50
+pm2 logs strapi --lines 50
 
-```bash
-# Start both apps
-pm2 start ecosystem.config.js
+# Restart services
+pm2 restart all
 
 # Check status
 pm2 list
 
-# View logs
-pm2 logs
-
-# Save configuration
-pm2 save
-
-# Setup startup
-pm2 startup
-# Follow the instructions it gives you
+# Test Strapi API directly
+curl http://localhost:1337/api/offices?populate=*
 ```
 
-### 7. Test the Website
+## How It Works
 
-Open: http://localhost:3000/ru/offices
+1. **Build Time**: Next.js fetches data from Strapi and generates static pages
+2. **Runtime**: Pages are served from cache
+3. **Revalidation**: With `cache: 'no-store'`, data is fetched on every request (good for development)
+4. **Production**: Change to `cache: 'force-cache'` with revalidation for better performance
 
-You should see:
-- ✅ Offices from Strapi (if you added content)
-- ✅ Or fallback data (if no Strapi content yet)
+## Current Configuration
 
-## 📊 How to Know if Strapi Data is Loading
+The app is configured to:
+- ✅ Fetch fresh data on every request (no caching)
+- ✅ Fall back to hardcoded data if Strapi is unavailable
+- ✅ Log all fetch operations for debugging
+- ✅ Support multiple locales (ru, kz, en)
 
-### Method 1: Check Browser Console
+## Need Help?
 
-1. Open http://localhost:3000/ru/offices
-2. Press F12 (DevTools)
-3. Look at Console:
-   - If you see "Using fallback office data" → Using hardcoded data
-   - If you don't see this → Using Strapi data ✅
-
-### Method 2: Check Image URLs
-
-Right-click on an office image → "Open image in new tab"
-
-- **Strapi images**: `http://localhost:1337/uploads/...`
-- **Fallback images**: `/gallery/offices/...`
-
-### Method 3: Run Test Script
-
+Check the logs:
 ```bash
-./scripts/test-strapi-connection.sh
+pm2 logs nextjs --lines 100
 ```
 
-This will tell you:
-- ✅ If Strapi is running
-- ✅ If APIs are working
-- ✅ How many entries you have
-
-## 🔧 PM2 Commands
-
-```bash
-# List all processes
-pm2 list
-
-# View logs
-pm2 logs
-pm2 logs strapi
-pm2 logs nextjs
-
-# Restart
-pm2 restart all
-pm2 restart strapi
-pm2 restart nextjs
-
-# Stop
-pm2 stop all
-
-# Delete
-pm2 delete all
-
-# Monitor
-pm2 monit
-```
-
-## 🌐 Production Setup
-
-### Update Strapi .env
-
-Edit `strapi/.env`:
-
-```bash
-NODE_ENV=production
-HOST=0.0.0.0
-PORT=1337
-PUBLIC_URL=https://cms.praktikoffice.kz
-
-# Keep your database credentials
-DATABASE_HOST=127.0.0.1
-DATABASE_PORT=5432
-DATABASE_NAME=praktikoffice_strapi
-DATABASE_USERNAME=strapi_user
-DATABASE_PASSWORD=your_password
-```
-
-### Update Next.js .env.local
-
-```bash
-NEXT_PUBLIC_STRAPI_URL=https://cms.praktikoffice.kz
-```
-
-### Build Both Apps
-
-```bash
-# Build Strapi
-cd strapi
-NODE_ENV=production npm run build
-cd ..
-
-# Build Next.js
-npm run build
-```
-
-### Start with PM2
-
-```bash
-pm2 start ecosystem.config.js
-pm2 save
-```
-
-### Configure Caddy
-
-Update `Caddyfile` with your domains and start:
-
-```bash
-sudo caddy start --config Caddyfile
-```
-
-## 📝 Content Checklist
-
-Add in Strapi:
-
-### Offices (9 entries × 3 languages):
-- [ ] Office K10
-- [ ] Office K11
-- [ ] Office K14
-- [ ] Office K17
-- [ ] Office K18
-- [ ] Office K19
-- [ ] Office K31
-- [ ] Office K38
-- [ ] Office K41
-
-### Meeting Rooms (5 entries × 3 languages):
-- [ ] Meeting Room P6
-- [ ] Meeting Room P8
-- [ ] Meeting Room P10
-- [ ] Meeting Room P12
-- [ ] Meeting Room P16
-
-### Coworking (1 entry × 3 languages):
-- [ ] Nomad Tariff
-
-## 🐛 Troubleshooting
-
-### Still seeing old data?
-
-1. **Hard refresh browser**: Ctrl+Shift+R (Windows) or Cmd+Shift+R (Mac)
-2. **Check Strapi is running**: `pm2 list`
-3. **Check API permissions**: Settings → Roles → Public
-4. **Check content is published**: Not just saved
-5. **Restart Next.js**: `pm2 restart nextjs`
-
-### Images not loading?
-
-1. **Check images uploaded in Strapi**
-2. **Check image URLs**: `curl "http://localhost:1337/api/offices?populate=*" | grep url`
-3. **Check Strapi PUBLIC_URL**: In `strapi/.env`
-
-### API not working?
-
-1. **Test API**: `curl "http://localhost:1337/api/offices?populate=*"`
-2. **Check permissions**: Settings → Roles → Public
-3. **Check Strapi logs**: `pm2 logs strapi`
-
-## 🎯 Quick Start Commands
-
-```bash
-# 1. Start everything
-pm2 start ecosystem.config.js
-
-# 2. Check status
-pm2 list
-
-# 3. View logs
-pm2 logs
-
-# 4. Test API
-./scripts/test-strapi-connection.sh
-
-# 5. Open website
-open http://localhost:3000/ru/offices
-
-# 6. Open Strapi admin
-open http://localhost:1337/admin
-```
-
-## 📚 Documentation
-
-- `HOW_TO_USE_STRAPI_DATA.md` - Complete guide
-- `STRAPI_INTEGRATION.md` - Technical details
-- `SETUP_CHECKLIST.md` - Full checklist
-- `STRAPI_TROUBLESHOOTING.md` - Common issues
-
-## ✅ Success Indicators
-
-You'll know everything is working when:
-
-1. ✅ `pm2 list` shows both apps as "online"
-2. ✅ `./scripts/test-strapi-connection.sh` shows all green checkmarks
-3. ✅ http://localhost:3000/ru/offices loads without errors
-4. ✅ Browser console doesn't show "Using fallback office data"
-5. ✅ Images load from `http://localhost:1337/uploads/...`
-
-Good luck with your deployment! 🚀
+Look for:
+- "Fetching from Strapi" - confirms fetch is happening
+- "Strapi response received" - confirms data is coming back
+- "Using Strapi data" - confirms data is being used
+- "Using fallback" - means Strapi data is not available

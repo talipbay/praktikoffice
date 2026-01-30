@@ -132,10 +132,19 @@ export default async function OfficesPage({
   // Try to fetch from Strapi
   let offices = await fetchOfficesData(locale);
   
+  // Log for debugging
+  console.log('=== OFFICES PAGE DEBUG ===');
+  console.log('Locale:', locale);
+  console.log('Fetched offices count:', offices?.length || 0);
+  console.log('First office:', offices?.[0]);
+  console.log('========================');
+  
   // If no data from Strapi, use fallback
   if (!offices || offices.length === 0) {
-    console.log('Using fallback office data');
+    console.log('Using fallback office data - no data from Strapi');
     offices = fallbackOffices;
+  } else {
+    console.log('Using Strapi data - found', offices.length, 'offices');
   }
 
   return <OfficesClient offices={offices} />;

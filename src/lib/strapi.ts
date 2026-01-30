@@ -29,17 +29,27 @@ async function fetchAPI<T>(
   const separator = endpoint.includes('?') ? '&' : '?';
   const localeParam = locale ? `${separator}locale=${locale}` : '';
   
-  const res = await fetch(`${STRAPI_URL}/api${endpoint}${localeParam}`, {
+  const url = `${STRAPI_URL}/api${endpoint}${localeParam}`;
+  
+  console.log('Fetching from Strapi:', url);
+  
+  const res = await fetch(url, {
     headers,
-    next: { revalidate: 60 }, // ISR: revalidate every 60 seconds
+    // Use no-cache in development, ISR in production
+    cache: process.env.NODE_ENV === 'production' ? 'no-store' : 'no-store',
+    next: { revalidate: 0 }, // Always fetch fresh data
     ...options,
   });
 
   if (!res.ok) {
+    console.error(`Strapi API error: ${res.status} ${res.statusText}`);
     throw new Error(`Strapi API error: ${res.status}`);
   }
 
-  return res.json();
+  const data = await res.json();
+  console.log('Strapi response received:', JSON.stringify(data, null, 2));
+  
+  return data;
 }
 
 // Gallery Categories

@@ -37,13 +37,17 @@ export interface CoworkingTariffData {
  */
 export async function fetchOfficesData(locale: string = 'ru'): Promise<OfficeData[]> {
   try {
+    console.log('Fetching offices from Strapi for locale:', locale);
     const response = await getOffices(locale);
     
+    console.log('Strapi response:', JSON.stringify(response, null, 2));
+    
     if (!response.data || !Array.isArray(response.data)) {
+      console.log('No data or not an array:', response);
       return [];
     }
 
-    return response.data.map((office: any) => ({
+    const offices = response.data.map((office: any) => ({
       id: office.attributes.slug,
       name: office.attributes.name,
       size: office.attributes.size,
@@ -54,6 +58,9 @@ export async function fetchOfficesData(locale: string = 'ru'): Promise<OfficeDat
         getStrapiImageUrl(img)
       ) || [],
     }));
+    
+    console.log('Transformed offices:', offices);
+    return offices;
   } catch (error) {
     console.error('Error fetching offices from Strapi:', error);
     return [];
