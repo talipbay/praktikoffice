@@ -22,8 +22,12 @@ async function fetchAPI<T>(
 ): Promise<T> {
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
-    ...(STRAPI_TOKEN && { Authorization: `Bearer ${STRAPI_TOKEN}` }),
   };
+  
+  // Only add Authorization header if token is set and not a placeholder
+  if (STRAPI_TOKEN && STRAPI_TOKEN !== 'your_strapi_api_token_here') {
+    headers['Authorization'] = `Bearer ${STRAPI_TOKEN}`;
+  }
 
   // Add locale parameter if provided
   const separator = endpoint.includes('?') ? '&' : '?';
@@ -32,6 +36,7 @@ async function fetchAPI<T>(
   const url = `${STRAPI_URL}/api${endpoint}${localeParam}`;
   
   console.log('Fetching from Strapi:', url);
+  console.log('Using token:', STRAPI_TOKEN ? 'Yes' : 'No (public API)');
   
   const res = await fetch(url, {
     headers,
@@ -43,6 +48,10 @@ async function fetchAPI<T>(
 
   if (!res.ok) {
     console.error(`Strapi API error: ${res.status} ${res.statusText}`);
+    if (res.status === 401) {
+      console.error('❌ 401 Unauthorized - Check API token or make API public');
+      console.error('See: scripts/setup-strapi-token.md');
+    }
     throw new Error(`Strapi API error: ${res.status}`);
   }
 

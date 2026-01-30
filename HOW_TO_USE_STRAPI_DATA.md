@@ -1,288 +1,202 @@
-# How to Use Strapi Data in Your Pages
+# How to Use Strapi Data - Complete Guide
 
-## Current Status
+## Current Issue: 401 Unauthorized Error
 
-✅ **Offices page** - Updated to fetch from Strapi (with fallback)
-⏳ **Meeting Rooms page** - Needs update
-⏳ **Open Space page** - Needs update
-
-## Quick Steps to See Strapi Data
-
-### 1. Make Sure Strapi is Running
-
-```bash
-pm2 list
-# Should show "strapi" as "online"
-
-# If not running:
-pm2 restart strapi
+Your logs show:
+```
+Error: Strapi API error: 401
+Using fallback office data
 ```
 
-### 2. Add Environment Variable
+This means **Strapi is blocking the API requests** because permissions are not set.
 
-Add to `.env.local`:
+---
+
+## Fix: Make Strapi API Public (5 Minutes)
+
+### Step 1: Open Strapi Admin
+
+Go to: `http://localhost:1337/admin` (or your domain with port 1337)
+
+Login with your admin credentials.
+
+### Step 2: Configure Public Permissions
+
+1. Click **"Settings"** in the left sidebar (gear icon)
+2. Under "Users & Permissions Plugin", click **"Roles"**
+3. Click on the **"Public"** role
+4. Scroll down to find your content types:
+
+   **For "Office":**
+   - ✅ Check `find`
+   - ✅ Check `findOne`
+
+   **For "Meeting-room":**
+   - ✅ Check `find`
+   - ✅ Check `findOne`
+
+   **For "Coworking-tariff":**
+   - ✅ Check `find`
+   - ✅ Check `findOne`
+
+   **For "Gallery-category"** (if you have it):
+   - ✅ Check `find`
+   - ✅ Check `findOne`
+
+5. Click **"Save"** button at the top right
+
+### Step 3: Test the API
+
+```bash
+# Test if API is now public
+curl http://localhost:1337/api/offices?populate=*
+```
+
+Should return JSON with your offices (not 401 error).
+
+### Step 4: Rebuild Next.js
+
+```bash
+./scripts/fix-cache-issue.sh
+```
+
+### Step 5: Clear Browser Cache
+
+- Chrome/Firefox: `Ctrl+Shift+R` or `Cmd+Shift+R`
+- Safari: `Cmd+Option+R`
+
+### Step 6: Verify It Works
+
+Visit: `http://your-domain.com/ru/offices`
+
+Check logs:
+```bash
+pm2 logs nextjs --lines 20
+```
+
+Should see:
+```
+✅ Fetching from Strapi: http://localhost:1337/api/offices...
+✅ Using Strapi data - found X offices
+```
+
+---
+
+## Why Make API Public?
+
+**Q: Is it safe to make the API public?**
+
+**A: Yes!** For a public website, this is perfectly fine because:
+- ✅ Your website data (offices, prices) is meant to be public anyway
+- ✅ Users can only READ data (not create, update, or delete)
+- ✅ This is how most public websites work
+- ✅ Strapi admin panel is still protected by login
+
+**Q: When should I use API tokens?**
+
+**A:** Use tokens if:
+- You have private/sensitive data
+- You want to track API usage
+- You need different access levels
+- You're building a mobile app
+
+For your use case (public website), public API is the right choice.
+
+---
+
+## Alternative: Use API Token (Advanced)
+
+If you prefer to use a token:
+
+### Generate Token
+
+1. Go to Strapi admin: `http://localhost:1337/admin`
+2. Click **"Settings"** → **"API Tokens"**
+3. Click **"Create new API Token"**
+4. Fill in:
+   - Name: "Next.js Frontend"
+   - Token duration: "Unlimited"
+   - Token type: "Read-only"
+5. Click **"Save"**
+6. **Copy the token** (shown only once!)
+
+### Add to .env.local
 
 ```bash
 NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
+NEXT_PUBLIC_STRAPI_API_TOKEN=your_actual_token_here
 ```
 
-### 3. Set API Permissions in Strapi
-
-1. Go to: http://localhost:1337/admin
-2. Navigate to: **Settings → Users & Permissions → Roles → Public**
-3. Enable these permissions:
-   - **Office**: Check `find` and `findOne`
-   - **Meeting-room**: Check `find` and `findOne`
-   - **Coworking-tariff**: Check `find` and `findOne`
-4. Click **Save**
-
-### 4. Test API Connection
+### Rebuild
 
 ```bash
-./scripts/test-strapi-connection.sh
+./scripts/fix-cache-issue.sh
 ```
 
-This will tell you:
-- ✅ If Strapi is running
-- ✅ If APIs are accessible
-- ✅ How many entries you have
-- ✅ If environment is configured
+---
 
-### 5. Add Content in Strapi
+## Troubleshooting
 
-#### Add an Office:
+### Still getting 401?
 
-1. Go to: http://localhost:1337/admin
-2. Click **Content Manager** → **Office**
-3. Click **Create new entry**
-4. Fill in:
-   - **Name**: Офис К10
-   - **Slug**: office-k10 (auto-generated)
-   - **Size**: 24 м²
-   - **Capacity**: до 8 человек
-   - **Price**: 4,000 $/месяц
-   - **Features**: Click "Add an entry" and add:
-     ```json
-     ["workplaces_8", "meetingZone", "spaciousLayout", "loungeArea"]
-     ```
-   - **Images**: Upload 3-6 images
-   - **isAvailable**: Toggle ON
-5. Click **Save**
-6. Click **Publish**
+1. **Check permissions are saved**
+   - Go back to Strapi admin
+   - Settings → Roles → Public
+   - Verify checkboxes are still checked
+   - Click Save again
 
-#### Add Translations:
-
-1. After saving, you'll see language selector at top
-2. Click **English** → **Create new locale**
-3. Fill in English translations
-4. Save and Publish
-5. Repeat for **Kazakh**
-
-### 6. Rebuild Next.js
-
-```bash
-# Clear cache
-rm -rf .next
-
-# Rebuild
-npm run build
-
-# Start
-npm run dev
-```
-
-### 7. Test the Page
-
-Open: http://localhost:3000/ru/offices
-
-You should now see:
-- ✅ Office data from Strapi
-- ✅ Images from Strapi
-- ✅ Prices from Strapi
-
-## How It Works
-
-### Data Flow:
-
-```
-Strapi (Port 1337)
-    ↓
-    ↓ API Call with locale
-    ↓
-fetchOfficesData(locale)
-    ↓
-    ↓ Transform data
-    ↓
-OfficesClient Component
-    ↓
-    ↓ Display
-    ↓
-User sees page
-```
-
-### Fallback System:
-
-```javascript
-// Try to fetch from Strapi
-let offices = await fetchOfficesData(locale);
-
-// If no data from Strapi, use fallback
-if (!offices || offices.length === 0) {
-  console.log('Using fallback office data');
-  offices = fallbackOffices;
-}
-```
-
-This means:
-- ✅ If Strapi is down → Shows hardcoded data
-- ✅ If Strapi has no data → Shows hardcoded data
-- ✅ If Strapi has data → Shows Strapi data
-
-## Checking What Data is Being Used
-
-### Method 1: Browser Console
-
-1. Open page: http://localhost:3000/ru/offices
-2. Press F12 (open DevTools)
-3. Look at Console tab
-4. If you see "Using fallback office data" → Using hardcoded data
-5. If you don't see this message → Using Strapi data
-
-### Method 2: Check Images
-
-- **Strapi images**: URL starts with `http://localhost:1337/uploads/`
-- **Fallback images**: URL starts with `/gallery/offices/`
-
-Right-click on an image → "Open image in new tab" → Check URL
-
-### Method 3: Check API Response
-
-```bash
-# See what Strapi returns
-curl "http://localhost:1337/api/offices?populate=*&locale=ru" | jq '.'
-```
-
-## Common Issues
-
-### Issue: Still seeing old data after adding to Strapi
-
-**Solutions:**
-1. Hard refresh browser: `Ctrl+Shift+R` (Windows) or `Cmd+Shift+R` (Mac)
-2. Clear Next.js cache: `rm -rf .next && npm run build`
-3. Check API permissions are set in Strapi
-4. Check content is **Published** (not just saved)
-5. Run test script: `./scripts/test-strapi-connection.sh`
-
-### Issue: Images not showing
-
-**Solutions:**
-1. Check images are uploaded in Strapi
-2. Check image URLs in API response:
+2. **Restart Strapi**
    ```bash
-   curl "http://localhost:1337/api/offices?populate=*&locale=ru" | grep "url"
+   pm2 restart strapi
    ```
-3. Images should be accessible at: `http://localhost:1337/uploads/filename.webp`
-4. Check Strapi `PUBLIC_URL` in `strapi/.env`
 
-### Issue: Features not translating
+3. **Test API directly**
+   ```bash
+   curl http://localhost:1337/api/offices?populate=*
+   ```
 
-**Check feature keys match translation keys:**
+### Getting 403 instead of 401?
 
-In Strapi, features should be an array like:
-```json
-["workplaces_8", "meetingZone", "spaciousLayout"]
+Same fix - configure public permissions in Strapi admin.
+
+### API works but still seeing old data?
+
+Cache issue - run:
+```bash
+./scripts/fix-cache-issue.sh
 ```
 
-These map to translations in `messages/ru.json`:
-```json
-{
-  "offices": {
-    "officeFeatures": {
-      "workplaces_8": "8 рабочих мест",
-      "meetingZone": "Переговорная зона"
-    }
-  }
-}
-```
+Then clear browser cache.
 
-## Adding More Content
+---
 
-### For Each Office:
-
-1. Create entry in Strapi
-2. Add Russian content
-3. Add English translation
-4. Add Kazakh translation
-5. Upload images (3-6 per office)
-6. Set features array
-7. Publish
-
-Repeat for all 9 offices: K10, K11, K14, K17, K18, K19, K31, K38, K41
-
-### For Meeting Rooms:
-
-Same process for: P6, P8, P10, P12, P16
-
-### For Coworking:
-
-Add Nomad tariff with:
-- Name, schedule, price
-- Features array
-- Description
-
-## Production Deployment
-
-Once everything works locally:
+## Quick Commands
 
 ```bash
-# 1. Update production environment
-# In .env.local:
-NEXT_PUBLIC_STRAPI_URL=https://cms.praktikoffice.kz
+# Check if API is accessible
+./scripts/fix-401-error.sh
 
-# 2. Build both apps
-cd strapi && npm run build && cd ..
-npm run build
+# Test API directly
+curl http://localhost:1337/api/offices?populate=*
 
-# 3. Start with PM2
-pm2 restart all
+# Rebuild after fixing permissions
+./scripts/fix-cache-issue.sh
 
-# 4. Save PM2 config
-pm2 save
+# Check logs
+pm2 logs nextjs --lines 20
+pm2 logs strapi --lines 20
 ```
 
-## Need Help?
+---
 
-Run the test script to diagnose issues:
-```bash
-./scripts/test-strapi-connection.sh
-```
+## Summary
 
-Check the guides:
-- `scripts/update-pages-for-strapi.md` - Detailed troubleshooting
-- `STRAPI_INTEGRATION.md` - Technical details
-- `STRAPI_TROUBLESHOOTING.md` - Common errors
+1. ✅ Open Strapi admin: `http://localhost:1337/admin`
+2. ✅ Settings → Roles → Public
+3. ✅ Check `find` and `findOne` for all content types
+4. ✅ Save
+5. ✅ Run: `./scripts/fix-cache-issue.sh`
+6. ✅ Clear browser cache
+7. ✅ Done!
 
-## Quick Reference
-
-```bash
-# Test Strapi connection
-./scripts/test-strapi-connection.sh
-
-# Check Strapi is running
-pm2 list
-
-# View Strapi logs
-pm2 logs strapi
-
-# Restart Strapi
-pm2 restart strapi
-
-# Clear Next.js cache
-rm -rf .next
-
-# Rebuild Next.js
-npm run build
-
-# Test API manually
-curl "http://localhost:1337/api/offices?populate=*&locale=ru"
-```
+The 401 error will be gone and you'll see Strapi data on your site! 🎉
