@@ -77,3 +77,14 @@ api.praktikoffice.kz {
 # localhost:1337 {
 #     reverse_proxy localhost:1337
 # }
+
+# IP-based access for Strapi admin (for development)
+http://89.35.125.175:1337 {
+    reverse_proxy localhost:1337
+    
+    # Logs
+    log {
+        output file /var/log/caddy/strapi-ip.log
+        format json
+    }
+}
