@@ -8,19 +8,19 @@
     "contact": "Контакты"
   },
   "menu": {
-    "home": "ГЛАВНАЯ",
-    "spaces": "ПРОСТРАНСТВА",
-    "contact": "КОНТАКТЫ",
-    "openSpace": "открытое пространство",
-    "office": "офисы",
-    "meetingRoom": "переговорные",
+    "home": "HOME",
+    "spaces": "SPACES",
+    "contact": "CONTACT",
+    "openSpace": "open space",
+    "office": "office",
+    "meetingRoom": "meeting room",
     "emailLabel": "почта",
     "phoneLabel": "телефон",
     "socialLabel": "соц. сети"
   },
   "hero": {
     "title": "премиум сервисные офисы",
-    "subtitle": "коворкинг."
+    "subtitle": "coworking."
   },
   "about": {
     "heading": "class A.",

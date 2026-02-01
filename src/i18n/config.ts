@@ -4,9 +4,9 @@ export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = 'ru';
 
 export const localeNames: Record<Locale, string> = {
-  kz: 'Қазақша',
-  ru: 'Русский',
-  en: 'English',
+  kz: 'Қаз',
+  ru: 'Рус',
+  en: 'Eng',
 };
 
 export const localeFlags: Record<Locale, string> = {

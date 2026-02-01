@@ -62,7 +62,7 @@ export function LanguageSwitcher() {
             className="fixed inset-0 z-40" 
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute top-full mt-2 right-0 bg-background border border-foreground/20 rounded-lg shadow-lg overflow-hidden z-50 min-w-[150px]">
+          <div className="absolute top-full mt-2 right-0 bg-background border border-foreground/20 rounded-lg shadow-lg overflow-hidden z-50 min-w-[80px]">
             {locales.map((loc) => (
               <button
                 key={loc}
@@ -72,8 +72,9 @@ export function LanguageSwitcher() {
                 }`}
                 data-cursor="small"
               >
-                <span>{localeFlags[loc]}</span>
+                
                 <span className="text-sm font-medium">{localeNames[loc]}</span>
+                <span>{localeFlags[loc]}</span>
               </button>
             ))}
           </div>

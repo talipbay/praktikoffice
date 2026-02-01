@@ -8,19 +8,19 @@
     "contact": "Байланыс"
   },
   "menu": {
-    "home": "БАСТЫ БЕТ",
-    "spaces": "КЕҢІСТІКТЕР",
-    "contact": "БАЙЛАНЫС",
-    "openSpace": "ашық кеңістік",
-    "office": "офистер",
-    "meetingRoom": "келіссөз бөлмелері",
+     "home": "HOME",
+    "spaces": "SPACES",
+    "contact": "CONTACT",
+   "openSpace": "open space",
+    "office": "office",
+    "meetingRoom": "meeting room",
     "emailLabel": "пошта",
     "phoneLabel": "телефон",
     "socialLabel": "әлеум. желілер"
   },
   "hero": {
     "title": "премиум сервистік офистер",
-    "subtitle": "коворкинг."
+    "subtitle": "coworking."
   },
   "about": {
     "heading": "class A.",
