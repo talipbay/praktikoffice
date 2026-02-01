@@ -98,7 +98,7 @@ export default function OpenSpaceClient({
                     {features.map((feature, index) => (
                       <div key={index} className="flex items-start gap-3">
                         <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 shrink-0"></div>
-                        <p className="text-sm opacity-80">{t(`features.${feature}`)}</p>
+                        <p className="text-sm opacity-80">{feature}</p>
                       </div>
                     ))}
                   </div>
