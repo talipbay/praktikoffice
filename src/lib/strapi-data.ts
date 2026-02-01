@@ -144,8 +144,10 @@ export async function fetchMeetingRoomsData(locale: string = 'ru'): Promise<Meet
         price: data.price || '',
         description: typeof data.description === 'string' 
           ? data.description 
-          : (Array.isArray(data.description) && data.description.length > 0 && data.description[0].children?.[0]?.text)
-            ? data.description[0].children[0].text
+          : (Array.isArray(data.description) && data.description.length > 0)
+            ? data.description.map((block: any) => 
+                block.children?.map((child: any) => child.text).join('') || ''
+              ).join(' ')
             : '',
         featureKeys: data.features || [],
         images: finalImages,
@@ -153,8 +155,10 @@ export async function fetchMeetingRoomsData(locale: string = 'ru'): Promise<Meet
         specialFeatureKey: data.slug || room.documentId || `meeting-${room.id}`,
         specialFeature: typeof data.specialFeature === 'string' 
           ? data.specialFeature 
-          : (Array.isArray(data.specialFeature) && data.specialFeature.length > 0 && data.specialFeature[0].children?.[0]?.text)
-            ? data.specialFeature[0].children[0].text
+          : (Array.isArray(data.specialFeature) && data.specialFeature.length > 0)
+            ? data.specialFeature.map((block: any) => 
+                block.children?.map((child: any) => child.text).join('') || ''
+              ).join(' ')
             : '',
       };
     });

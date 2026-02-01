@@ -131,7 +131,7 @@ export default function MeetingRoomClient({ rooms }: MeetingRoomClientProps) {
                         variant="outline"
                         className="bg-transparent border-foreground text-foreground"
                       >
-                        {t(`roomFeatures.${featureKey}`)}
+                        {featureKey}
                       </Badge>
                     )
                   )}
