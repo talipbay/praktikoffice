@@ -172,7 +172,11 @@ export async function fetchCoworkingTariffsData(locale: string = 'ru'): Promise<
         name: data.name || 'Unnamed Tariff',
         schedule: data.schedule || '',
         price: data.price || '',
-        description: data.description || '',
+        description: typeof data.description === 'string' 
+          ? data.description 
+          : (Array.isArray(data.description) && data.description.length > 0 && data.description[0].children?.[0]?.text)
+            ? data.description[0].children[0].text
+            : '',
         featureKeys: data.features || [],
       };
     });
