@@ -9,6 +9,7 @@ const fallbackRooms = [
     size: "15 м²",
     capacity: "6 мест",
     price: "12,500 ₸/час",
+    description: "",
     featureKeys: [
       "smartGlass",
       "coworkingAccess",
@@ -22,6 +23,7 @@ const fallbackRooms = [
     ],
     descriptionKey: "p6",
     specialFeatureKey: "p6",
+    specialFeature: "",
   },
   {
     id: "meeting-p8",
@@ -29,6 +31,7 @@ const fallbackRooms = [
     size: "20 м²",
     capacity: "8 мест",
     price: "15,000 ₸/час",
+    description: "",
     featureKeys: [
       "smartGlass",
       "coworkingAccess",
@@ -42,6 +45,7 @@ const fallbackRooms = [
     ],
     descriptionKey: "p8",
     specialFeatureKey: "p8",
+    specialFeature: "",
   },
   {
     id: "meeting-p10",
@@ -49,6 +53,7 @@ const fallbackRooms = [
     size: "37 м²",
     capacity: "10 мест",
     price: "25,000 ₸/час",
+    description: "",
     featureKeys: [
       "coworkingAccess",
       "kitchenCoffee",
@@ -61,6 +66,7 @@ const fallbackRooms = [
     ],
     descriptionKey: "p10",
     specialFeatureKey: "p10",
+    specialFeature: "",
   },
   {
     id: "meeting-p12",
@@ -68,6 +74,7 @@ const fallbackRooms = [
     size: "30 м²",
     capacity: "12 мест",
     price: "25,000 ₸/час",
+    description: "",
     featureKeys: [
       "smartGlass",
       "tvWithClicker",
@@ -84,6 +91,7 @@ const fallbackRooms = [
     ],
     descriptionKey: "p12",
     specialFeatureKey: "p12",
+    specialFeature: "",
   },
   {
     id: "meeting-p16",
@@ -91,6 +99,7 @@ const fallbackRooms = [
     size: "38 м²",
     capacity: "16 человек",
     price: "25,000 ₸/час",
+    description: "",
     featureKeys: [
       "smartGlass",
       "tvWithClicker",
@@ -106,6 +115,7 @@ const fallbackRooms = [
     ],
     descriptionKey: "p16",
     specialFeatureKey: "p16",
+    specialFeature: "",
   },
 ];
 

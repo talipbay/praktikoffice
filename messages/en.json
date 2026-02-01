@@ -317,5 +317,25 @@
         "flexible": "• Flexible space layout"
       }
     }
+  },
+  "contactForm": {
+    "title": "Submit Application",
+    "subtitle": "Leave your contacts and our manager will contact you",
+    "name": "name",
+    "namePlaceholder": "Your name",
+    "company": "company name",
+    "companyPlaceholder": "Your company name",
+    "phone": "phone",
+    "phonePlaceholder": "+7 (___) ___-__-__",
+    "officeType": "space type",
+    "officeTypes": {
+      "office": "Office",
+      "meeting": "Meeting Room",
+      "coworking": "Coworking"
+    },
+    "submitButton": "Submit Application",
+    "submitting": "Submitting...",
+    "successMessage": "Thank you! We will contact you shortly.",
+    "errorMessage": "An error occurred while sending. Please try again."
   }
 }

@@ -18,10 +18,12 @@ export interface MeetingRoomData {
   size: string;
   capacity: string;
   price: string;
+  description: string;
   featureKeys: string[];
   images: string[];
   descriptionKey: string;
   specialFeatureKey: string;
+  specialFeature: string;
 }
 
 export interface CoworkingTariffData {
@@ -140,10 +142,20 @@ export async function fetchMeetingRoomsData(locale: string = 'ru'): Promise<Meet
         size: data.size || '',
         capacity: data.capacity || '',
         price: data.price || '',
+        description: typeof data.description === 'string' 
+          ? data.description 
+          : (Array.isArray(data.description) && data.description.length > 0 && data.description[0].children?.[0]?.text)
+            ? data.description[0].children[0].text
+            : '',
         featureKeys: data.features || [],
         images: finalImages,
         descriptionKey: data.slug || room.documentId || `meeting-${room.id}`,
         specialFeatureKey: data.slug || room.documentId || `meeting-${room.id}`,
+        specialFeature: typeof data.specialFeature === 'string' 
+          ? data.specialFeature 
+          : (Array.isArray(data.specialFeature) && data.specialFeature.length > 0 && data.specialFeature[0].children?.[0]?.text)
+            ? data.specialFeature[0].children[0].text
+            : '',
       };
     });
     

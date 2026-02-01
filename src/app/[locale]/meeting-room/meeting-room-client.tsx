@@ -82,31 +82,25 @@ export default function MeetingRoomClient({ rooms }: MeetingRoomClientProps) {
                 <h2 className="text-3xl font-semibold mb-4">
                   {t("roomPrefix")} {rooms[selectedRoom].name}
                 </h2>
+                {/* Use Strapi description if available, otherwise fallback to translation */}
                 <p className="text-lg opacity-70 mb-6">
-                  {t(`roomDescriptions.${rooms[selectedRoom].descriptionKey}`)}
+                  {rooms[selectedRoom].description || t(`roomDescriptions.${rooms[selectedRoom].descriptionKey}`)}
                 </p>
               </div>
 
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <p className="text-sm opacity-60 mb-2">{t("area")}</p>
-                  <p className="text-xl font-medium">
-                    {rooms[selectedRoom].size}
+                  <p className="text-sm opacity-60 mb-2">{t("price")}</p>
+                  <p className="text-3xl font-bold text-orange-500">
+                    {rooms[selectedRoom].price}
                   </p>
                 </div>
                 <div>
                   <p className="text-sm opacity-60 mb-2">{t("capacity")}</p>
-                  <p className="text-xl font-medium">
+                  <p className="text-3xl font-bold">
                     {rooms[selectedRoom].capacity}
                   </p>
                 </div>
-              </div>
-
-              <div>
-                <p className="text-sm opacity-60 mb-2">{t("price")}</p>
-                <p className="text-3xl font-bold text-orange-500">
-                  {rooms[selectedRoom].price}
-                </p>
               </div>
 
               <div>
@@ -116,15 +110,17 @@ export default function MeetingRoomClient({ rooms }: MeetingRoomClientProps) {
                 </p>
               </div>
 
-              {/* Special Feature */}
-              <div className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20">
-                <h4 className="font-medium mb-2 text-orange-500">
-                  {t("specialFeature")}
-                </h4>
-                <p className="text-sm opacity-80">
-                  {t(`specialFeatures.${rooms[selectedRoom].specialFeatureKey}`)}
-                </p>
-              </div>
+              {/* Special Feature - only show if there's content */}
+              {(rooms[selectedRoom].specialFeature || t(`specialFeatures.${rooms[selectedRoom].specialFeatureKey}`)) && (
+                <div className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20">
+                  <h4 className="font-medium mb-2 text-orange-500">
+                    {t("specialFeature")}
+                  </h4>
+                  <p className="text-sm opacity-80">
+                    {rooms[selectedRoom].specialFeature || t(`specialFeatures.${rooms[selectedRoom].specialFeatureKey}`)}
+                  </p>
+                </div>
+              )}
 
               <div>
                 <div className="flex flex-wrap gap-2">

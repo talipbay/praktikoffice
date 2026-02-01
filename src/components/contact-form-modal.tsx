@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { useTranslations } from "next-intl";
 import emailjs from "@emailjs/browser";
 
 interface ContactFormModalProps {
@@ -15,6 +16,8 @@ export const ContactFormModal = ({
   onClose,
   defaultService = "office",
 }: ContactFormModalProps) => {
+  const t = useTranslations("contactForm");
+  
   const [formData, setFormData] = useState({
     name: "",
     company: "",
@@ -55,20 +58,20 @@ export const ContactFormModal = ({
         from_phone: formData.phone,
         service_type:
           formData.officeType === "office"
-            ? "Офис"
+            ? t("officeTypes.office")
             : formData.officeType === "meeting"
-            ? "Переговорная"
-            : "Коворкинг",
+            ? t("officeTypes.meeting")
+            : t("officeTypes.coworking"),
         to_name: "Praktik Office",
         message: `Новая заявка от ${formData.name}
 ${formData.company ? `Компания: ${formData.company}` : ""}
 Телефон: ${formData.phone}
 Тип услуги: ${
           formData.officeType === "office"
-            ? "Офис"
+            ? t("officeTypes.office")
             : formData.officeType === "meeting"
-            ? "Переговорная"
-            : "Коворкинг"
+            ? t("officeTypes.meeting")
+            : t("officeTypes.coworking")
         }
 
 Заявка отправлена с сайта praktikoffice.kz`,
@@ -95,10 +98,10 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
 📞 *Телефон:* ${formData.phone}
 🏢 *Тип услуги:* ${
         formData.officeType === "office"
-          ? "Офис"
+          ? t("officeTypes.office")
           : formData.officeType === "meeting"
-          ? "Переговорная"
-          : "Коворкинг"
+          ? t("officeTypes.meeting")
+          : t("officeTypes.coworking")
       }
 
 📝 *Источник:* Модальное окно на сайте
@@ -130,7 +133,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
       telegramResponses.forEach((resp, index) => {
         console.log(`Telegram notification ${index + 1}:`, resp.ok);
       });
-      setSubmitMessage("Спасибо! Мы свяжемся с вами в ближайшее время.");
+      setSubmitMessage(t("successMessage"));
       setFormData({
         name: "",
         company: "",
@@ -145,7 +148,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
       }, 2000);
     } catch (error) {
       console.error("Submission error:", error);
-      setSubmitMessage("Произошла ошибка при отправке. Попробуйте еще раз.");
+      setSubmitMessage(t("errorMessage"));
     } finally {
       setIsSubmitting(false);
     }
@@ -203,10 +206,10 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
             {/* Form Header */}
             <div className="mb-6">
               <h2 className="text-2xl font-semibold mb-2 text-foreground">
-                Оставить заявку
+                {t("title")}
               </h2>
               <p className="text-sm opacity-70">
-                Оставьте свои контакты, и наш менеджер свяжется с вами
+                {t("subtitle")}
               </p>
             </div>
 
@@ -217,7 +220,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                   htmlFor="modal-name"
                   className="block text-xs opacity-60 mb-2"
                 >
-                  имя
+                  {t("name")}
                 </label>
                 <input
                   type="text"
@@ -227,7 +230,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                   onChange={handleInputChange}
                   required
                   className="w-full px-3 py-3 bg-transparent border border-foreground/20 rounded-lg text-sm text-foreground placeholder-foreground/50 focus:border-foreground focus:outline-none transition-colors"
-                  placeholder="Ваше имя"
+                  placeholder={t("namePlaceholder")}
                   data-cursor="small"
                 />
               </div>
@@ -237,7 +240,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                   htmlFor="modal-company"
                   className="block text-xs opacity-60 mb-2"
                 >
-                  название компании
+                  {t("company")}
                 </label>
                 <input
                   type="text"
@@ -246,7 +249,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                   value={formData.company}
                   onChange={handleInputChange}
                   className="w-full px-3 py-3 bg-transparent border border-foreground/20 rounded-lg text-sm text-foreground placeholder-foreground/50 focus:border-foreground focus:outline-none transition-colors"
-                  placeholder="Название вашей компании"
+                  placeholder={t("companyPlaceholder")}
                   data-cursor="small"
                 />
               </div>
@@ -256,7 +259,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                   htmlFor="modal-phone"
                   className="block text-xs opacity-60 mb-2"
                 >
-                  телефон
+                  {t("phone")}
                 </label>
                 <input
                   type="tel"
@@ -269,7 +272,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                   }}
                   required
                   className="w-full px-3 py-3 bg-transparent border border-foreground/20 rounded-lg text-sm text-foreground placeholder-foreground/50 focus:border-foreground focus:outline-none transition-colors"
-                  placeholder="+7 (___) ___-__-__"
+                  placeholder={t("phonePlaceholder")}
                   data-cursor="small"
                 />
               </div>
@@ -279,7 +282,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                   htmlFor="modal-officeType"
                   className="block text-xs opacity-60 mb-2"
                 >
-                  тип помещения
+                  {t("officeType")}
                 </label>
                 <select
                   id="modal-officeType"
@@ -289,9 +292,9 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                   className="w-full px-3 py-3 bg-black border border-foreground/20 rounded-lg text-sm text-foreground focus:border-foreground focus:outline-none transition-colors"
                   data-cursor="small"
                 >
-                  <option value="office">Офис</option>
-                  <option value="meeting">Переговорная</option>
-                  <option value="coworking">Коворкинг</option>
+                  <option value="office">{t("officeTypes.office")}</option>
+                  <option value="meeting">{t("officeTypes.meeting")}</option>
+                  <option value="coworking">{t("officeTypes.coworking")}</option>
                 </select>
               </div>
 
@@ -301,7 +304,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                 className="w-full px-6 py-3 bg-foreground text-background rounded-lg text-sm font-medium hover:opacity-80 disabled:opacity-50 transition-opacity mt-6"
                 data-cursor="small"
               >
-                {isSubmitting ? "Отправка..." : "Отправить заявку"}
+                {isSubmitting ? t("submitting") : t("submitButton")}
               </button>
 
               {submitMessage && (
@@ -309,7 +312,7 @@ ${formData.company ? `🏢 *Компания:* ${formData.company}` : ""}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className={`text-sm text-center ${
-                    submitMessage.includes("Спасибо")
+                    submitMessage.includes(t("successMessage").substring(0, 6))
                       ? "text-green-400"
                       : "text-red-400"
                   }`}
