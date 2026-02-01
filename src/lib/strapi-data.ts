@@ -37,8 +37,11 @@ export interface CoworkingTariffData {
  */
 export async function fetchOfficesData(locale: string = 'ru'): Promise<OfficeData[]> {
   try {
-    console.log('Fetching offices from Strapi for locale:', locale);
-    const response = await getOffices(locale);
+    // Map kz to kk for Strapi (standard Kazakh locale code)
+    const strapiLocale = locale === 'kz' ? 'kk' : locale;
+    
+    console.log('Fetching offices from Strapi for locale:', locale, '-> Strapi locale:', strapiLocale);
+    const response = await getOffices(strapiLocale);
     
     console.log('Strapi response:', JSON.stringify(response, null, 2));
     
@@ -95,8 +98,11 @@ export async function fetchOfficesData(locale: string = 'ru'): Promise<OfficeDat
  */
 export async function fetchMeetingRoomsData(locale: string = 'ru'): Promise<MeetingRoomData[]> {
   try {
-    console.log('Fetching meeting rooms from Strapi for locale:', locale);
-    const response = await getMeetingRooms(locale);
+    // Map kz to kk for Strapi (standard Kazakh locale code)
+    const strapiLocale = locale === 'kz' ? 'kk' : locale;
+    
+    console.log('Fetching meeting rooms from Strapi for locale:', locale, '-> Strapi locale:', strapiLocale);
+    const response = await getMeetingRooms(strapiLocale);
     
     console.log('Strapi meeting rooms response:', JSON.stringify(response, null, 2));
     
@@ -154,8 +160,11 @@ export async function fetchMeetingRoomsData(locale: string = 'ru'): Promise<Meet
  */
 export async function fetchCoworkingTariffsData(locale: string = 'ru'): Promise<CoworkingTariffData[]> {
   try {
-    console.log('Fetching coworking tariffs from Strapi for locale:', locale);
-    const response = await getCoworkingTariffs(locale);
+    // Map kz to kk for Strapi (standard Kazakh locale code)
+    const strapiLocale = locale === 'kz' ? 'kk' : locale;
+    
+    console.log('Fetching coworking tariffs from Strapi for locale:', locale, '-> Strapi locale:', strapiLocale);
+    const response = await getCoworkingTariffs(strapiLocale);
     
     console.log('Strapi coworking tariffs response:', JSON.stringify(response, null, 2));
     
@@ -194,8 +203,11 @@ export async function fetchCoworkingTariffsData(locale: string = 'ru'): Promise<
  */
 export async function fetchCoworkingImages(locale: string = 'ru'): Promise<string[]> {
   try {
-    console.log('Fetching coworking images from Strapi for locale:', locale);
-    const response = await getCoworkingTariffs(locale);
+    // Map kz to kk for Strapi (standard Kazakh locale code)
+    const strapiLocale = locale === 'kz' ? 'kk' : locale;
+    
+    console.log('Fetching coworking images from Strapi for locale:', locale, '-> Strapi locale:', strapiLocale);
+    const response = await getCoworkingTariffs(strapiLocale);
     
     if (!response.data || !Array.isArray(response.data) || response.data.length === 0) {
       console.log('No coworking data for images');

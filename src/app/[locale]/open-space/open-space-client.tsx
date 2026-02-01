@@ -80,7 +80,7 @@ export default function OpenSpaceClient({
                 <div className="grid grid-cols-2 gap-6">
                   <div>
                     <p className="text-sm opacity-60 mb-2">{t("workingHours")}</p>
-                    <p className="text-xl font-medium">
+                    <p className="text-3xl font-bold">
                       {schedule}
                     </p>
                   </div>
