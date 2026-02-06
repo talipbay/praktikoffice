@@ -42,17 +42,21 @@ export async function fetchZonesFromStrapi(): Promise<Zone[]> {
       throw new Error(`Failed to fetch zones: ${response.statusText}`);
     }
 
-    const result: StrapiResponse<StrapiZone[]> = await response.json();
+    const result: any = await response.json();
     
     // Transform Strapi format to our Zone format
-    return result.data.map((item) => ({
-      id: item.attributes.zoneId,
-      vertices: item.attributes.vertices,
-      status: item.attributes.status,
-      companyName: item.attributes.companyName,
-      createdAt: new Date(item.attributes.createdAt).getTime(),
-      updatedAt: new Date(item.attributes.updatedAt).getTime(),
-    }));
+    // Handle both old format (with attributes) and new format (direct fields)
+    return result.data.map((item: any) => {
+      const data = item.attributes || item;
+      return {
+        id: data.zoneId,
+        vertices: data.vertices,
+        status: data.status,
+        companyName: data.companyName,
+        createdAt: data.createdAt ? new Date(data.createdAt).getTime() : Date.now(),
+        updatedAt: data.updatedAt ? new Date(data.updatedAt).getTime() : Date.now(),
+      };
+    });
   } catch (error) {
     console.error('Error fetching zones from Strapi:', error);
     return [];
