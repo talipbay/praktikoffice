@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "zones",
+  "info": {
+    "singularName": "zone",
+    "pluralName": "zones",
+    "displayName": "Zone",
+    "description": "Floor plan zones for office management"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "zoneId": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "vertices": {
+      "type": "json",
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["free", "occupied"],
+      "default": "free",
+      "required": true
+    },
+    "companyName": {
+      "type": "string",
+      "required": false
+    }
+  }
+}

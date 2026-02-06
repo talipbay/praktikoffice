@@ -1,0 +1,33 @@
+ZONE MIGRATION - QUICK COMMANDS
+================================
+
+STEP 1: Zone content type files are already created!
+     ✓ strapi/src/api/zone/content-types/zone/schema.json
+     ✓ strapi/src/api/zone/controllers/zone.ts
+     ✓ strapi/src/api/zone/services/zone.ts
+     ✓ strapi/src/api/zone/routes/zone.ts
+
+STEP 2: Restart Strapi to load the new content type
+     cd strapi
+     npm run develop
+
+STEP 3: Set permissions in Strapi Admin
+     1. Open: http://89.35.125.175:1337/admin
+     2. Go to: Settings → Roles → Public
+     3. Find "Zone" section
+     4. Enable: find, findOne, create, update
+     5. Click Save
+
+STEP 4: Run migration
+     NEXT_PUBLIC_STRAPI_URL=http://89.35.125.175:1337 \
+     NEXT_PUBLIC_STRAPI_API_TOKEN=2c2efcd80f8156e683126e2ea6719259a024f88db7972bfd1c0cadfb28410c71ff8eed539afe49a560d657e0131dc20340b2a90e6ecf153005aa230d490aee0e4d9789429b8fb78b72fad0ef82febe8f897e9d6ba47a6b0a121611da06a2ea754e1ea9dae08d0fe09b3580a607d0c1edb0c12eec6df1dee31bdd83f70f09b154 \
+     node scripts/migrate-zones-final.js
+
+STEP 5: Verify
+     - Check Strapi Admin: Content Manager → Zones (should see 44 zones)
+     - Check map: https://praktikoffice.kz/en/map
+
+TROUBLESHOOTING:
+     - If "Content type not found": Restart Strapi
+     - If "Permission denied": Check Step 3
+     - See: docs/SETUP_ZONE_CONTENT_TYPE.md

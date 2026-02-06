@@ -16,6 +16,7 @@ All documentation for the Praktik Office project.
 - **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - File structure overview
 
 ### Strapi Backend
+- **[SETUP_ZONE_CONTENT_TYPE.md](SETUP_ZONE_CONTENT_TYPE.md)** - ⭐ Create Zone content type (REQUIRED)
 - **[STRAPI_ZONE_SETUP.md](STRAPI_ZONE_SETUP.md)** - Strapi setup guide
 - **[STRAPI_INTEGRATION.md](STRAPI_INTEGRATION.md)** - Strapi integration details
 - **[STRAPI_SETUP.md](STRAPI_SETUP.md)** - General Strapi setup
