@@ -86,9 +86,12 @@ export async function fetchOfficesData(locale: string = 'ru'): Promise<OfficeDat
         description: typeof data.description === 'string' 
           ? data.description 
           : (Array.isArray(data.description) && data.description.length > 0)
-            ? data.description.map((block: any) => 
-                block.children?.map((child: any) => child.text).join('') || ''
-              ).join(' ')
+            ? data.description.map((block: any) => {
+                if (block.type === 'paragraph') {
+                  return block.children?.map((child: any) => child.text).join('') || '';
+                }
+                return '';
+              }).filter(Boolean).join('\n\n')
             : '',
         featureKeys: data.features || [],
         images: finalImages,

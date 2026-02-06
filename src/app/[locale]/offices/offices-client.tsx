@@ -97,10 +97,7 @@ export default function OfficesClient({ offices }: OfficesClientProps) {
 
             <div className="space-y-6">
               <div>
-                <h2 className="text-3xl font-semibold mb-4">
-                  {offices[selectedOffice].name}
-                </h2>
-                <p className="text-lg opacity-70 mb-6">
+                <p className="text-lg opacity-70 mb-6 whitespace-pre-line">
                   {offices[selectedOffice].description || t("description")}
                 </p>
               </div>
