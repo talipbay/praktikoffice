@@ -1,0 +1,64 @@
+REBUILD NEXT.JS TO APPLY FIXES
+===============================
+
+The CORS fix and cursor fix need to be rebuilt into the Next.js app.
+
+STEP 1: Rebuild Next.js
+------------------------
+cd ~/praktikoffice
+npm run build
+
+STEP 2: Restart Services
+-------------------------
+pm2 restart strapi
+pm2 restart nextjs
+
+STEP 3: Verify CORS Headers
+----------------------------
+curl -I -H "Origin: https://praktikoffice.kz" \
+  https://cms.praktikoffice.kz/api/zones | grep -i access-control
+
+Expected: Should see "access-control-allow-origin" header
+
+STEP 4: Test in Browser
+------------------------
+1. Open: https://praktikoffice.kz/en/map
+2. Press: Ctrl + Shift + R (hard refresh)
+3. Press: F12 (open console)
+4. Run this:
+
+fetch('https://cms.praktikoffice.kz/api/zones', {
+  headers: {
+    'Authorization': 'Bearer 2c2efcd80f8156e683126e2ea6719259a024f88db7972bfd1c0cadfb28410c71ff8eed539afe49a560d657e0131dc20340b2a90e6ecf153005aa230d490aee0e4d9789429b8fb78b72fad0ef82febe8f897e9d6ba47a6b0a121611da06a2ea754e1ea9dae08d0fe09b3580a607d0c1edb0c12eec6df1dee31bdd83f70f09b154'
+  }
+}).then(r => r.json()).then(d => console.log('Zones:', d.data.length))
+
+Expected: "Zones: 25"
+
+STEP 5: Check Strapi Permissions
+---------------------------------
+If still not working:
+1. Open: https://cms.praktikoffice.kz/admin
+2. Settings → Roles → Public → Zone
+3. Enable: find, findOne, create, update
+4. Save
+
+STEP 6: Check Browser Console
+------------------------------
+Look for errors:
+- CORS error → CORS not applied, rebuild again
+- 403 error → Permissions issue (do STEP 5)
+- 401 error → Token issue
+
+WHY REBUILD IS NEEDED:
+======================
+- Next.js compiles TypeScript files at build time
+- The CORS fix in strapi/config/middlewares.ts needs Strapi restart
+- The cursor fix in layout.tsx needs Next.js rebuild
+- Changes won't apply until rebuild + restart
+
+QUICK COMMANDS:
+===============
+npm run build && pm2 restart all
+
+Then test: https://praktikoffice.kz/en/map

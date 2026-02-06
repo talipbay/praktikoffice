@@ -1,0 +1,141 @@
+🔧 APPLY ALL FIXES - COMPLETE GUIDE
+====================================
+
+WHAT WAS FIXED:
+===============
+✅ Cursor issue - CSS updated to allow canvas cursor
+✅ CORS configuration - Added praktikoffice.kz to allowed origins
+✅ Strapi server URL - Added public URL configuration
+
+FILES CHANGED:
+==============
+1. src/app/(admin)/[locale]/map/layout.tsx - Cursor fix
+2. strapi/config/middlewares.ts - CORS configuration
+3. strapi/config/server.ts - Public URL configuration
+
+HOW TO APPLY:
+=============
+
+OPTION 1: Automated (Recommended)
+----------------------------------
+bash scripts/rebuild-all.sh
+
+This will:
+- Build Strapi
+- Build Next.js
+- Restart both services
+- Verify everything works
+
+OPTION 2: Manual
+----------------
+# Build Strapi
+cd strapi
+npm run build
+cd ..
+
+# Build Next.js
+npm run build
+
+# Restart services
+pm2 restart strapi
+pm2 restart nextjs
+
+# Verify
+pm2 status
+
+AFTER REBUILD:
+==============
+
+1. Set Strapi Permissions (CRITICAL!)
+--------------------------------------
+Open: https://cms.praktikoffice.kz/admin
+Go to: Settings → Roles → Public → Zone
+Enable:
+  ✓ find
+  ✓ findOne
+  ✓ create
+  ✓ update
+Click: Save
+
+2. Test the Map Page
+--------------------
+Open: https://praktikoffice.kz/en/map
+Press: Ctrl + Shift + R (hard refresh)
+Result: Should see 25 zones on floor plan
+
+3. Verify in Browser Console
+-----------------------------
+Press F12 → Console tab
+Run:
+
+fetch('https://cms.praktikoffice.kz/api/zones', {
+  headers: {
+    'Authorization': 'Bearer 2c2efcd80f8156e683126e2ea6719259a024f88db7972bfd1c0cadfb28410c71ff8eed539afe49a560d657e0131dc20340b2a90e6ecf153005aa230d490aee0e4d9789429b8fb78b72fad0ef82febe8f897e9d6ba47a6b0a121611da06a2ea754e1ea9dae08d0fe09b3580a607d0c1edb0c12eec6df1dee31bdd83f70f09b154'
+  }
+}).then(r => r.json()).then(d => console.log('Zones:', d.data.length))
+
+Expected: "Zones: 25"
+
+TROUBLESHOOTING:
+================
+
+If zones still don't load:
+--------------------------
+1. Check browser console for errors
+2. Verify Strapi permissions are set
+3. Run: bash scripts/debug-zone-loading.sh
+4. Check: docs/FIX_ZONES_NOT_LOADING.md
+
+If cursor is still wrong:
+-------------------------
+1. Hard refresh: Ctrl + Shift + R
+2. Clear cache: F12 → Right-click refresh → Empty cache
+3. Try different browser
+
+If CORS errors appear:
+----------------------
+1. Verify Strapi restarted: pm2 logs strapi
+2. Check CORS headers: curl -I -H "Origin: https://praktikoffice.kz" https://cms.praktikoffice.kz/api/zones
+3. Rebuild Strapi: cd strapi && npm run build && cd .. && pm2 restart strapi
+
+QUICK COMMANDS:
+===============
+
+# Rebuild everything
+bash scripts/rebuild-all.sh
+
+# Debug issues
+bash scripts/debug-zone-loading.sh
+
+# Check logs
+pm2 logs strapi
+pm2 logs nextjs
+
+# Restart services
+pm2 restart all
+
+# Check status
+pm2 status
+
+EXPECTED RESULT:
+================
+After applying fixes and setting permissions:
+✅ Zones visible on /map page
+✅ Cursor works correctly (changes on hover)
+✅ Can click zones to select them
+✅ Can right-click for context menu
+✅ Can create new zones (if enabled)
+
+DOCUMENTATION:
+==============
+- REBUILD_AND_FIX.txt - Rebuild instructions
+- FIX_MAP_NOW.txt - Quick fix reference
+- docs/FIX_ZONES_NOT_LOADING.md - Complete troubleshooting
+- scripts/debug-zone-loading.sh - Debug script
+- scripts/rebuild-all.sh - Automated rebuild
+
+START HERE:
+===========
+bash scripts/rebuild-all.sh
+
+Then set Strapi permissions and test!
