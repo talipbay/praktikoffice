@@ -180,6 +180,7 @@ export const ZoneCanvas = React.forwardRef<ZoneCanvasRef, ZoneCanvasProps>(({
   const [editingVertices, setEditingVertices] = useState<Point[]>([]);
   const [dragStartPosition, setDragStartPosition] = useState<Point | null>(null);
   const [isLongPressActive, setIsLongPressActive] = useState(false);
+  const [cursorStyle, setCursorStyle] = useState('default');
   
 
 
@@ -452,6 +453,22 @@ export const ZoneCanvas = React.forwardRef<ZoneCanvasRef, ZoneCanvasProps>(({
     
     const originalPoint = canvasToOriginal(canvasPoint);
 
+    // Update cursor based on state
+    if (isDraggingVertex) {
+      setCursorStyle('grabbing');
+    } else if (isCreatingZone) {
+      setCursorStyle('crosshair');
+    } else if (isEditingZone && editingVertices.length > 0) {
+      // Check if hovering over a vertex
+      const canvasVertices = originalVerticestoCanvas(editingVertices);
+      const nearestIndex = findNearestVertexIndex(canvasPoint, canvasVertices, 15);
+      setCursorStyle(nearestIndex !== -1 ? 'grab' : 'default');
+    } else {
+      // Check if hovering over a zone
+      const hoveredZone = findZoneAtPointMemo(originalPoint, zones);
+      setCursorStyle(hoveredZone ? 'pointer' : 'default');
+    }
+
     // Handle vertex dragging (store in original coordinates)
     if (isDraggingVertex && draggingVertexIndex !== -1 && isLongPressActive) {
       const newVertices = [...editingVertices];
@@ -469,7 +486,7 @@ export const ZoneCanvas = React.forwardRef<ZoneCanvasRef, ZoneCanvasProps>(({
     if (isCreatingZone) {
       setMousePosition(originalPoint);
     }
-  }, 16), [isCreatingZone, isDraggingVertex, draggingVertexIndex, editingVertices, isLongPressActive, canvasToOriginal]); // 16ms = ~60fps
+  }, 16), [isCreatingZone, isDraggingVertex, draggingVertexIndex, editingVertices, isLongPressActive, canvasToOriginal, isEditingZone, originalVerticestoCanvas, findNearestVertexIndex, findZoneAtPointMemo, zones]); // 16ms = ~60fps
 
 
 
@@ -1035,6 +1052,7 @@ export const ZoneCanvas = React.forwardRef<ZoneCanvasRef, ZoneCanvasProps>(({
         onTouchStart={handlePointerDown}
         onTouchEnd={handlePointerUp}
         tabIndex={0}
+        style={{ cursor: cursorStyle }}
         onError={(error: any) => {
           console.error('Konva Stage error:', error);
         }}
