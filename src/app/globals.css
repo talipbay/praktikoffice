@@ -86,9 +86,9 @@
     @apply border-border outline-ring/50;
   }
 
-  /* Only hide cursor on desktop devices */
+  /* Only hide cursor on desktop devices, but not on canvas or interactive elements */
   @media (min-width: 769px) and (hover: hover) and (pointer: fine) {
-    * {
+    body *:not(canvas):not(button):not(input):not(select):not(textarea):not(a):not([role="button"]) {
       cursor: none !important;
     }
   }

@@ -1,0 +1,37 @@
+fix: resolve Strapi redirect, cursor visibility, and zone update issues
+
+Fixed three critical issues affecting the map management interface:
+
+1. Strapi Admin Redirect Issue
+   - Removed `url` config from strapi/config/server.ts
+   - Prevents cms.praktikoffice.kz from redirecting to localhost:1337
+   - Caddy handles domain routing, Strapi doesn't need to know the URL
+
+2. Cursor Visibility on /map Page
+   - Updated src/app/globals.css cursor hiding rule
+   - Excluded canvas and interactive elements from cursor:none
+   - Users can now see cursor when working with the map
+
+3. Zone Update Failures
+   - Enhanced CORS configuration in strapi/config/middlewares.ts
+   - Added missing HTTP methods and headers
+   - Updated .env.local to use production Strapi URL
+   - Zone status changes (free/occupied) now work correctly
+
+Files changed:
+- strapi/config/server.ts
+- strapi/config/middlewares.ts
+- src/app/globals.css
+- .env.local
+
+Deployment scripts added:
+- FIX_ISSUES.sh - Automated fix application
+- CHECK_CONFIG.sh - Configuration verification
+- DEPLOY_FIXES_VPS.md - VPS deployment guide
+- QUICK_FIX_REFERENCE.md - Quick reference card
+
+Testing:
+- ✅ cms.praktikoffice.kz accessible without redirect
+- ✅ Cursor visible on map canvas
+- ✅ Zone status updates working
+- ✅ CORS headers properly configured
