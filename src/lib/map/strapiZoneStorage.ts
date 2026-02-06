@@ -115,14 +115,16 @@ export async function updateZoneInStrapi(zone: Zone): Promise<boolean> {
       throw new Error(`Failed to find zone: ${response.statusText}`);
     }
 
-    const result: StrapiResponse<StrapiZone[]> = await response.json();
+    const result: any = await response.json();
     
-    if (result.data.length === 0) {
+    if (!result.data || result.data.length === 0) {
       // Zone doesn't exist, create it
       return createZoneInStrapi(zone);
     }
 
-    const strapiId = result.data[0].id;
+    // Handle both old format (with attributes) and new format (direct fields)
+    const firstItem = result.data[0];
+    const strapiId = firstItem.id;
 
     // Update the zone
     const updateResponse = await fetch(`${STRAPI_URL}/api/zones/${strapiId}`, {
@@ -142,7 +144,8 @@ export async function updateZoneInStrapi(zone: Zone): Promise<boolean> {
     });
 
     if (!updateResponse.ok) {
-      throw new Error(`Failed to update zone: ${updateResponse.statusText}`);
+      const errorText = await updateResponse.text();
+      throw new Error(`Failed to update zone: ${updateResponse.statusText} - ${errorText}`);
     }
 
     return true;
@@ -172,9 +175,9 @@ export async function deleteZoneFromStrapi(zoneId: string): Promise<boolean> {
       throw new Error(`Failed to find zone: ${response.statusText}`);
     }
 
-    const result: StrapiResponse<StrapiZone[]> = await response.json();
+    const result: any = await response.json();
     
-    if (result.data.length === 0) {
+    if (!result.data || result.data.length === 0) {
       // Zone doesn't exist
       return true;
     }
@@ -191,7 +194,8 @@ export async function deleteZoneFromStrapi(zoneId: string): Promise<boolean> {
     });
 
     if (!deleteResponse.ok) {
-      throw new Error(`Failed to delete zone: ${deleteResponse.statusText}`);
+      const errorText = await deleteResponse.text();
+      throw new Error(`Failed to delete zone: ${deleteResponse.statusText} - ${errorText}`);
     }
 
     return true;
