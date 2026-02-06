@@ -1,0 +1,12 @@
+# Copy and paste this command on your server:
+
+cd ~/praktikoffice && node scripts/migrate-zones-simple.js
+
+# That's it! The script will:
+# 1. Read public/zones-cleaned.json
+# 2. Connect to Strapi
+# 3. Create all zones
+# 4. Show progress and summary
+
+# Make sure Strapi is running first:
+# cd ~/praktikoffice/strapi && npm run develop

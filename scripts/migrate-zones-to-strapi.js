@@ -11,10 +11,10 @@ if (!STRAPI_TOKEN) {
   process.exit(1);
 }
 
-const zonesFile = path.join(process.cwd(), 'zones-backup.json');
+const zonesFile = path.join(process.cwd(), 'public/zones-cleaned.json');
 if (!fs.existsSync(zonesFile)) {
-  console.error('❌ Error: zones-backup.json not found');
-  console.error('Export zones from map and save as zones-backup.json');
+  console.error('❌ Error: public/zones-cleaned.json not found');
+  console.error('Place your zones file at public/zones-cleaned.json');
   process.exit(1);
 }
 

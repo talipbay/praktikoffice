@@ -1,0 +1,595 @@
+{
+  "version": "1.0.0",
+  "exportDate": "2025-11-03T12:19:28.145Z",
+  "zones": [
+    {
+      "id": "zone_1762170399031_j4jhojg8j",
+      "vertices": [
+        { "x": 1701, "y": 40 },
+        { "x": 1858, "y": 40 },
+        { "x": 1858, "y": 87 },
+        { "x": 1919, "y": 89 },
+        { "x": 1917, "y": 177 },
+        { "x": 1704, "y": 180 }
+      ],
+      "status": "occupied",
+      "companyName": "MDQ",
+      "createdAt": 1762170399031,
+      "updatedAt": 1762171963339
+    },
+    {
+      "id": "zone_1762170432695_cg7dof0ci",
+      "vertices": [
+        { "x": 1750, "y": 187 },
+        { "x": 1751, "y": 257 },
+        { "x": 1919, "y": 260 },
+        { "x": 1917, "y": 185 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762170432695,
+      "updatedAt": 1762170469384
+    },
+    {
+      "id": "zone_1762170456485_69j125gln",
+      "vertices": [
+        { "x": 1753, "y": 269 },
+        { "x": 1917, "y": 272 },
+        { "x": 1919, "y": 398 },
+        { "x": 1748, "y": 395 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762170456485,
+      "updatedAt": 1762170504567
+    },
+    {
+      "id": "zone_1762170481634_7q0yyljsb",
+      "vertices": [
+        { "x": 1750, "y": 313 },
+        { "x": 1750, "y": 392 },
+        { "x": 1655, "y": 393 },
+        { "x": 1655, "y": 316 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762170481634,
+      "updatedAt": 1762170496401
+    },
+    {
+      "id": "zone_1762170511962_kwuhvnros",
+      "vertices": [
+        { "x": 1529, "y": 336 },
+        { "x": 1577, "y": 338 },
+        { "x": 1579, "y": 392 },
+        { "x": 1529, "y": 392 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762170511962,
+      "updatedAt": 1762170764438
+    },
+    {
+      "id": "zone_1762170628625_ajca0rsby",
+      "vertices": [
+        { "x": 1452, "y": 342 },
+        { "x": 1452, "y": 392 },
+        { "x": 1521, "y": 393 },
+        { "x": 1522, "y": 336 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762170628625,
+      "updatedAt": 1762170761401
+    },
+    {
+      "id": "zone_1762170664065_w7rlc1tq8",
+      "vertices": [
+        { "x": 1372, "y": 335 },
+        { "x": 1372, "y": 392 },
+        { "x": 1449, "y": 395 },
+        { "x": 1452, "y": 338 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762170664065,
+      "updatedAt": 1762172316560
+    },
+    {
+      "id": "zone_1762171302051_tz71h0ih2",
+      "vertices": [
+        { "x": 1298, "y": 391 },
+        { "x": 1296, "y": 338 },
+        { "x": 1365, "y": 336 },
+        { "x": 1366, "y": 392 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171302051,
+      "updatedAt": 1762172291142
+    },
+    {
+      "id": "zone_1762171319607_tka8stxrg",
+      "vertices": [
+        { "x": 1293, "y": 339 },
+        { "x": 1293, "y": 395 },
+        { "x": 1239, "y": 393 },
+        { "x": 1240, "y": 338 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171319607,
+      "updatedAt": 1762172352554
+    },
+    {
+      "id": "zone_1762171338456_e1bc1o4ra",
+      "vertices": [
+        { "x": 1654, "y": 399 },
+        { "x": 1860, "y": 401 },
+        { "x": 1856, "y": 535 },
+        { "x": 1621, "y": 532 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171338456,
+      "updatedAt": 1762171338456
+    },
+    {
+      "id": "zone_1762171345617_fo9f0o3qo",
+      "vertices": [
+        { "x": 1624, "y": 539 },
+        { "x": 1856, "y": 542 },
+        { "x": 1857, "y": 699 },
+        { "x": 1685, "y": 699 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171345617,
+      "updatedAt": 1762171345617
+    },
+    {
+      "id": "zone_1762171355001_j238m6dcs",
+      "vertices": [
+        { "x": 1737, "y": 705 },
+        { "x": 1916, "y": 705 },
+        { "x": 1917, "y": 868 },
+        { "x": 1734, "y": 870 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171355001,
+      "updatedAt": 1762171355001
+    },
+    {
+      "id": "zone_1762171361007_25gw5bpfw",
+      "vertices": [
+        { "x": 1730, "y": 877 },
+        { "x": 1916, "y": 878 },
+        { "x": 1919, "y": 998 },
+        { "x": 1858, "y": 1000 },
+        { "x": 1858, "y": 1051 },
+        { "x": 1734, "y": 1053 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171361007,
+      "updatedAt": 1762171361007
+    },
+    {
+      "id": "zone_1762171368309_rd71iyh25",
+      "vertices": [
+        { "x": 1725, "y": 940 },
+        { "x": 1727, "y": 1049 },
+        { "x": 1618, "y": 1049 },
+        { "x": 1615, "y": 933 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171368309,
+      "updatedAt": 1762171368309
+    },
+    {
+      "id": "zone_1762171374479_mhs2j9vvb",
+      "vertices": [
+        { "x": 1612, "y": 933 },
+        { "x": 1615, "y": 1049 },
+        { "x": 1539, "y": 1049 },
+        { "x": 1542, "y": 930 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171374479,
+      "updatedAt": 1762171374479
+    },
+    {
+      "id": "zone_1762171379300_8zjnu5mxz",
+      "vertices": [
+        { "x": 1535, "y": 926 },
+        { "x": 1535, "y": 1046 },
+        { "x": 1456, "y": 1049 },
+        { "x": 1451, "y": 923 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171379300,
+      "updatedAt": 1762171379300
+    },
+    {
+      "id": "zone_1762171386786_4594obr3i",
+      "vertices": [
+        { "x": 1448, "y": 920 },
+        { "x": 1212, "y": 900 },
+        { "x": 1208, "y": 1047 },
+        { "x": 1451, "y": 1049 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171386786,
+      "updatedAt": 1762171386786
+    },
+    {
+      "id": "zone_1762171392876_8fj7nj22a",
+      "vertices": [
+        { "x": 1208, "y": 898 },
+        { "x": 1049, "y": 883 },
+        { "x": 1052, "y": 1050 },
+        { "x": 1208, "y": 1050 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171392876,
+      "updatedAt": 1762171392876
+    },
+    {
+      "id": "zone_1762171410260_kx72slthv",
+      "vertices": [
+        { "x": 1042, "y": 885 },
+        { "x": 1044, "y": 1050 },
+        { "x": 967, "y": 1050 },
+        { "x": 961, "y": 883 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171410260,
+      "updatedAt": 1762171469872
+    },
+    {
+      "id": "zone_1762171417100_72kuyg9ev",
+      "vertices": [
+        { "x": 961, "y": 883 },
+        { "x": 960, "y": 1053 },
+        { "x": 725, "y": 1050 },
+        { "x": 724, "y": 941 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171417100,
+      "updatedAt": 1762171447177
+    },
+    {
+      "id": "zone_1762171580723_4or2vap75",
+      "vertices": [
+        { "x": 1054, "y": 837 },
+        { "x": 1053, "y": 710 },
+        { "x": 1143, "y": 707 },
+        { "x": 1140, "y": 845 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171580723,
+      "updatedAt": 1762171580723
+    },
+    {
+      "id": "zone_1762171586933_ri7hhapez",
+      "vertices": [
+        { "x": 971, "y": 711 },
+        { "x": 1049, "y": 712 },
+        { "x": 1052, "y": 838 },
+        { "x": 977, "y": 833 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171586933,
+      "updatedAt": 1762171586933
+    },
+    {
+      "id": "zone_1762171592933_256cceb8v",
+      "vertices": [
+        { "x": 966, "y": 710 },
+        { "x": 971, "y": 830 },
+        { "x": 881, "y": 823 },
+        { "x": 880, "y": 708 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171592933,
+      "updatedAt": 1762171592933
+    },
+    {
+      "id": "zone_1762171601361_vw8r0sop7",
+      "vertices": [
+        { "x": 863, "y": 278 },
+        { "x": 937, "y": 282 },
+        { "x": 941, "y": 395 },
+        { "x": 867, "y": 392 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171601361,
+      "updatedAt": 1762171601361
+    },
+    {
+      "id": "zone_1762171608977_cmvm96pfn",
+      "vertices": [
+        { "x": 856, "y": 276 },
+        { "x": 861, "y": 392 },
+        { "x": 793, "y": 392 },
+        { "x": 790, "y": 272 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171608977,
+      "updatedAt": 1762171608977
+    },
+    {
+      "id": "zone_1762171617220_t6xyhdxmb",
+      "vertices": [
+        { "x": 650, "y": 260 },
+        { "x": 715, "y": 265 },
+        { "x": 717, "y": 393 },
+        { "x": 648, "y": 392 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171617220,
+      "updatedAt": 1762171617220
+    },
+    {
+      "id": "zone_1762171624860_edsqqdxy2",
+      "vertices": [
+        { "x": 644, "y": 262 },
+        { "x": 645, "y": 396 },
+        { "x": 521, "y": 395 },
+        { "x": 518, "y": 249 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171624860,
+      "updatedAt": 1762171624860
+    },
+    {
+      "id": "zone_1762171631881_15lo8tbth",
+      "vertices": [
+        { "x": 959, "y": 229 },
+        { "x": 960, "y": 39 },
+        { "x": 844, "y": 41 },
+        { "x": 843, "y": 220 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171631881,
+      "updatedAt": 1762171631881
+    },
+    {
+      "id": "zone_1762171638246_26yu5hse6",
+      "vertices": [
+        { "x": 841, "y": 220 },
+        { "x": 840, "y": 43 },
+        { "x": 681, "y": 43 },
+        { "x": 687, "y": 210 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171638246,
+      "updatedAt": 1762171638246
+    },
+    {
+      "id": "zone_1762171665068_0qbdjxvux",
+      "vertices": [
+        { "x": 562, "y": 44 },
+        { "x": 675, "y": 44 },
+        { "x": 678, "y": 210 },
+        { "x": 562, "y": 197 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171665068,
+      "updatedAt": 1762171665068
+    },
+    {
+      "id": "zone_1762171671923_lh61np51b",
+      "vertices": [
+        { "x": 558, "y": 196 },
+        { "x": 555, "y": 47 },
+        { "x": 403, "y": 43 },
+        { "x": 402, "y": 186 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171671923,
+      "updatedAt": 1762171671923
+    },
+    {
+      "id": "zone_1762171677429_eqivimnfg",
+      "vertices": [
+        { "x": 315, "y": 43 },
+        { "x": 393, "y": 44 },
+        { "x": 395, "y": 185 },
+        { "x": 318, "y": 175 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171677429,
+      "updatedAt": 1762171677429
+    },
+    {
+      "id": "zone_1762171683226_tvdjkl7id",
+      "vertices": [
+        { "x": 229, "y": 40 },
+        { "x": 310, "y": 41 },
+        { "x": 312, "y": 177 },
+        { "x": 235, "y": 173 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171683226,
+      "updatedAt": 1762171720990
+    },
+    {
+      "id": "zone_1762171738959_p8xd8it4v",
+      "vertices": [
+        { "x": 227, "y": 166 },
+        { "x": 227, "y": 41 },
+        { "x": 66, "y": 39 },
+        { "x": 64, "y": 90 },
+        { "x": 0, "y": 86 },
+        { "x": 4, "y": 170 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171738959,
+      "updatedAt": 1762171738959
+    },
+    {
+      "id": "zone_1762171747020_llz8bo642",
+      "vertices": [
+        { "x": 117, "y": 175 },
+        { "x": 1, "y": 173 },
+        { "x": 1, "y": 385 },
+        { "x": 119, "y": 385 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171747020,
+      "updatedAt": 1762171747020
+    },
+    {
+      "id": "zone_1762171753014_42mf2n2kw",
+      "vertices": [
+        { "x": 124, "y": 227 },
+        { "x": 255, "y": 226 },
+        { "x": 249, "y": 306 },
+        { "x": 124, "y": 305 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171753014,
+      "updatedAt": 1762171753014
+    },
+    {
+      "id": "zone_1762171759727_x0gdh3xbn",
+      "vertices": [
+        { "x": 123, "y": 308 },
+        { "x": 249, "y": 310 },
+        { "x": 253, "y": 388 },
+        { "x": 126, "y": 383 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171759727,
+      "updatedAt": 1762171759727
+    },
+    {
+      "id": "zone_1762171765147_0jqctulee",
+      "vertices": [
+        { "x": 64, "y": 389 },
+        { "x": 253, "y": 392 },
+        { "x": 250, "y": 546 },
+        { "x": 66, "y": 549 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171765147,
+      "updatedAt": 1762171765147
+    },
+    {
+      "id": "zone_1762171791497_4h0koae3b",
+      "vertices": [
+        { "x": 403, "y": 981 },
+        { "x": 642, "y": 980 },
+        { "x": 641, "y": 1056 },
+        { "x": 406, "y": 1050 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171791497,
+      "updatedAt": 1762171791497
+    },
+    {
+      "id": "zone_1762171799851_wia3he78l",
+      "vertices": [
+        { "x": 236, "y": 761 },
+        { "x": 313, "y": 760 },
+        { "x": 316, "y": 871 },
+        { "x": 233, "y": 874 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171799851,
+      "updatedAt": 1762171799851
+    },
+    {
+      "id": "zone_1762171808373_gftxxute4",
+      "vertices": [
+        { "x": 236, "y": 877 },
+        { "x": 361, "y": 875 },
+        { "x": 396, "y": 981 },
+        { "x": 401, "y": 1053 },
+        { "x": 236, "y": 1049 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171808373,
+      "updatedAt": 1762171808373
+    },
+    {
+      "id": "zone_1762171815947_40x1ndwph",
+      "vertices": [
+        { "x": 4, "y": 911 },
+        { "x": 3, "y": 997 },
+        { "x": 67, "y": 1000 },
+        { "x": 69, "y": 1054 },
+        { "x": 227, "y": 1050 },
+        { "x": 230, "y": 915 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171815947,
+      "updatedAt": 1762171815947
+    },
+    {
+      "id": "zone_1762171824257_d1joncmka",
+      "vertices": [
+        { "x": 6, "y": 828 },
+        { "x": 157, "y": 827 },
+        { "x": 165, "y": 904 },
+        { "x": 4, "y": 907 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171824257,
+      "updatedAt": 1762171824257
+    },
+    {
+      "id": "zone_1762171832154_4323ro9or",
+      "vertices": [
+        { "x": 4, "y": 697 },
+        { "x": 62, "y": 694 },
+        { "x": 79, "y": 711 },
+        { "x": 162, "y": 711 },
+        { "x": 163, "y": 823 },
+        { "x": 0, "y": 824 }
+      ],
+      "status": "free",
+      "companyName": null,
+      "createdAt": 1762171832154,
+      "updatedAt": 1762171832154
+    }
+  ],
+  "metadata": {
+    "totalZones": 44,
+    "freeZones": 43,
+    "occupiedZones": 1,
+    "exportSource": "Interactive Zone Manager"
+  }
+}
