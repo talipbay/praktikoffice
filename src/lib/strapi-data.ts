@@ -8,6 +8,7 @@ export interface OfficeData {
   size: string;
   capacity: string;
   price: string;
+  description: string;
   featureKeys: string[];
   images: string[];
 }
@@ -82,6 +83,13 @@ export async function fetchOfficesData(locale: string = 'ru'): Promise<OfficeDat
         size: data.size || '',
         capacity: data.capacity || '',
         price: data.price || '',
+        description: typeof data.description === 'string' 
+          ? data.description 
+          : (Array.isArray(data.description) && data.description.length > 0)
+            ? data.description.map((block: any) => 
+                block.children?.map((child: any) => child.text).join('') || ''
+              ).join(' ')
+            : '',
         featureKeys: data.features || [],
         images: finalImages,
       };

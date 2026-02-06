@@ -14,6 +14,7 @@ interface Office {
   size: string;
   capacity: string;
   price: string;
+  description: string;
   featureKeys: string[];
   images: string[];
 }
@@ -99,9 +100,19 @@ export default function OfficesClient({ offices }: OfficesClientProps) {
                 <h2 className="text-3xl font-semibold mb-4">
                   {offices[selectedOffice].name}
                 </h2>
-                <p className="text-lg opacity-70 mb-6">
-                  {t("description")}
+                <p className="text-lg opacity-70 mb-4">
+                  {offices[selectedOffice].description || t("description")}
                 </p>
+                <div className="flex gap-6 text-sm opacity-70">
+                  <div>
+                    <span className="opacity-60">{t("size")}: </span>
+                    <span className="font-medium">{offices[selectedOffice].size}</span>
+                  </div>
+                  <div>
+                    <span className="opacity-60">{t("capacity")}: </span>
+                    <span className="font-medium">{offices[selectedOffice].capacity}</span>
+                  </div>
+                </div>
               </div>
 
               <div>
@@ -120,7 +131,7 @@ export default function OfficesClient({ offices }: OfficesClientProps) {
                       variant="outline"
                       className="bg-transparent border-foreground text-foreground"
                     >
-                      {t(`officeFeatures.${featureKey}`)}
+                      {featureKey}
                     </Badge>
                   ))}
                 </div>

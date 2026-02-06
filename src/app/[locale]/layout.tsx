@@ -131,6 +131,17 @@ export default async function LocaleLayout({
         <link rel="icon" href="/favicon.jpg" type="image/jpeg" />
         <link rel="shortcut icon" href="/favicon.jpg" type="image/jpeg" />
         <link rel="apple-touch-icon" href="/favicon.jpg" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-86JBER2K5Q"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-86JBER2K5Q');
+            `,
+          }}
+        />
         <style
           dangerouslySetInnerHTML={{
             __html: `
@@ -180,6 +191,29 @@ export default async function LocaleLayout({
             <Footer />
           </ColorProvider>
         </NextIntlClientProvider>
+        <span id="_zero_75520">
+          <noscript>
+            <a href="https://zero.kz/?s=75520" target="_blank" rel="noopener noreferrer">
+              <img src="https://c.zero.kz/z.png?u=75520" width="88" height="31" alt="ZERO.kz" />
+            </a>
+          </noscript>
+        </span>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              var _zero_kz_ = _zero_kz_ || [];
+              _zero_kz_.push(['id', 75520]);
+              _zero_kz_.push(['type', 1]);
+              (function () {
+                var a = document.getElementsByTagName('script')[0],
+                s = document.createElement('script');
+                s.async = true;
+                s.src = (document.location.protocol == 'http:' ? 'http:' : 'https:') + '//c.zero.kz/z.js';
+                a.parentNode.insertBefore(s, a);
+              })();
+            `,
+          }}
+        />
       </body>
     </html>
   );

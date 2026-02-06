@@ -9,6 +9,7 @@ const fallbackOffices = [
     size: "24 м²",
     capacity: "до 8 человек",
     price: "4,000 $/месяц",
+    description: "Просторный офис с зоной для встреч и комфортной планировкой",
     featureKeys: ["workplaces_8", "meetingZone", "spaciousLayout", "loungeArea"],
     images: [
       "/gallery/offices/office-3.webp",
@@ -22,6 +23,7 @@ const fallbackOffices = [
     size: "24 м²",
     capacity: "до 8 человек",
     price: "4,000 $/месяц",
+    description: "Современный офис с отличной планировкой и новой мебелью",
     featureKeys: ["workplaces_8", "meetingZone", "modernFurniture", "excellentLayout"],
     images: [
       "/gallery/offices/office-4.webp",
@@ -35,6 +37,7 @@ const fallbackOffices = [
     size: "18 м²",
     capacity: "до 6 человек",
     price: "2,700 $/месяц",
+    description: "Компактный офис с хорошим освещением и удобной планировкой",
     featureKeys: ["workplaces_6", "meetingArea", "goodLighting", "convenientLayout"],
     images: [
       "/gallery/offices/office-2.webp",
@@ -48,6 +51,7 @@ const fallbackOffices = [
     size: "30 м²",
     capacity: "до 10 человек",
     price: "5,000 $/месяц",
+    description: "Большой офис премиум-класса с зоной отдыха и переговорной",
     featureKeys: ["workplaces_10", "largeMeetingRoom", "loungeArea", "premiumLayout"],
     images: [
       "/gallery/offices/office-2.webp",
@@ -61,6 +65,7 @@ const fallbackOffices = [
     size: "24 м²",
     capacity: "до 8 человек",
     price: "4,000 $/месяц",
+    description: "Функциональный офис с зоной для презентаций",
     featureKeys: ["workplaces_8", "presentationZone", "comfortableEnvironment", "functionalLayout"],
     images: [
       "/gallery/offices/office-5.webp",
@@ -74,6 +79,7 @@ const fallbackOffices = [
     size: "12 м²",
     capacity: "до 4 человек",
     price: "1,800 $/месяц",
+    description: "Компактный офис с естественным освещением",
     featureKeys: ["workplaces_4", "naturalLighting", "compactLayout", "accessToCommonAreas"],
     images: [
       "/gallery/offices/office-1.webp",
@@ -87,6 +93,7 @@ const fallbackOffices = [
     size: "24 м²",
     capacity: "до 8 человек",
     price: "4,000 $/месяц",
+    description: "Офис с удобным расположением и современным оборудованием",
     featureKeys: ["workplaces_8", "convenientLocation", "modernEquipment", "flexibleLayout"],
     images: [
       "/gallery/offices/office-6.webp",
@@ -100,6 +107,7 @@ const fallbackOffices = [
     size: "36 м²",
     capacity: "до 12 человек",
     price: "6,000 $/месяц",
+    description: "Большой офис с отдельными рабочими зонами и максимальным комфортом",
     featureKeys: ["workplaces_12", "largeMeetingRoom", "loungeArea", "separateWorkZones", "maximumComfort"],
     images: [
       "/gallery/offices/office-3.webp",
@@ -113,6 +121,7 @@ const fallbackOffices = [
     size: "27 м²",
     capacity: "до 9 человек",
     price: "4,500 $/месяц",
+    description: "Офис с расширенной рабочей зоной и дополнительным пространством",
     featureKeys: ["workplaces_9", "expandedWorkZone", "meetingArea", "additionalSpace"],
     images: [
       "/gallery/offices/office-1.webp",
