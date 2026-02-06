@@ -22,24 +22,29 @@ export default function MapLayout({
         <link rel="icon" href="/favicon.jpg" type="image/jpeg" />
         <style dangerouslySetInnerHTML={{
           __html: `
-            /* Reset cursor to default for admin interface */
+            /* Reset cursor - but allow canvas to override */
             body, html {
               cursor: default;
             }
             
-            /* Ensure buttons and interactive elements have pointer cursor */
+            /* Buttons and links */
             button, a, [role="button"], input[type="button"], input[type="submit"] {
               cursor: pointer !important;
             }
             
-            /* Text inputs should have text cursor */
+            /* Text inputs */
             input[type="text"], input[type="email"], textarea {
               cursor: text !important;
             }
             
-            /* Allow canvas to control its own cursor */
-            canvas, .canvas-area {
-              cursor: auto !important;
+            /* CRITICAL: Let canvas and its container control cursor */
+            canvas, canvas *, .canvas-area, .canvas-area * {
+              cursor: inherit !important;
+            }
+            
+            /* Remove any custom cursor from main site */
+            #custom-cursor {
+              display: none !important;
             }
             
             /* Force light theme colors for admin interface */

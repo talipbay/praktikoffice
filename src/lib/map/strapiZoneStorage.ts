@@ -30,7 +30,7 @@ interface StrapiResponse<T> {
  */
 export async function fetchZonesFromStrapi(): Promise<Zone[]> {
   try {
-    const response = await fetch(`${STRAPI_URL}/api/zones`, {
+    const response = await fetch(`${STRAPI_URL}/api/zones?pagination[pageSize]=100`, {
       headers: {
         'Authorization': `Bearer ${STRAPI_TOKEN}`,
         'Content-Type': 'application/json',
