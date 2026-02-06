@@ -91,7 +91,7 @@ export async function fetchOfficesData(locale: string = 'ru'): Promise<OfficeDat
                   return block.children?.map((child: any) => child.text).join('') || '';
                 }
                 return '';
-              }).filter(Boolean).join('\n\n')
+              }).filter(Boolean).join('\n')
             : '',
         featureKeys: data.features || [],
         images: finalImages,

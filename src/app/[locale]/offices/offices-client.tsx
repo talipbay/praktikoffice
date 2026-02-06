@@ -97,7 +97,7 @@ export default function OfficesClient({ offices }: OfficesClientProps) {
 
             <div className="space-y-6">
               <div>
-                <p className="text-sm opacity-80 mb-6 whitespace-pre-line leading-relaxed">
+                <p className="text-sm opacity-80 mb-6 whitespace-pre-line leading-normal">
                   {offices[selectedOffice].description || t("description")}
                 </p>
               </div>
