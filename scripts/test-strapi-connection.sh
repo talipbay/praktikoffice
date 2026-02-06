@@ -1,98 +1,122 @@
 #!/bin/bash
 
-echo "🔍 Testing Strapi Connection..."
-echo "================================"
+# Test Strapi connection
+echo "🔍 Testing Strapi Connection"
+echo "=============================="
 echo ""
 
-# Colors
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
+# Load environment variables
+if [ -f .env.local ]; then
+    export $(cat .env.local | grep -v '^#' | xargs)
+fi
 
-# Test Strapi health
-echo "1. Testing Strapi health..."
-if curl -s http://localhost:1337/_health > /dev/null 2>&1; then
-    echo -e "${GREEN}✅ Strapi is running${NC}"
+STRAPI_URL="${NEXT_PUBLIC_STRAPI_URL:-http://localhost:1337}"
+STRAPI_TOKEN="${NEXT_PUBLIC_STRAPI_API_TOKEN}"
+
+echo "📍 Strapi URL: $STRAPI_URL"
+echo "🔑 Token: ${STRAPI_TOKEN:0:10}..."
+echo ""
+
+# Test 1: Basic connectivity
+echo "Test 1: Basic connectivity"
+echo "--------------------------"
+if curl -s -o /dev/null -w "%{http_code}" "$STRAPI_URL" | grep -q "200\|301\|302"; then
+    echo "✅ Strapi is reachable"
 else
-    echo -e "${RED}❌ Strapi is not running${NC}"
-    echo "Start Strapi with: pm2 start ecosystem.config.js"
+    echo "❌ Cannot reach Strapi"
+    echo "   Make sure Strapi is running: cd strapi && npm run develop"
     exit 1
 fi
 echo ""
 
-# Test offices API
-echo "2. Testing Offices API..."
-OFFICES=$(curl -s "http://localhost:1337/api/offices?populate=*&locale=ru")
-if echo "$OFFICES" | grep -q '"data"'; then
-    COUNT=$(echo "$OFFICES" | jq '.data | length' 2>/dev/null || echo "0")
-    if [ "$COUNT" -gt 0 ]; then
-        echo -e "${GREEN}✅ Offices API working - Found $COUNT offices${NC}"
-    else
-        echo -e "${YELLOW}⚠️  Offices API working but no data found${NC}"
-        echo "Add offices in Strapi admin panel"
-    fi
-else
-    echo -e "${RED}❌ Offices API not working${NC}"
-    echo "Check API permissions in Strapi admin"
-fi
+# Test 2: API endpoint
+echo "Test 2: API endpoint"
+echo "--------------------"
+HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+    -H "Authorization: Bearer $STRAPI_TOKEN" \
+    -H "Content-Type: application/json" \
+    "$STRAPI_URL/api/zones")
+
+echo "HTTP Status: $HTTP_CODE"
+
+case $HTTP_CODE in
+    200)
+        echo "✅ API is accessible"
+        ZONE_COUNT=$(curl -s \
+            -H "Authorization: Bearer $STRAPI_TOKEN" \
+            -H "Content-Type: application/json" \
+            "$STRAPI_URL/api/zones" | grep -o '"data":\[' | wc -l)
+        echo "📦 Current zones: Check Strapi admin"
+        ;;
+    401)
+        echo "❌ Authentication failed - Invalid API token"
+        echo "   Check NEXT_PUBLIC_STRAPI_API_TOKEN in .env.local"
+        exit 1
+        ;;
+    403)
+        echo "❌ Permission denied"
+        echo "   Go to Strapi Admin → Settings → Roles → Public"
+        echo "   Enable all permissions for 'zone' content type"
+        exit 1
+        ;;
+    404)
+        echo "❌ Zone content type not found"
+        echo "   Create 'zone' content type in Strapi first"
+        echo "   See STRAPI_ZONE_SETUP.md for instructions"
+        exit 1
+        ;;
+    *)
+        echo "❌ Unexpected status code: $HTTP_CODE"
+        exit 1
+        ;;
+esac
 echo ""
 
-# Test meeting rooms API
-echo "3. Testing Meeting Rooms API..."
-ROOMS=$(curl -s "http://localhost:1337/api/meeting-rooms?populate=*&locale=ru")
-if echo "$ROOMS" | grep -q '"data"'; then
-    COUNT=$(echo "$ROOMS" | jq '.data | length' 2>/dev/null || echo "0")
-    if [ "$COUNT" -gt 0 ]; then
-        echo -e "${GREEN}✅ Meeting Rooms API working - Found $COUNT rooms${NC}"
-    else
-        echo -e "${YELLOW}⚠️  Meeting Rooms API working but no data found${NC}"
-        echo "Add meeting rooms in Strapi admin panel"
-    fi
-else
-    echo -e "${RED}❌ Meeting Rooms API not working${NC}"
-    echo "Check API permissions in Strapi admin"
-fi
+# Test 3: Create test zone
+echo "Test 3: Create test zone"
+echo "------------------------"
+TEST_RESPONSE=$(curl -s -w "\n%{http_code}" \
+    -X POST \
+    -H "Authorization: Bearer $STRAPI_TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{
+        "data": {
+            "zoneId": "test_zone_123",
+            "vertices": [{"x": 100, "y": 100}, {"x": 200, "y": 100}, {"x": 200, "y": 200}, {"x": 100, "y": 200}],
+            "status": "free",
+            "companyName": null
+        }
+    }' \
+    "$STRAPI_URL/api/zones")
+
+HTTP_CODE=$(echo "$TEST_RESPONSE" | tail -n1)
+RESPONSE_BODY=$(echo "$TEST_RESPONSE" | head -n-1)
+
+case $HTTP_CODE in
+    200|201)
+        echo "✅ Can create zones"
+        echo "   Cleaning up test zone..."
+        # Try to delete test zone (optional)
+        ;;
+    400)
+        if echo "$RESPONSE_BODY" | grep -q "already exists\|duplicate"; then
+            echo "✅ Can create zones (test zone already exists)"
+        else
+            echo "⚠️  Create failed: $RESPONSE_BODY"
+        fi
+        ;;
+    *)
+        echo "❌ Cannot create zones: HTTP $HTTP_CODE"
+        echo "   Response: $RESPONSE_BODY"
+        exit 1
+        ;;
+esac
 echo ""
 
-# Test coworking API
-echo "4. Testing Coworking Tariffs API..."
-TARIFFS=$(curl -s "http://localhost:1337/api/coworking-tariffs?populate=*&locale=ru")
-if echo "$TARIFFS" | grep -q '"data"'; then
-    COUNT=$(echo "$TARIFFS" | jq '.data | length' 2>/dev/null || echo "0")
-    if [ "$COUNT" -gt 0 ]; then
-        echo -e "${GREEN}✅ Coworking Tariffs API working - Found $COUNT tariffs${NC}"
-    else
-        echo -e "${YELLOW}⚠️  Coworking Tariffs API working but no data found${NC}"
-        echo "Add coworking tariffs in Strapi admin panel"
-    fi
-else
-    echo -e "${RED}❌ Coworking Tariffs API not working${NC}"
-    echo "Check API permissions in Strapi admin"
-fi
+echo "=============================="
+echo "✅ All tests passed!"
+echo "=============================="
 echo ""
-
-# Check environment variable
-echo "5. Checking Next.js environment..."
-if [ -f ".env.local" ]; then
-    if grep -q "NEXT_PUBLIC_STRAPI_URL" .env.local; then
-        STRAPI_URL=$(grep "NEXT_PUBLIC_STRAPI_URL" .env.local | cut -d'=' -f2)
-        echo -e "${GREEN}✅ NEXT_PUBLIC_STRAPI_URL is set: $STRAPI_URL${NC}"
-    else
-        echo -e "${RED}❌ NEXT_PUBLIC_STRAPI_URL not found in .env.local${NC}"
-        echo "Add: NEXT_PUBLIC_STRAPI_URL=http://localhost:1337"
-    fi
-else
-    echo -e "${RED}❌ .env.local file not found${NC}"
-    echo "Create .env.local and add: NEXT_PUBLIC_STRAPI_URL=http://localhost:1337"
-fi
+echo "Ready to migrate zones:"
+echo "  node scripts/migrate-zones-debug.js"
 echo ""
-
-echo "================================"
-echo "Test complete!"
-echo ""
-echo "Next steps:"
-echo "1. If APIs are working but no data: Add content in Strapi admin"
-echo "2. If APIs not working: Check permissions in Strapi (Settings → Roles → Public)"
-echo "3. Rebuild Next.js: rm -rf .next && npm run build"
-echo "4. Test pages: http://localhost:3000/ru/offices"

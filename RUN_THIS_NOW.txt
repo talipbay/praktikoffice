@@ -1,0 +1,27 @@
+=================================================================
+QUICK FIX - Run This Command on Your Server
+=================================================================
+
+The "fetch failed" error means Node.js can't connect to the HTTPS URL.
+
+Solution: Use localhost instead (Strapi is on same server)
+
+-----------------------------------------------------------------
+COPY AND RUN THIS COMMAND:
+-----------------------------------------------------------------
+
+NEXT_PUBLIC_STRAPI_URL=http://localhost:1337 node scripts/migrate-zones-debug.js
+
+-----------------------------------------------------------------
+
+This will:
+1. Connect to Strapi via localhost (bypasses HTTPS issues)
+2. Test connection first
+3. Migrate all 44 zones
+4. Show progress and results
+
+Make sure Strapi is running first:
+  cd strapi && npm run develop
+  (or check: pm2 list)
+
+=================================================================
