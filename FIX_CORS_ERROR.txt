@@ -1,0 +1,91 @@
+🔴 CORS ERROR FIXED
+===================
+
+ERROR MESSAGE:
+--------------
+"The 'Access-Control-Allow-Origin' header contains multiple values 
+'*, https://praktikoffice.kz', but only one is allowed."
+
+ROOT CAUSE:
+-----------
+Both Caddy AND Strapi were adding CORS headers, causing duplicates.
+
+SOLUTION:
+---------
+✅ Removed CORS headers from Caddyfile (let Strapi handle it)
+✅ Updated Strapi CORS config to only allow specific origins
+✅ Removed wildcard (*) from CORS
+
+FILES CHANGED:
+--------------
+1. Caddyfile - Removed Access-Control-* headers
+2. strapi/config/middlewares.ts - Fixed CORS config
+
+HOW TO APPLY:
+=============
+
+QUICK FIX (Run this):
+---------------------
+bash FIX_CORS_NOW.sh
+
+OR MANUAL:
+----------
+# 1. Reload Caddy
+sudo systemctl reload caddy
+
+# 2. Rebuild Strapi
+cd strapi
+npm run build
+cd ..
+
+# 3. Restart Strapi
+pm2 restart strapi
+
+# 4. Test
+curl -I -H "Origin: https://praktikoffice.kz" \
+  https://cms.praktikoffice.kz/api/zones | grep -i access-control
+
+VERIFY FIX:
+===========
+
+1. Open: https://praktikoffice.kz/en/map
+2. Press: Ctrl + Shift + R (hard refresh)
+3. Press: F12 → Console
+4. Run:
+
+fetch('https://cms.praktikoffice.kz/api/zones', {
+  headers: {
+    'Authorization': 'Bearer 2c2efcd80f8156e683126e2ea6719259a024f88db7972bfd1c0cadfb28410c71ff8eed539afe49a560d657e0131dc20340b2a90e6ecf153005aa230d490aee0e4d9789429b8fb78b72fad0ef82febe8f897e9d6ba47a6b0a121611da06a2ea754e1ea9dae08d0fe09b3580a607d0c1edb0c12eec6df1dee31bdd83f70f09b154'
+  }
+}).then(r => r.json()).then(d => console.log('Zones:', d.data.length))
+
+EXPECTED RESULT:
+----------------
+✅ No CORS error
+✅ Console shows: "Zones: 25"
+✅ Zones appear on map
+
+IF STILL NOT WORKING:
+=====================
+
+Check Strapi Permissions:
+-------------------------
+1. Open: https://cms.praktikoffice.kz/admin
+2. Settings → Roles → Public → Zone
+3. Enable: find, findOne, create, update
+4. Save
+
+Check Logs:
+-----------
+pm2 logs strapi
+pm2 logs nextjs
+
+Debug:
+------
+bash scripts/debug-zone-loading.sh
+
+QUICK COMMAND:
+==============
+bash FIX_CORS_NOW.sh
+
+Then refresh /map page and zones should load!

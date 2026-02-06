@@ -7,7 +7,7 @@ export default [
     config: {
       enabled: true,
       origin: ['https://praktikoffice.kz', 'https://cms.praktikoffice.kz', 'http://localhost:3000'],
-      headers: '*',
+      credentials: true,
     },
   },
   'strapi::poweredBy',
