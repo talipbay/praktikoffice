@@ -1,0 +1,67 @@
+QUICK FIX - ZONES NOT LOADING
+==============================
+
+ISSUE 1: Zones not visible on /map page
+ISSUE 2: Cursor appears under the map
+
+FIXES APPLIED:
+✅ CORS configuration updated in strapi/config/middlewares.ts
+✅ Cursor CSS fixed in src/app/(admin)/[locale]/map/layout.tsx
+
+YOUR ACTION REQUIRED:
+=====================
+
+STEP 1: Set Strapi Permissions (CRITICAL!)
+-------------------------------------------
+1. Open: https://cms.praktikoffice.kz/admin
+2. Click: Settings (left sidebar)
+3. Click: Roles → Public
+4. Scroll to: Zone section
+5. Check these boxes:
+   ✓ find
+   ✓ findOne
+   ✓ create
+   ✓ update
+6. Click: Save (top right)
+
+STEP 2: Restart Services
+-------------------------
+pm2 restart strapi
+pm2 restart nextjs
+
+STEP 3: Test
+------------
+1. Open: https://praktikoffice.kz/en/map
+2. Press: Ctrl + Shift + R (hard refresh)
+3. You should see zones on the floor plan
+
+STEP 4: Verify in Browser Console
+----------------------------------
+1. Press F12 on /map page
+2. Go to Console tab
+3. Run this:
+
+fetch('https://cms.praktikoffice.kz/api/zones', {
+  headers: {
+    'Authorization': 'Bearer 2c2efcd80f8156e683126e2ea6719259a024f88db7972bfd1c0cadfb28410c71ff8eed539afe49a560d657e0131dc20340b2a90e6ecf153005aa230d490aee0e4d9789429b8fb78b72fad0ef82febe8f897e9d6ba47a6b0a121611da06a2ea754e1ea9dae08d0fe09b3580a607d0c1edb0c12eec6df1dee31bdd83f70f09b154'
+  }
+}).then(r => r.json()).then(d => console.log('Zones:', d.data.length))
+
+Expected: "Zones: 44"
+If you see 403: Permissions not set (do STEP 1)
+If you see 401: Invalid token
+
+DEBUGGING:
+----------
+bash scripts/debug-zone-loading.sh
+
+DOCUMENTATION:
+--------------
+See: docs/FIX_ZONES_NOT_LOADING.md
+
+MOST LIKELY CAUSE:
+==================
+Strapi permissions not enabled for Public role.
+This is the #1 reason zones don't load.
+
+After setting permissions and restarting, zones should appear!

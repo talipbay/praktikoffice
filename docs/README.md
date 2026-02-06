@@ -31,6 +31,7 @@ All documentation for the Praktik Office project.
 - **[QUICK_FIX.md](QUICK_FIX.md)** - Quick fix for fetch errors
 
 ### Fixes & Updates
+- **[FIX_ZONES_NOT_LOADING.md](FIX_ZONES_NOT_LOADING.md)** - ⭐ Zones not showing on /map page
 - **[FINAL_FIXES_SUMMARY.md](FINAL_FIXES_SUMMARY.md)** - All fixes summary
 - **[FINAL_SUMMARY.md](FINAL_SUMMARY.md)** - Complete summary
 - **[UPDATES_SUMMARY.md](UPDATES_SUMMARY.md)** - What changed

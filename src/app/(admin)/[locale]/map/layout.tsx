@@ -23,13 +23,8 @@ export default function MapLayout({
         <style dangerouslySetInnerHTML={{
           __html: `
             /* Reset cursor to default for admin interface */
-            * {
-              cursor: default !important;
-            }
-            
-            /* Override any custom cursor styles */
             body, html {
-              cursor: default !important;
+              cursor: default;
             }
             
             /* Ensure buttons and interactive elements have pointer cursor */
@@ -40,6 +35,11 @@ export default function MapLayout({
             /* Text inputs should have text cursor */
             input[type="text"], input[type="email"], textarea {
               cursor: text !important;
+            }
+            
+            /* Allow canvas to control its own cursor */
+            canvas, .canvas-area {
+              cursor: auto !important;
             }
             
             /* Force light theme colors for admin interface */
