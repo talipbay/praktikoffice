@@ -41,3 +41,9 @@ logs/
 
 # Caddy
 /var/log/caddy/
+
+# Praktikmap - separate project (reference only)
+/praktikmap/
+
+# Zone migration backup files
+zones-backup.json

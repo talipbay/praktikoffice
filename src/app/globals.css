@@ -178,3 +178,93 @@
 .animate-scroll-up {
   animation: scroll-up 80s linear infinite;
 }
+
+/* Zone Management Map Styles */
+@layer utilities {
+  /* Touch-friendly button sizes */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Prevent text selection on touch devices during zone creation */
+  .no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Smooth scrolling for mobile panels */
+  .smooth-scroll {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  /* Canvas container responsive behavior */
+  .canvas-container {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+  }
+  
+  /* Large image canvas support - no overflow */
+  .canvas-large {
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+  }
+  
+  /* Canvas area container */
+  .canvas-area {
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+  }
+  
+  /* Prevent any scrolling in canvas containers */
+  .no-scroll {
+    overflow: hidden !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+  }
+  
+  /* Mobile-optimized zone management panel */
+  @media (max-width: 767px) {
+    .zone-panel-mobile {
+      max-height: 40vh;
+      overflow-y: auto;
+    }
+  }
+  
+  /* Tablet breakpoint adjustments */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .canvas-tablet {
+      max-width: 90vw;
+    }
+  }
+  
+  /* High DPI display optimizations */
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .canvas-container canvas {
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+    }
+  }
+}
+
+/* Zone creation instructions responsive positioning */
+@media (max-width: 767px) {
+  .zone-instructions {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 50;
+    max-width: 90vw;
+  }
+}

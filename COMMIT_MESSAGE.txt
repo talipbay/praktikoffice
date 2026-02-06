@@ -1,0 +1,54 @@
+feat: Add interactive zone management system with Strapi integration
+
+Major Features:
+- Interactive floor plan zone management at /[locale]/map
+- Server-side storage with Strapi backend (multi-user support)
+- Clean admin interface without navbar/footer (route group)
+- Improved text visibility (dark text with white stroke)
+- Migration tools for existing localStorage zones
+
+Components Added:
+- ZoneCanvas with Konva for interactive drawing
+- ZoneManagementPanel for zone control
+- 15+ supporting components (dialogs, lists, actions)
+- useZoneStateStrapi hook for server-backed state
+- Strapi API integration layer
+
+Features:
+- Create polygonal zones (3-6 vertices)
+- Mark zones as free/occupied
+- Assign company names
+- Edit zone shapes (drag vertices)
+- Delete zones with confirmation
+- Import/export zone data
+- Keyboard shortcuts
+- Responsive design (mobile/tablet/desktop)
+- Auto-save to Strapi database
+
+Technical Details:
+- Route group (admin) to bypass parent layout
+- Strapi content type for zones
+- Real-time coordinate transformation
+- Performance optimizations
+- Browser compatibility checks
+
+Migration Tools:
+- Browser console script for quick migration
+- Node.js script for batch migration
+- Export/import functionality
+
+Documentation:
+- Complete setup guides
+- Migration instructions
+- Quick reference cards
+- Troubleshooting guides
+
+Dependencies Added:
+- konva: HTML5 Canvas library
+- react-konva: React bindings for Konva
+- @radix-ui components: Dialog, ScrollArea, Separator, Slot
+
+Breaking Changes: None
+- Existing routes unchanged
+- New admin route at /[locale]/map
+- praktikmap folder excluded from git (reference only)
