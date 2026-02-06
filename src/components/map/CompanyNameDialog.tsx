@@ -125,7 +125,7 @@ export function CompanyNameDialog({
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent 
-        className="sm:max-w-md"
+        className="sm:max-w-md bg-white text-gray-900"
         onKeyDown={handleKeyDown}
       >
         <form onSubmit={handleSubmit}>

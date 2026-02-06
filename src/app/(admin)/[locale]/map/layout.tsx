@@ -23,8 +23,12 @@ export default function MapLayout({
         <style dangerouslySetInnerHTML={{
           __html: `
             /* Reset cursor - but allow canvas to override */
+            * {
+              cursor: inherit;
+            }
+            
             body, html {
-              cursor: default;
+              cursor: default !important;
             }
             
             /* Buttons and links */
@@ -37,8 +41,8 @@ export default function MapLayout({
               cursor: text !important;
             }
             
-            /* CRITICAL: Let canvas and its container control cursor */
-            canvas, canvas *, .canvas-area, .canvas-area * {
+            /* Canvas container - let it control cursor */
+            .canvas-area, .canvas-area *, canvas {
               cursor: inherit !important;
             }
             
